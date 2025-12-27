@@ -14,9 +14,9 @@ function HomePage() {
                 />
             </figure>
             <SearchBar />
-            {/* <NavLink to = "/advancedSearch">
+            <NavLink to = "/advancedSearch">
                 Advanced Search
-            </NavLink> */}
+            </NavLink>
             <h3>Random Recommendations</h3>
             {/* Insert Recommendations Carousel */}
         </>
