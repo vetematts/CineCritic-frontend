@@ -15,6 +15,7 @@ CineCritic is a full-stack web application that allows users to browse films and
 |[@testing-library/react](https://www.npmjs.com/package/@testing-library/react)|Vitest library with React testing features.|
 |[@testing-library/jest-dom](https://www.npmjs.com/package/@testing-library/jest-dom)|Library that tests the state of the DOM.|
 |[@testing-library/user-event](https://www.npmjs.com/package/@testing-library/user-event)|Library with testing features that simulate users interacting with the web application.|
+|[Styled-Components](https://styled-components.com/)|Adds styling capabilities to React Components.|
 
 ## Setting up
     npm install vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event --save-dev
