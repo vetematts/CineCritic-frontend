@@ -6,18 +6,27 @@ import "./SearchBar.css";
 function SearchBar() {
     const [searchTerm, setSearchTerm] = useState("");
 
-    const handleSubmit = (event) => {
-        setSearchTerm(event.target.value)
+    const handleSubmit = async (event) => {
+        event.preventDefault(); // Stop the default reloading page
+        
+        // Send a GET request with the search term to /films
+        // Once we have the results back 
+        // SUCCESS: Navigate to the search results page
+        // FAIL: Send error message
+    };
+
+    const handleSearchTerm = (event) => {
+        setSearchTerm(event.target.value);
     };
 
     return (
-        <form>
+        <form onSubmit = {handleSubmit}>
             <label>
                 <input 
                     type = "text"
                     className = "search-bar"
                     value = {searchTerm} 
-                    onChange ={handleSubmit}
+                    onChange = {handleSearchTerm}
                     default = "search"
                 />
             </label>
