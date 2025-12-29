@@ -15,6 +15,7 @@ const StyledSearchBar = styled.input`
     padding: 5px; /* Optional: Add padding so text doesn't touch the edges */
 
     width: 80rem;
+    color: #ffffff;
 `;
 
 // Search bar handles the processing of any queries submitted anywhere the component exists
@@ -42,7 +43,7 @@ function SearchBar() {
                     className = "search-bar"
                     value = {searchTerm} 
                     onChange = {handleSearchTerm}
-                    default = "search"
+                    placeholder = "Search"
                 />
             </label>
         </form>
