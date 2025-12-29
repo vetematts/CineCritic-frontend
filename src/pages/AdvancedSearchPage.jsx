@@ -1,8 +1,17 @@
+// Import packges
 import { useState } from "react";
 import styled from "styled-components";
 
+// Styled components
+// Give all the labels the same gold colouring as headings
 const StyledLabels = styled.label`
     color: #e9da57;
+`;
+
+const StyledInputs = styled.input`
+    background-color: #5a5b5f;
+    opacity: 0.6;
+    width: 70rem;
 `;
 
 function AdvancedSearchPage() {
@@ -14,7 +23,7 @@ function AdvancedSearchPage() {
     const [genres, setGenres] = useState("");
 
     const handleTitle = (event) => {
-        setTitle(event.title.value);
+        setTitle(event.target.value);
     };
 
     const handleReleaseYear = (event) => {
@@ -47,7 +56,7 @@ function AdvancedSearchPage() {
             <StyledLabels>
                 Movie Title
             </StyledLabels>
-            <input 
+            <StyledInputs 
                 value = {title} 
                 onChange = {handleTitle}
                 placeholder = "Any word in the name of the movie"
@@ -55,7 +64,7 @@ function AdvancedSearchPage() {
             <StyledLabels>
                 Release Year
             </StyledLabels>
-            <input 
+            <StyledInputs 
                 value = {releaseYear} 
                 onChange = {handleReleaseYear}
                 placeholder = "Any number when the movie was released"
@@ -63,7 +72,7 @@ function AdvancedSearchPage() {
             <StyledLabels>
                 Film Crew
             </StyledLabels>
-            <input 
+            <StyledInputs 
                 value = {crew} 
                 onChange = {handleFilmCrew}
                 placeholder = "Any word in the name of any film crew members"
@@ -82,7 +91,7 @@ function AdvancedSearchPage() {
                 <option value = "GREATER_THAN">Greater than</option>
                 <option value = "GREATER_OR_EQUAL">Greater or equal to</option>
             </select>
-            <input 
+            <StyledInputs 
                 value = {rating} 
                 onChange = {handleRating}
                 placeholder = "Any number between 0 and 5"
@@ -90,7 +99,7 @@ function AdvancedSearchPage() {
             <StyledLabels>
                 Genres
             </StyledLabels>
-            <input 
+            <StyledInputs 
                 value = {genres} 
                 onChange ={handleGenres}
                 placeholder = "Enter any genre"
