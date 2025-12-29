@@ -1,4 +1,9 @@
 import { useState } from "react";
+import styled from "styled-components";
+
+const StyledLabels = styled.label`
+    color: #e9da57;
+`;
 
 function AdvancedSearchPage() {
     const [title, setTitle] = useState("");
@@ -39,33 +44,33 @@ function AdvancedSearchPage() {
 
     return (
         <form>
-            <label>
+            <StyledLabels>
                 Movie Title
-            </label>
+            </StyledLabels>
             <input 
                 value = {title} 
                 onChange = {handleTitle}
                 placeholder = "Any word in the name of the movie"
             />
-            <label>
+            <StyledLabels>
                 Release Year
-            </label>
+            </StyledLabels>
             <input 
                 value = {releaseYear} 
                 onChange = {handleReleaseYear}
                 placeholder = "Any number when the movie was released"
             />
-            <label>
+            <StyledLabels>
                 Film Crew
-            </label>
+            </StyledLabels>
             <input 
                 value = {crew} 
                 onChange = {handleFilmCrew}
                 placeholder = "Any word in the name of any film crew members"
             />
-            <label>
+            <StyledLabels>
                 Rating
-            </label>
+            </StyledLabels>
             <select 
                 value = {ratingComparator} 
                 onChange = {handleRatingDropDown}
@@ -82,9 +87,9 @@ function AdvancedSearchPage() {
                 onChange = {handleRating}
                 placeholder = "Any number between 0 and 5"
             />
-            <label>
+            <StyledLabels>
                 Genres
-            </label>
+            </StyledLabels>
             <input 
                 value = {genres} 
                 onChange ={handleGenres}
