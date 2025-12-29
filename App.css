@@ -1,10 +1,21 @@
+/* Import the Google Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Gayathri:wght@100;400;700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+
 #root {
-  /* max-width: 1280px; */
-  /* display: flex; */
+  /* Container Dimensions */
+  max-width: 1280px;
+  display: flex;
   place-items: center;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+
+  /* Alignment for the children inside the container */
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  /* Font style */
+  font-family: "Google Sans", sans-serif;
 }
 
 body {
@@ -13,10 +24,5 @@ body {
 }
 
 h2, h3 {
-  color: #f0e0cc;
-}
-
-.home_logo {
-  /* height: 60rem; */
-  padding: 1.5em;
+  color: #e9da57;
 }
