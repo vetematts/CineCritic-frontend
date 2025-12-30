@@ -5,13 +5,35 @@ import styled from "styled-components";
 // Styled components
 // Give all the labels the same gold colouring as headings
 const StyledLabels = styled.label`
+    /* Same golden font as the headings */
     color: #e9da57;
+    
+    /* Response design */
+    display: flex;
+    justify-content: flex-start;
+
+    /* Spacing between itself and its input */
+    padding: 2px;
 `;
 
+// White background input fields with slight rounded corners
+// with spacing to break up and declutter the page
 const StyledInputs = styled.input`
-    background-color: #5a5b5f;
-    opacity: 0.6;
-    width: 70rem;
+    /* White background */
+    background-color: #ffffffff;
+    opacity: 0.9;
+
+    /* Round the corners */
+    border-radius: 10px; /* More pixel value for more roundness */
+    padding: 5px; /* Optional: Add padding so text doesn't touch the edges */
+
+    /* Set responsive design */
+    display: flex;
+    justify-content: flex-start;
+    width: 60rem;
+
+    /* Space away from other items */
+    margin: 5px 0 20px 0;
 `;
 
 function AdvancedSearchPage() {
@@ -34,9 +56,9 @@ function AdvancedSearchPage() {
         setCrew(event.target.value);
     };
 
-    const handleRatingDropDown = (event) => {
-        setRatingComparator(event.target.value);
-    };
+    // const handleRatingDropDown = (event) => {
+    //     setRatingComparator(event.target.value);
+    // };
 
     const handleRating = (event) => {
         setRating(event.target.value);
@@ -81,13 +103,12 @@ function AdvancedSearchPage() {
                 Rating
             </StyledLabels>
             <select 
-                value = {ratingComparator} 
-                onChange = {handleRatingDropDown}
+                defaultValue = {"EQUAL_TO"}
             >
                 {/* HTML entity codes: &lt is < and &gt is > */}
                 <option value = "LESS_THAN">Less than</option> 
                 <option value = "LESS_OR_EQUAL">Less or equal to</option>
-                <option value = "EQUAL_TO" selected>Equal to</option>
+                <option value = "EQUAL_TO">Equal to</option>
                 <option value = "GREATER_THAN">Greater than</option>
                 <option value = "GREATER_OR_EQUAL">Greater or equal to</option>
             </select>
