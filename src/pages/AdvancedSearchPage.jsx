@@ -59,6 +59,15 @@ const StyledRatingInput = styled.div`
     width: 61rem;
 `;
 
+// Space the submit button further away from the last query input
+const StyledSubmitButton = styled.button`
+    /* Roughly 50px distance between this and the Genres input field */
+    margin: 4rem 0 0 0;
+
+    /* Give the button a bit more meat */
+    height: 30px;
+`;
+
 function AdvancedSearchPage() {
     const [title, setTitle] = useState("");
     const [releaseYear, setReleaseYear] = useState("");
@@ -150,12 +159,12 @@ function AdvancedSearchPage() {
                 onChange ={handleGenres}
                 placeholder = "Enter any genre"
             />
-            <button 
+            <StyledSubmitButton 
                 type = "submit"
                 onSubmit = {handleSubmitSearch}
             >
-                    Search with these options
-            </button>
+                Search with these options
+            </StyledSubmitButton>
         </form>
     );
 }
