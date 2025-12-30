@@ -29,11 +29,34 @@ const StyledInputs = styled.input`
 
     /* Set responsive design */
     display: flex;
+    flex: 1; /* Shrink and grow in proportion to window size */
     justify-content: flex-start;
-    width: 60rem;
+    flex-basis: 60rem; /* Ideal width if space permits */
+    width: 60rem; /* This is the ideal width */
 
     /* Space away from other items */
     margin: 5px 0 20px 0;
+`;
+
+// Flexible drop down that fits in next to its input field
+const StyledDropDown = styled.select`
+    /* Make the drop down responsive */    
+    display: flex;
+    flex: 0;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: auto;
+
+    /* Space away from other items */
+    margin: 5px 5px 20px 0;
+`;
+
+// Create a div container for the ratings drop down and input
+const StyledRatingInput = styled.div`
+    /* Set responsive design */
+    display: flex;
+    justify-content: flex-start;
+    width: 61rem;
 `;
 
 function AdvancedSearchPage() {
@@ -41,7 +64,7 @@ function AdvancedSearchPage() {
     const [releaseYear, setReleaseYear] = useState("");
     const [crew, setCrew] = useState("");
     const [ratingComparator, setRatingComparator] = useState("EQUAL_TO");
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState("");
     const [genres, setGenres] = useState("");
 
     const handleTitle = (event) => {
@@ -102,21 +125,23 @@ function AdvancedSearchPage() {
             <StyledLabels>
                 Rating
             </StyledLabels>
-            <select 
-                defaultValue = {"EQUAL_TO"}
-            >
-                {/* HTML entity codes: &lt is < and &gt is > */}
-                <option value = "LESS_THAN">Less than</option> 
-                <option value = "LESS_OR_EQUAL">Less or equal to</option>
-                <option value = "EQUAL_TO">Equal to</option>
-                <option value = "GREATER_THAN">Greater than</option>
-                <option value = "GREATER_OR_EQUAL">Greater or equal to</option>
-            </select>
-            <StyledInputs 
-                value = {rating} 
-                onChange = {handleRating}
-                placeholder = "Any number between 0 and 5"
-            />
+            <StyledRatingInput>
+                <StyledDropDown 
+                    defaultValue = {"EQUAL_TO"}
+                >
+                    {/* HTML entity codes: &lt is < and &gt is > */}
+                    <option value = "LESS_THAN">Less than</option> 
+                    <option value = "LESS_OR_EQUAL">Less or equal to</option>
+                    <option value = "EQUAL_TO">Equal to</option>
+                    <option value = "GREATER_THAN">Greater than</option>
+                    <option value = "GREATER_OR_EQUAL">Greater or equal to</option>
+                </StyledDropDown>
+                <StyledInputs 
+                    value = {rating} 
+                    onChange = {handleRating}
+                    placeholder = "Any number between 0 and 5"
+                />
+            </StyledRatingInput>
             <StyledLabels>
                 Genres
             </StyledLabels>
