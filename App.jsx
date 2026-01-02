@@ -1,9 +1,6 @@
 // Import the routing library
 import { BrowserRouter } from 'react-router';
 
-// Plugin the pages
-import HomePage from './src/pages/HomePage'
-
 // Import the routes to connect all the page interactions
 import AppRoutes from './AppRoutes';
 
@@ -14,11 +11,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <AppRoutes>
-          <main>
-            <HomePage />
-          </main>
-        </AppRoutes>
+        <AppRoutes />
       </BrowserRouter>
     </>
   )
