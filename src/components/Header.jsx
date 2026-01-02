@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 // Import image assets
 import logo from "../assets/cine_critic_logo_small.png";
 import styled from "styled-components";
+import { NavLink } from "react-router";
 
 // Styled parts
 // Create a responsive header that doesn't wrap and maintains its shape
@@ -24,10 +25,12 @@ const StyledLogo = styled.img`
 function Header() {
     return (
         <StyledHeader>
-            <StyledLogo 
-                src = {logo} 
-                alt = "CineCritic Logo"
-            />
+            <NavLink to = "/">
+                <StyledLogo 
+                    src = {logo} 
+                    alt = "CineCritic Logo"
+                />
+            </NavLink>
             <SearchBar />
         </StyledHeader>
     );
