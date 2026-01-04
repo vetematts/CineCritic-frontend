@@ -73,7 +73,11 @@ function Footer() {
                 <StyledFooterColumns id = "films-search">
                     <StyledFooterHeadings>Films</StyledFooterHeadings>
                     <StyledList>
-                        <StyledFooterLinkList><StyledFooterLinks>Advanced Search</StyledFooterLinks></StyledFooterLinkList>
+                        <StyledFooterLinkList>
+                            <StyledFooterLinks to = "/advancedSearch">
+                                Advanced Search
+                            </StyledFooterLinks>
+                        </StyledFooterLinkList>
                         <StyledFooterLinkList><StyledFooterLinks>All Films</StyledFooterLinks></StyledFooterLinkList>
                     </StyledList>
                 </StyledFooterColumns>
