@@ -7,7 +7,6 @@ import SearchBar from "../components/SearchBar";
 
 // Import image assets
 import banner from "../assets/cine_critic_logo.png";
-import Footer from "../components/Footer";
 
 // Styled components
 // Align the home logo container to centre the image
@@ -59,7 +58,6 @@ function HomePage() {
                 Random Recommendations
             </StyledRandomRecommendations>
             {/* Insert Recommendations Carousel */}
-            <Footer />
         </>
     );
 }
