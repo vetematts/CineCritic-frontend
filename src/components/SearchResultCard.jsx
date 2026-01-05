@@ -2,6 +2,10 @@
 import { NavLink } from "react-router";
 import styled from "styled-components";
 
+// Import URL pathing utility, this allows us to 
+// dynamically add images to the react applcation
+import getImageURL from "../utilities/image-pathing";
+
 // Make the card flexible, able to grow and shrink 
 // depending on the resolution size. Place the film 
 // poster and the description block side-by-side
@@ -29,7 +33,7 @@ function SearchResultCard({title, releaseYear, description}) {
                 {/* Separate the image and the description 
                     body into two columns */}
                 <StyledFilmCardContents id = "mini-movie-poster">
-                    <img src = {{}} />
+                    <img src = {getImageURL(title)} />
                 </StyledFilmCardContents>
                 {/* Show maximum 3 lines, gradient into full 
                     transparency */}
