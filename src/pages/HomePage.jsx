@@ -70,15 +70,13 @@ function HomePage() {
     return (
         <>
         <StyledHomeContainer className = "flex-container">
-            {/* <StyledHomeRow id = "banner-container"> */}
-                <StyledFigure>
+                <StyledFigure id = "banner-container">
                     <StyledHomeLogo 
                         src = {banner}
                         className = "home_logo" 
                         alt = "CineCritic Banner" 
                     />
                 </StyledFigure>
-            {/* </StyledHomeRow> */}
             <StyledHomeRow id = "home-search-bar">
                 <SearchBar />
             </StyledHomeRow>
