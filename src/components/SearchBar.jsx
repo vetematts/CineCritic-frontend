@@ -3,18 +3,24 @@ import { useState } from "react";
 import styled from "styled-components";
 
 // Styled components
+const StyledForm = styled.form`
+    display: flex;
+    flex: 1;
+`;
+
 // Give the search bar a flat transparent rounded look
 const StyledSearchBar = styled.input`
-    /* Flat colour with transparency */    
+    // Flat colour with transparency
     background-color: #5a5b5f;
     opacity: 0.6; 
     
-    /* Round the corners */
+    // Round the corners
     border-radius: 10px; /* More pixel value for more roundness */
     border: 1px solid #ccc; /* Optional: Add a border for visibility */
     padding: 5px; /* Optional: Add padding so text doesn't touch the edges */
 
-    width: 80rem;
+    min-width: 5rem;
+    flex-basis: 80rem;
     color: #ffffff;
 `;
 
@@ -36,17 +42,15 @@ function SearchBar() {
     };
 
     return (
-        <form onSubmit = {handleSubmit}>
-            <label>
-                <StyledSearchBar 
-                    type = "text"
-                    className = "search-bar"
-                    value = {searchTerm} 
-                    onChange = {handleSearchTerm}
-                    placeholder = "Search"
-                />
-            </label>
-        </form>
+        <StyledForm onSubmit = {handleSubmit}>
+            <StyledSearchBar 
+                type = "text"
+                className = "search-bar"
+                value = {searchTerm} 
+                onChange = {handleSearchTerm}
+                placeholder = "Search"
+            />
+        </StyledForm>
     );
 }
 
