@@ -9,55 +9,91 @@ import SearchBar from "../components/SearchBar";
 import banner from "../assets/cine_critic_logo.png";
 
 // Styled components
+const StyledHomeContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const StyledHomeRow = styled.div`
+    display: flex;    
+    flex: 1;
+
+    &#home-search-bar {
+        align-items: center;
+    }
+
+    &#home-advanced-search {
+        // Align the contents of the container under and 
+        // at the end of the search bar
+        justify-content: flex-end;
+    }
+
+    &#home-random-recommendations{
+        align-items: flex-start;
+    }
+`;
+
 // Align the home logo container to centre the image
-const StyledBannerContainer = styled.figure`
+const StyledFigure = styled.figure`
+    // Figure is the flex container for the image
+    display: flex;    
+    flex: 1;
     align-items: center;
     justify-content: center;
+
+    // Set maximum limits for pc browsers
+    max-width: 80rem;
+    max-height: 20rem;
+    padding: 1.5rem;
+    // border: 5px solid white; // Uncomment this to see the container
 `;
 
 // Re-size the logo to be roughly 1/3rd to 1/4th of the screen
 const StyledHomeLogo = styled.img`
-  height: 20rem;
-  padding: 1.5em;
+    // This takes shape according to the 
+    // parent, the figure container
+    padding: 1.5rem;
+    width: 40%;
+    height: 40%;
 `;
 
 // Style the advanced search link under the search bar
 const StyledAdvancedSearchLink = styled(NavLink)`
-    /* Same gold-ish colour scheme as headings */
+    // Same gold-ish colour scheme as headings
     color: #e9da57;
     text-decoration: none;
-    
-    /* Align the contents of the container under and at the end of the search bar */
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem 0 0 2rem;
-    width: 80rem;
-`;
 
-const StyledRandomRecommendations = styled.h3`
-    align-items: flex-start;
-    width: 100rem;
+    padding: 1rem 0 0 2rem;
+    max-width: 80rem;
 `;
 
 // The default page that is loaded
 function HomePage() {
     return (
         <>
-            <StyledBannerContainer>
-                <StyledHomeLogo 
-                    src = {banner}
-                    className = "home_logo" 
-                    alt = "CineCritic Banner" 
-                />
-            </StyledBannerContainer>
-            <SearchBar />
-            <StyledAdvancedSearchLink to = "/advancedSearch">
-                Advanced Search
-            </StyledAdvancedSearchLink>
-            <StyledRandomRecommendations>
-                Random Recommendations
-            </StyledRandomRecommendations>
-            {/* Insert Recommendations Carousel */}
+        <StyledHomeContainer className = "flex-container">
+            {/* <StyledHomeRow id = "banner-container"> */}
+                <StyledFigure>
+                    <StyledHomeLogo 
+                        src = {banner}
+                        className = "home_logo" 
+                        alt = "CineCritic Banner" 
+                    />
+                </StyledFigure>
+            {/* </StyledHomeRow> */}
+            <StyledHomeRow id = "home-search-bar">
+                <SearchBar />
+            </StyledHomeRow>
+            <StyledHomeRow id = "home-advanced-search">
+                <StyledAdvancedSearchLink to = "/advancedSearch">
+                    Advanced Search
+                </StyledAdvancedSearchLink>
+            </StyledHomeRow>
+            <StyledHomeRow id = "home-random-recommendations">
+                <h3>Random Recommendations</h3>
+                {/* Insert Recommendations Carousel */}
+            </StyledHomeRow>
+        </StyledHomeContainer>
         </>
     );
 }
