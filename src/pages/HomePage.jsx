@@ -40,21 +40,19 @@ const StyledFigure = styled.figure`
     flex: 1;
     align-items: center;
     justify-content: center;
-
-    // Set maximum limits for pc browsers
-    max-width: 80rem;
-    max-height: 20rem;
-    padding: 1.5rem;
     // border: 5px solid white; // Uncomment this to see the container
 `;
 
 // Re-size the logo to be roughly 1/3rd to 1/4th of the screen
 const StyledHomeLogo = styled.img`
-    // This takes shape according to the 
-    // parent, the figure container
-    padding: 1.5rem;
+    // This takes shape according to the parent, the figure 
+    // container
+    flex: 1;
     width: 40%;
-    height: 40%;
+
+    // Provide a bit of space between the logo and the search
+    // bar
+    padding: 0 0 2rem 0;
 `;
 
 // Style the advanced search link under the search bar
