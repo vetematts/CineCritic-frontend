@@ -7,6 +7,7 @@ import AppRoutes from './AppRoutes';
 // Import the styling for the application
 import './App.css'
 
+
 function App() {
   return (
     <>
