@@ -2,7 +2,7 @@
 import { Route, Routes, useLocation } from "react-router";
 
 // Import all the pages for AppRoutes to redirect users to
-import Layout from "./src/components/Layout";
+import PageLayout from "./src/pages/PageLayout";
 import HomePage from "./src/pages/HomePage";
 import AdvancedSearchPage from "./src/pages/AdvancedSearchPage";
 
@@ -12,7 +12,7 @@ function AppRoutes() {
   
     return (
         <Routes>
-            <Route path = "/" element = {<Layout currentPage = {location.pathname} />}> {/* Parent Route */}
+            <Route path = "/" element = {<PageLayout currentPage = {location.pathname} />}> {/* Parent Route */}
                 <Route index element = {<HomePage />} /> {/* Rendered in the <Outlet /> */}
                 <Route path = "/advancedSearch" element = {<AdvancedSearchPage />} />
             </Route>

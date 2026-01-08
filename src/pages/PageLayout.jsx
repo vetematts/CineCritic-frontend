@@ -2,11 +2,11 @@
 import { Outlet } from "react-router-dom"
 
 // Plugin the top level components that will exist on all the pages
-import Header from './Header';
-import Footer from "./Footer";
+import Header from '../components/Header';
+import Footer from "../components/Footer";
 
 // Create a templated layout for the webpage
-function Layout({currentPage}) {
+function PageLayout({currentPage}) {
     return (
         <>
             {/* Only show the header when we're 
@@ -20,4 +20,4 @@ function Layout({currentPage}) {
     )
 };
 
-export default Layout;
+export default PageLayout;
