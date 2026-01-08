@@ -5,9 +5,12 @@ import { Route, Routes, useLocation } from "react-router";
 import PageLayout from "./src/pages/PageLayout";
 import HomePage from "./src/pages/HomePage";
 import AdvancedSearchPage from "./src/pages/AdvancedSearchPage";
+import SearchResults from "./src/pages/SearchResultsPage";
 
 // This component handles all the routing to the different pages
 function AppRoutes() {
+    // Find out what page we're on so we can hide 
+    // the header if on the home page
     const location = useLocation();
   
     return (
@@ -15,6 +18,7 @@ function AppRoutes() {
             <Route path = "/" element = {<PageLayout currentPage = {location.pathname} />}> {/* Parent Route */}
                 <Route index element = {<HomePage />} /> {/* Rendered in the <Outlet /> */}
                 <Route path = "/advancedSearch" element = {<AdvancedSearchPage />} />
+                <Route path = "/search" element = {<SearchResults />} />
             </Route>
         </Routes>
     )
