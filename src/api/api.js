@@ -1,5 +1,6 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
+// Read the JWT from localStorage (if it exists).
 const getToken = () => {
   if (typeof localStorage === "undefined") {
     return null;
@@ -8,6 +9,7 @@ const getToken = () => {
   return localStorage.getItem("token");
 };
 
+// Build a full URL using the base API URL and optional query params.
 const buildUrl = (path, params) => {
   const base = API_BASE_URL || window.location.origin;
   const url = new URL(path, base);
@@ -31,6 +33,7 @@ const parseJson = async (response) => {
   }
 };
 
+// Send a JSON request and normalise errors into { error, code }.
 const request = async (path, options = {}) => {
   const { method = "GET", body, headers = {}, params } = options;
   const url = buildUrl(path, params);
@@ -41,6 +44,7 @@ const request = async (path, options = {}) => {
     requestHeaders["Content-Type"] = "application/json";
   }
 
+  // Attach Authorisation header when a token is available.
   if (token) {
     requestHeaders.Authorization = `Bearer ${token}`;
   }

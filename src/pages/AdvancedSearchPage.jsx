@@ -109,6 +109,7 @@ function AdvancedSearchPage() {
         setLoading(true);
         setError(null);
 
+        // Map the rating comparator to ratingMin/ratingMax query params.
         const trimmedRating = rating.trim();
         let ratingMin;
         let ratingMax;

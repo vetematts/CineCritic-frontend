@@ -64,6 +64,7 @@ function HomePage() {
     useEffect(() => {
         let isMounted = true;
 
+        // Load trending + top-rated movies from the backend on first render.
         const loadTrending = async () => {
             setError(null);
 

@@ -35,6 +35,7 @@ function MovieDetailPage() {
 
         let isMounted = true;
 
+        // Load movie detail plus reviews for this TMDB id.
         const loadMovie = async () => {
             setLoading(true);
             setError(null);

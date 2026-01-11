@@ -34,6 +34,7 @@ function SearchBar() {
             return;
         }
 
+        // Query the backend search endpoint with the user's term.
         setLoading(true);
         setError(null);
 
