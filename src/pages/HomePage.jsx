@@ -58,6 +58,7 @@ const StyledError = styled.p`
 // The default page that is loaded
 function HomePage() {
     const [trending, setTrending] = useState([]);
+    const [topRated, setTopRated] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -67,9 +68,13 @@ function HomePage() {
             setError(null);
 
             try {
-                const data = await get("/api/movies/trending");
+                const [trendingData, topRatedData] = await Promise.all([
+                    get("/api/movies/trending"),
+                    get("/api/movies/top-rated"),
+                ]);
                 if (isMounted) {
-                    setTrending(data || []);
+                    setTrending(trendingData || []);
+                    setTopRated(topRatedData || []);
                 }
             } catch (err) {
                 if (isMounted) {
@@ -104,6 +109,16 @@ function HomePage() {
             {error && <StyledError>{error}</StyledError>}
             <StyledTrendingList>
                 {trending.map((movie) => (
+                    <StyledTrendingItem key = {movie.id || movie.tmdbId}>
+                        {movie.title || movie.name}
+                    </StyledTrendingItem>
+                ))}
+            </StyledTrendingList>
+            <StyledRandomRecommendations>
+                Top Rated
+            </StyledRandomRecommendations>
+            <StyledTrendingList>
+                {topRated.map((movie) => (
                     <StyledTrendingItem key = {movie.id || movie.tmdbId}>
                         {movie.title || movie.name}
                     </StyledTrendingItem>
