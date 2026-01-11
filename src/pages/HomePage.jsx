@@ -40,7 +40,6 @@ const StyledFigure = styled.figure`
     flex: 1;
     align-items: center;
     justify-content: center;
-    // border: 5px solid white; // Uncomment this to see the container
 `;
 
 // Re-size the logo to be roughly 1/3rd to 1/4th of the screen
@@ -69,27 +68,27 @@ const StyledAdvancedSearchLink = styled(NavLink)`
 function HomePage() {
     return (
         <>
-        <StyledHomeContainer className = "flex-container">
-                <StyledFigure id = "banner-container">
-                    <StyledHomeLogo 
-                        src = {banner}
-                        className = "home_logo" 
-                        alt = "CineCritic Banner" 
-                    />
-                </StyledFigure>
-            <StyledHomeRow id = "home-search-bar">
-                <SearchBar />
-            </StyledHomeRow>
-            <StyledHomeRow id = "home-advanced-search">
-                <StyledAdvancedSearchLink to = "/advancedSearch">
-                    Advanced Search
-                </StyledAdvancedSearchLink>
-            </StyledHomeRow>
-            <StyledHomeRow id = "home-random-recommendations">
-                <h3>Random Recommendations</h3>
-                {/* Insert Recommendations Carousel */}
-            </StyledHomeRow>
-        </StyledHomeContainer>
+            <StyledHomeContainer className = "flex-container">
+                    <StyledFigure id = "banner-container">
+                        <StyledHomeLogo 
+                            src = {banner}
+                            className = "home_logo" 
+                            alt = "CineCritic Banner" 
+                        />
+                    </StyledFigure>
+                <StyledHomeRow id = "home-search-bar">
+                    <SearchBar />
+                </StyledHomeRow>
+                <StyledHomeRow id = "home-advanced-search">
+                    <StyledAdvancedSearchLink to = "/advancedSearch">
+                        Advanced Search
+                    </StyledAdvancedSearchLink>
+                </StyledHomeRow>
+                <StyledHomeRow id = "home-random-recommendations">
+                    <h3>Random Recommendations</h3>
+                    {/* Insert Recommendations Carousel */}
+                </StyledHomeRow>
+            </StyledHomeContainer>
         </>
     );
 }
