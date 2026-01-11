@@ -1,6 +1,7 @@
 // Import packges
 import { useState } from "react";
 import styled from "styled-components";
+import { get } from "../api/api";
 
 // Styled components
 // Give all the labels the same gold colouring as headings
@@ -75,6 +76,9 @@ function AdvancedSearchPage() {
     const [ratingComparator, setRatingComparator] = useState("EQUAL_TO");
     const [rating, setRating] = useState("");
     const [genres, setGenres] = useState("");
+    const [results, setResults] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleTitle = (event) => {
         setTitle(event.target.value);
@@ -88,9 +92,9 @@ function AdvancedSearchPage() {
         setCrew(event.target.value);
     };
 
-    // const handleRatingDropDown = (event) => {
-    //     setRatingComparator(event.target.value);
-    // };
+    const handleRatingDropDown = (event) => {
+        setRatingComparator(event.target.value);
+    };
 
     const handleRating = (event) => {
         setRating(event.target.value);
@@ -100,13 +104,50 @@ function AdvancedSearchPage() {
         setGenres(event.target.value);
     };
 
-    const handleSubmitSearch = () => {
-        // Take all the states and apply them to 
-        // the GET query with multiple terms
+    const handleSubmitSearch = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        // Map the rating comparator to ratingMin/ratingMax query params.
+        const trimmedRating = rating.trim();
+        let ratingMin;
+        let ratingMax;
+
+        if (trimmedRating) {
+            if (ratingComparator === "LESS_THAN" || ratingComparator === "LESS_OR_EQUAL") {
+                ratingMax = trimmedRating;
+            } else if (ratingComparator === "GREATER_THAN" || ratingComparator === "GREATER_OR_EQUAL") {
+                ratingMin = trimmedRating;
+            } else {
+                ratingMin = trimmedRating;
+                ratingMax = trimmedRating;
+            }
+        }
+
+        try {
+            const data = await get("/api/movies/advanced", {
+                params: {
+                    query: title,
+                    year: releaseYear,
+                    genres,
+                    crew,
+                    ratingMin,
+                    ratingMax,
+                    page: 1,
+                },
+            });
+
+            setResults(data || []);
+        } catch (err) {
+            setError(err?.error || "Unable to load results.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <form>
+        <form onSubmit = {handleSubmitSearch}>
             <StyledLabels>
                 Movie Title
             </StyledLabels>
@@ -136,7 +177,8 @@ function AdvancedSearchPage() {
             </StyledLabels>
             <StyledRatingInput>
                 <StyledDropDown 
-                    defaultValue = {"EQUAL_TO"}
+                    value = {ratingComparator}
+                    onChange = {handleRatingDropDown}
                 >
                     {/* HTML entity codes: &lt is < and &gt is > */}
                     <option value = "LESS_THAN">Less than</option> 
@@ -161,10 +203,20 @@ function AdvancedSearchPage() {
             />
             <StyledSubmitButton 
                 type = "submit"
-                onSubmit = {handleSubmitSearch}
             >
                 Search with these options
             </StyledSubmitButton>
+            {loading && <p>Loading...</p>}
+            {error && <p>{error}</p>}
+            {results.length > 0 && (
+                <ul>
+                    {results.map((movie) => (
+                        <li key = {movie.id || movie.tmdbId}>
+                            {movie.title || movie.name}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </form>
     );
 }

@@ -1,6 +1,7 @@
 // Import packages
 import { useState } from "react";
 import styled from "styled-components";
+import { get } from "../api/api";
 
 // Styled components
 // Give the search bar a flat transparent rounded look
@@ -21,14 +22,32 @@ const StyledSearchBar = styled.input`
 // Search bar handles the processing of any queries submitted anywhere the component exists
 function SearchBar() {
     const [searchTerm, setSearchTerm] = useState("");
+    const [results, setResults] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Stop the default reloading page
         
-        // Send a GET request with the search term to /films
-        // Once we have the results back 
-        // SUCCESS: Navigate to the search results page
-        // FAIL: Send error message
+        const trimmed = searchTerm.trim();
+        if (!trimmed) {
+            return;
+        }
+
+        // Query the backend search endpoint with the user's term.
+        setLoading(true);
+        setError(null);
+
+        try {
+            const data = await get("/api/movies/search", {
+                params: { q: trimmed },
+            });
+            setResults(data || []);
+        } catch (err) {
+            setError(err?.error || "Unable to load search results.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleSearchTerm = (event) => {
@@ -46,6 +65,17 @@ function SearchBar() {
                     placeholder = "Search"
                 />
             </label>
+            {loading && <p>Loading...</p>}
+            {error && <p>{error}</p>}
+            {results.length > 0 && (
+                <ul>
+                    {results.map((movie) => (
+                        <li key = {movie.id || movie.tmdbId}>
+                            {movie.title || movie.name}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </form>
     );
 }
