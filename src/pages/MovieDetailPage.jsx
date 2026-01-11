@@ -24,6 +24,7 @@ const StyledError = styled.p`
 function MovieDetailPage() {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
+    const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -39,10 +40,14 @@ function MovieDetailPage() {
             setError(null);
 
             try {
-                const data = await get(`/api/movies/${id}`);
+                const [movieData, reviewsData] = await Promise.all([
+                    get(`/api/movies/${id}`),
+                    get(`/api/reviews/${id}`),
+                ]);
 
                 if (isMounted) {
-                    setMovie(data);
+                    setMovie(movieData);
+                    setReviews(reviewsData || []);
                 }
             } catch (err) {
                 if (isMounted) {
@@ -79,6 +84,24 @@ function MovieDetailPage() {
                         <StyledMeta>Rating {movie.vote_average}</StyledMeta>
                     )}
                     {movie.overview && <p>{movie.overview}</p>}
+                </>
+            )}
+            {!loading && reviews.length > 0 && (
+                <>
+                    <h3>Reviews</h3>
+                    <ul>
+                        {reviews.map((review) => (
+                            <li key = {review.id || review._id}>
+                                <p>{review.content || review.text}</p>
+                                {review.rating && (
+                                    <StyledMeta>Rating {review.rating}</StyledMeta>
+                                )}
+                                {review.author && (
+                                    <StyledMeta>By {review.author}</StyledMeta>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
                 </>
             )}
         </StyledContainer>
