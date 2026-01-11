@@ -1,9 +1,11 @@
 // Import Packages
 import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 // Import the Search Bar component
 import SearchBar from "../components/SearchBar";
+import { get } from "../api/api";
 
 // Import image assets
 import banner from "../assets/cine_critic_logo.png";
@@ -39,8 +41,50 @@ const StyledRandomRecommendations = styled.h3`
     width: 100rem;
 `;
 
+const StyledTrendingList = styled.ul`
+    list-style: none;
+    padding: 0;
+    margin: 0;
+`;
+
+const StyledTrendingItem = styled.li`
+    padding: 0.5rem 0;
+`;
+
+const StyledError = styled.p`
+    color: #ffb4a2;
+`;
+
 // The default page that is loaded
 function HomePage() {
+    const [trending, setTrending] = useState([]);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const loadTrending = async () => {
+            setError(null);
+
+            try {
+                const data = await get("/api/movies/trending");
+                if (isMounted) {
+                    setTrending(data || []);
+                }
+            } catch (err) {
+                if (isMounted) {
+                    setError(err?.error || "Unable to load trending movies.");
+                }
+            }
+        };
+
+        loadTrending();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
     return (
         <>
             <StyledBannerContainer>
@@ -57,6 +101,14 @@ function HomePage() {
             <StyledRandomRecommendations>
                 Random Recommendations
             </StyledRandomRecommendations>
+            {error && <StyledError>{error}</StyledError>}
+            <StyledTrendingList>
+                {trending.map((movie) => (
+                    <StyledTrendingItem key = {movie.id || movie.tmdbId}>
+                        {movie.title || movie.name}
+                    </StyledTrendingItem>
+                ))}
+            </StyledTrendingList>
             {/* Insert Recommendations Carousel */}
         </>
     );
