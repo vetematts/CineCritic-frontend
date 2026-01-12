@@ -29,6 +29,15 @@ const StyledAuthButton = styled.button`
     height: 2.4rem;
 `;
 
+const StyledAuthLink = styled(NavLink)`
+    margin-left: auto;
+    height: 2.4rem;
+    display: flex;
+    align-items: center;
+    color: #e9da57;
+    text-decoration: none;
+`;
+
 function Header() {
     const { isAuthenticated, logout } = useAuth();
 
@@ -50,10 +59,14 @@ function Header() {
                 />
             </NavLink>
             <SearchBar />
-            {isAuthenticated && (
+            {isAuthenticated ? (
                 <StyledAuthButton type = "button" onClick = {handleLogout}>
                     Log out
                 </StyledAuthButton>
+            ) : (
+                <StyledAuthLink to = "/login">
+                    Log in
+                </StyledAuthLink>
             )}
         </StyledHeader>
     );
