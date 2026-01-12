@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { get } from '../api/api';
+import { get, post } from '../api/api';
+import { useAuth } from '../contexts/AuthContext';
 
 const StyledContainer = styled.section`
   width: 100rem;
@@ -23,10 +24,14 @@ const StyledError = styled.p`
 
 function MovieDetailPage() {
   const { id } = useParams();
+  const { user } = useAuth();
   const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [reviewBody, setReviewBody] = useState('');
+  const [reviewRating, setReviewRating] = useState('5');
+  const [reviewError, setReviewError] = useState(null);
 
   useEffect(() => {
     if (!id) {
@@ -93,6 +98,71 @@ function MovieDetailPage() {
               </li>
             ))}
           </ul>
+        </>
+      )}
+      {!loading && (
+        <>
+          <h3>Write a review</h3>
+          {!user && <p>Please log in to submit a review.</p>}
+          {reviewError && <StyledError>{reviewError}</StyledError>}
+          <form
+            onSubmit={async (event) => {
+              event.preventDefault();
+              if (!user?.id) {
+                setReviewError('You must be logged in.');
+                return;
+              }
+
+              setReviewError(null);
+              try {
+                await post('/api/reviews', {
+                  tmdbId: Number(id),
+                  userId: user.id,
+                  rating: Number(reviewRating),
+                  body: reviewBody,
+                  status: 'published',
+                });
+
+                const updated = await get(`/api/reviews/${id}`);
+                setReviews(updated || []);
+                setReviewBody('');
+                setReviewRating('5');
+              } catch (err) {
+                setReviewError(err?.message || 'Unable to submit review.');
+              }
+            }}
+          >
+            <label>
+              Rating
+              <select
+                value={reviewRating}
+                onChange={(event) => setReviewRating(event.target.value)}
+                disabled={!user}
+              >
+                <option value="0.5">0.5</option>
+                <option value="1">1</option>
+                <option value="1.5">1.5</option>
+                <option value="2">2</option>
+                <option value="2.5">2.5</option>
+                <option value="3">3</option>
+                <option value="3.5">3.5</option>
+                <option value="4">4</option>
+                <option value="4.5">4.5</option>
+                <option value="5">5</option>
+              </select>
+            </label>
+            <label>
+              Review
+              <textarea
+                value={reviewBody}
+                onChange={(event) => setReviewBody(event.target.value)}
+                disabled={!user}
+              />
+            </label>
+            <button type="submit" disabled={!user}>
+              Submit review
+            </button>
+          </form>
         </>
       )}
     </StyledContainer>
