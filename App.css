@@ -1,5 +1,5 @@
 /* Import the Google Sans font */
-@import url("https://fonts.googleapis.com/css2?family=Gayathri:wght@100;400;700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Gayathri:wght@100;400;700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
 
 #root {
   /* Container Dimensions */
@@ -15,7 +15,7 @@
   flex-wrap: wrap;
 
   /* Font style */
-  font-family: "Google Sans", sans-serif;
+  font-family: 'Google Sans', sans-serif;
 }
 
 body {

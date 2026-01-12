@@ -1,14 +1,14 @@
 // Import Packages
-import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 // Import the Search Bar component
-import SearchBar from "../components/SearchBar";
-import { get } from "../api/api";
+import SearchBar from '../components/SearchBar';
+import { get } from '../api/api';
 
 // Import image assets
-import banner from "../assets/cine_critic_logo.png";
+import banner from '../assets/cine_critic_logo.png';
 
 // Styled components
 // Align the home logo container to centre the image
@@ -70,8 +70,8 @@ function HomePage() {
 
       try {
         const [trendingData, topRatedData] = await Promise.all([
-          get("/api/movies/trending"),
-          get("/api/movies/top-rated"),
+          get('/api/movies/trending'),
+          get('/api/movies/top-rated'),
         ]);
         if (isMounted) {
           setTrending(trendingData || []);
@@ -79,7 +79,7 @@ function HomePage() {
         }
       } catch (err) {
         if (isMounted) {
-          setError(err?.error || "Unable to load trending movies.");
+          setError(err?.error || 'Unable to load trending movies.');
         }
       }
     };
@@ -94,19 +94,11 @@ function HomePage() {
   return (
     <>
       <StyledBannerContainer>
-        <StyledHomeLogo
-          src={banner}
-          className="home_logo"
-          alt="CineCritic Banner"
-        />
+        <StyledHomeLogo src={banner} className="home_logo" alt="CineCritic Banner" />
       </StyledBannerContainer>
       <SearchBar />
-      <StyledAdvancedSearchLink to="/advancedSearch">
-        Advanced Search
-      </StyledAdvancedSearchLink>
-      <StyledRandomRecommendations>
-        Random Recommendations
-      </StyledRandomRecommendations>
+      <StyledAdvancedSearchLink to="/advancedSearch">Advanced Search</StyledAdvancedSearchLink>
+      <StyledRandomRecommendations>Random Recommendations</StyledRandomRecommendations>
       {error && <StyledError>{error}</StyledError>}
       <StyledTrendingList>
         {trending.map((movie) => (

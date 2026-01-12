@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import { get } from "../api/api";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { get } from '../api/api';
 
 const StyledContainer = styled.section`
   width: 100rem;
@@ -52,7 +52,7 @@ function MovieDetailPage() {
         }
       } catch (err) {
         if (isMounted) {
-          setError(err?.error || "Unable to load movie details.");
+          setError(err?.error || 'Unable to load movie details.');
         }
       } finally {
         if (isMounted) {
@@ -75,15 +75,9 @@ function MovieDetailPage() {
       {!loading && movie && (
         <>
           <StyledTitle>{movie.title || movie.name}</StyledTitle>
-          {movie.release_date && (
-            <StyledMeta>Released {movie.release_date}</StyledMeta>
-          )}
-          {movie.runtime && (
-            <StyledMeta>Runtime {movie.runtime} minutes</StyledMeta>
-          )}
-          {movie.vote_average && (
-            <StyledMeta>Rating {movie.vote_average}</StyledMeta>
-          )}
+          {movie.release_date && <StyledMeta>Released {movie.release_date}</StyledMeta>}
+          {movie.runtime && <StyledMeta>Runtime {movie.runtime} minutes</StyledMeta>}
+          {movie.vote_average && <StyledMeta>Rating {movie.vote_average}</StyledMeta>}
           {movie.overview && <p>{movie.overview}</p>}
         </>
       )}
@@ -94,9 +88,7 @@ function MovieDetailPage() {
             {reviews.map((review) => (
               <li key={review.id || review._id}>
                 <p>{review.content || review.text}</p>
-                {review.rating && (
-                  <StyledMeta>Rating {review.rating}</StyledMeta>
-                )}
+                {review.rating && <StyledMeta>Rating {review.rating}</StyledMeta>}
                 {review.author && <StyledMeta>By {review.author}</StyledMeta>}
               </li>
             ))}

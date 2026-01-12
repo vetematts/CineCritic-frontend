@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { signupRequest } from "../api/auth";
-import { loginRequest } from "../api/auth";
-import { useAuth } from "../contexts/AuthContext";
+import { useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { signupRequest } from '../api/auth';
+import { loginRequest } from '../api/auth';
+import { useAuth } from '../contexts/AuthContext';
 
 const StyledForm = styled.form`
   display: flex;
@@ -24,30 +24,30 @@ const StyledError = styled.p`
 
 export default function SignupForm() {
   const { login, isAuthenticated } = useAuth();
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   if (isAuthenticated) return <Navigate to="/" />;
 
   const handleSignupSubmit = async (event) => {
     event.preventDefault();
-    setMessage("");
+    setMessage('');
 
     try {
       await signupRequest({ username, email, password });
 
       const data = await loginRequest({ email, password });
       if (!data?.token) {
-        throw new Error("Invalid login response");
+        throw new Error('Invalid login response');
       }
 
       login({ token: data.token });
-      navigate("/");
+      navigate('/');
     } catch (error) {
-      setMessage(error?.error || error?.message || "Signup failed");
+      setMessage(error?.error || error?.message || 'Signup failed');
     }
   };
 

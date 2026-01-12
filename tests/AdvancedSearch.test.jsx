@@ -1,9 +1,9 @@
 // Import the methods used for unit testing
-import { expect, test } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { expect, test } from 'vitest';
+import { render, screen } from '@testing-library/react';
 
 // Import the Advanced Search Page to test
-import AdvancedSearchPage from "../src/pages/AdvancedSearchPage";
+import AdvancedSearchPage from '../src/pages/AdvancedSearchPage';
 
 // // Test Case 1: Initialisation of the Advanced Search Page
 // test("Test Case 1: Initialisation of the Advanced Search Page | " +
@@ -19,7 +19,7 @@ import AdvancedSearchPage from "../src/pages/AdvancedSearchPage";
 // )
 
 // Test Case 2: Check the labels are rendered
-test("Test Case 2: Check labels are correctly rendered", () => {
+test('Test Case 2: Check labels are correctly rendered', () => {
   // Arrange
   render(<AdvancedSearchPage />);
 
@@ -38,25 +38,21 @@ test("Test Case 2: Check labels are correctly rendered", () => {
 });
 
 // Test Case 3: Check the placeholder text in the input fields
-test("Test Case 3: Check correct placeholder text in inputs", () => {
+test('Test Case 3: Check correct placeholder text in inputs', () => {
   // Arrange
   render(<AdvancedSearchPage />);
 
   // Act: None
   // Assert: Correct placeholder text in the input fields
-  const titlePlaceholder = screen.getByPlaceholderText(
-    /Any word in the name of the movie/i,
-  );
+  const titlePlaceholder = screen.getByPlaceholderText(/Any word in the name of the movie/i);
   const releaseYearPlaceholder = screen.getByPlaceholderText(
-    /Any number when the movie was released/i,
+    /Any number when the movie was released/i
   );
   const filmCrewPlaceholder = screen.getByPlaceholderText(
-    /Any word in the name of any film crew members/i,
+    /Any word in the name of any film crew members/i
   );
   const ratingDropDownPlaceholder = screen.getByDisplayValue(/Equal to/i);
-  const ratingPlaceholder = screen.getByPlaceholderText(
-    /Any number between 0 and 5/i,
-  );
+  const ratingPlaceholder = screen.getByPlaceholderText(/Any number between 0 and 5/i);
   const genresPlaceholder = screen.getByPlaceholderText(/Enter any genre/i);
   expect(titlePlaceholder).toBeInTheDocument();
   expect(releaseYearPlaceholder).toBeInTheDocument();

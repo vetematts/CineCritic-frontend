@@ -1,7 +1,7 @@
 // Import packges
-import { useState } from "react";
-import styled from "styled-components";
-import { get } from "../api/api";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { get } from '../api/api';
 
 // Styled components
 // Give all the labels the same gold colouring as headings
@@ -70,12 +70,12 @@ const StyledSubmitButton = styled.button`
 `;
 
 function AdvancedSearchPage() {
-  const [title, setTitle] = useState("");
-  const [releaseYear, setReleaseYear] = useState("");
-  const [crew, setCrew] = useState("");
-  const [ratingComparator, setRatingComparator] = useState("EQUAL_TO");
-  const [rating, setRating] = useState("");
-  const [genres, setGenres] = useState("");
+  const [title, setTitle] = useState('');
+  const [releaseYear, setReleaseYear] = useState('');
+  const [crew, setCrew] = useState('');
+  const [ratingComparator, setRatingComparator] = useState('EQUAL_TO');
+  const [rating, setRating] = useState('');
+  const [genres, setGenres] = useState('');
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -115,15 +115,9 @@ function AdvancedSearchPage() {
     let ratingMax;
 
     if (trimmedRating) {
-      if (
-        ratingComparator === "LESS_THAN" ||
-        ratingComparator === "LESS_OR_EQUAL"
-      ) {
+      if (ratingComparator === 'LESS_THAN' || ratingComparator === 'LESS_OR_EQUAL') {
         ratingMax = trimmedRating;
-      } else if (
-        ratingComparator === "GREATER_THAN" ||
-        ratingComparator === "GREATER_OR_EQUAL"
-      ) {
+      } else if (ratingComparator === 'GREATER_THAN' || ratingComparator === 'GREATER_OR_EQUAL') {
         ratingMin = trimmedRating;
       } else {
         ratingMin = trimmedRating;
@@ -132,7 +126,7 @@ function AdvancedSearchPage() {
     }
 
     try {
-      const data = await get("/api/movies/advanced", {
+      const data = await get('/api/movies/advanced', {
         params: {
           query: title,
           year: releaseYear,
@@ -146,7 +140,7 @@ function AdvancedSearchPage() {
 
       setResults(data || []);
     } catch (err) {
-      setError(err?.error || "Unable to load results.");
+      setError(err?.error || 'Unable to load results.');
     } finally {
       setLoading(false);
     }
@@ -174,10 +168,7 @@ function AdvancedSearchPage() {
       />
       <StyledLabels>Rating</StyledLabels>
       <StyledRatingInput>
-        <StyledDropDown
-          value={ratingComparator}
-          onChange={handleRatingDropDown}
-        >
+        <StyledDropDown value={ratingComparator} onChange={handleRatingDropDown}>
           {/* HTML entity codes: &lt is < and &gt is > */}
           <option value="LESS_THAN">Less than</option>
           <option value="LESS_OR_EQUAL">Less or equal to</option>
@@ -192,14 +183,8 @@ function AdvancedSearchPage() {
         />
       </StyledRatingInput>
       <StyledLabels>Genres</StyledLabels>
-      <StyledInputs
-        value={genres}
-        onChange={handleGenres}
-        placeholder="Enter any genre"
-      />
-      <StyledSubmitButton type="submit">
-        Search with these options
-      </StyledSubmitButton>
+      <StyledInputs value={genres} onChange={handleGenres} placeholder="Enter any genre" />
+      <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {results.length > 0 && (

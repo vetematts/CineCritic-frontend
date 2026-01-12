@@ -1,7 +1,7 @@
 // Import packages
-import { useState } from "react";
-import styled from "styled-components";
-import { get } from "../api/api";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { get } from '../api/api';
 
 // Styled components
 // Give the search bar a flat transparent rounded look
@@ -21,7 +21,7 @@ const StyledSearchBar = styled.input`
 
 // Search bar handles the processing of any queries submitted anywhere the component exists
 function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -39,12 +39,12 @@ function SearchBar() {
     setError(null);
 
     try {
-      const data = await get("/api/movies/search", {
+      const data = await get('/api/movies/search', {
         params: { q: trimmed },
       });
       setResults(data || []);
     } catch (err) {
-      setError(err?.error || "Unable to load search results.");
+      setError(err?.error || 'Unable to load search results.');
     } finally {
       setLoading(false);
     }

@@ -1,14 +1,14 @@
 // Import packages
 
 // Import other components
-import SearchBar from "./SearchBar";
-import { useAuth } from "../contexts/AuthContext";
-import { logoutRequest } from "../api/auth";
+import SearchBar from './SearchBar';
+import { useAuth } from '../contexts/AuthContext';
+import { logoutRequest } from '../api/auth';
 
 // Import image assets
-import logo from "../assets/cine_critic_logo_small.png";
-import styled from "styled-components";
-import { NavLink } from "react-router";
+import logo from '../assets/cine_critic_logo_small.png';
+import styled from 'styled-components';
+import { NavLink } from 'react-router';
 
 // Styled parts
 // Create a responsive header that doesn't wrap and maintains its shape

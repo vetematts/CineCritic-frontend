@@ -1,5 +1,5 @@
-import { NavLink } from "react-router";
-import styled from "styled-components";
+import { NavLink } from 'react-router';
+import styled from 'styled-components';
 
 // Create space between the main component and the footer
 const StyledFooter = styled.footer`
@@ -74,9 +74,7 @@ function Footer() {
           <StyledFooterHeadings>Films</StyledFooterHeadings>
           <StyledList>
             <StyledFooterLinkList>
-              <StyledFooterLinks to="/advancedSearch">
-                Advanced Search
-              </StyledFooterLinks>
+              <StyledFooterLinks to="/advancedSearch">Advanced Search</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
               <StyledFooterLinks>All Films</StyledFooterLinks>
@@ -114,17 +112,15 @@ function Footer() {
       </StyledFooterContainer>
       <StyledFooterTextContainer id="footer-description">
         <StyledFooterText>
-          Cinecritic is an unofficial film reviewing website where users can
-          share their watchlists and film recommendations.
+          Cinecritic is an unofficial film reviewing website where users can share their watchlists
+          and film recommendations.
         </StyledFooterText>
         <StyledFooterText>
-          Any images or text taken from the films are not a product of
-          Cinecritic and are the copyrighted products of their producers. We
-          respect the owners
+          Any images or text taken from the films are not a product of Cinecritic and are the
+          copyrighted products of their producers. We respect the owners
         </StyledFooterText>
         <StyledFooterText>
-          This site was designed for academic purposes and to share our
-          enthusiasm for films.
+          This site was designed for academic purposes and to share our enthusiasm for films.
         </StyledFooterText>
       </StyledFooterTextContainer>
     </StyledFooter>
