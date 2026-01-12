@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { get, post } from '../api/api';
+import { get, post, put } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
 
 const StyledContainer = styled.section`
@@ -32,6 +32,9 @@ function MovieDetailPage() {
   const [reviewBody, setReviewBody] = useState('');
   const [reviewRating, setReviewRating] = useState('5');
   const [reviewError, setReviewError] = useState(null);
+  const [editingReviewId, setEditingReviewId] = useState(null);
+  const [editingBody, setEditingBody] = useState('');
+  const [editingRating, setEditingRating] = useState('5');
 
   useEffect(() => {
     if (!id) {
@@ -95,6 +98,70 @@ function MovieDetailPage() {
                 <p>{review.content || review.text}</p>
                 {review.rating && <StyledMeta>Rating {review.rating}</StyledMeta>}
                 {review.author && <StyledMeta>By {review.author}</StyledMeta>}
+                {user?.id &&
+                  (review.userId === user.id || review.user?.id === user.id) &&
+                  editingReviewId !== (review.id || review._id) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingReviewId(review.id || review._id);
+                        setEditingBody(review.content || review.text || '');
+                        setEditingRating(String(review.rating || '5'));
+                      }}
+                    >
+                      Edit
+                    </button>
+                  )}
+                {editingReviewId === (review.id || review._id) && (
+                  <form
+                    onSubmit={async (event) => {
+                      event.preventDefault();
+                      setReviewError(null);
+                      try {
+                        await put(`/api/reviews/${editingReviewId}`, {
+                          rating: Number(editingRating),
+                          body: editingBody,
+                        });
+
+                        const updated = await get(`/api/reviews/${id}`);
+                        setReviews(updated || []);
+                        setEditingReviewId(null);
+                      } catch (err) {
+                        setReviewError(err?.message || 'Unable to update review.');
+                      }
+                    }}
+                  >
+                    <label>
+                      Rating
+                      <select
+                        value={editingRating}
+                        onChange={(event) => setEditingRating(event.target.value)}
+                      >
+                        <option value="0.5">0.5</option>
+                        <option value="1">1</option>
+                        <option value="1.5">1.5</option>
+                        <option value="2">2</option>
+                        <option value="2.5">2.5</option>
+                        <option value="3">3</option>
+                        <option value="3.5">3.5</option>
+                        <option value="4">4</option>
+                        <option value="4.5">4.5</option>
+                        <option value="5">5</option>
+                      </select>
+                    </label>
+                    <label>
+                      Review
+                      <textarea
+                        value={editingBody}
+                        onChange={(event) => setEditingBody(event.target.value)}
+                      />
+                    </label>
+                    <button type="submit">Save</button>
+                    <button type="button" onClick={() => setEditingReviewId(null)}>
+                      Cancel
+                    </button>
+                  </form>
+                )}
               </li>
             ))}
           </ul>
