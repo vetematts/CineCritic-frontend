@@ -2,6 +2,8 @@
 
 // Import other components
 import SearchBar from "./SearchBar";
+import { useAuth } from "../contexts/AuthContext";
+import { logoutRequest } from "../api/auth";
 
 // Import image assets
 import logo from "../assets/cine_critic_logo_small.png";
@@ -22,7 +24,23 @@ const StyledLogo = styled.img`
     justify-content: flex-start;
 `;
 
+const StyledAuthButton = styled.button`
+    margin-left: auto;
+    height: 2.4rem;
+`;
+
 function Header() {
+    const { isAuthenticated, logout } = useAuth();
+
+    const handleLogout = async () => {
+        try {
+            await logoutRequest();
+        } catch {
+            // Ignore network failures; local logout still proceeds.
+        }
+        logout();
+    };
+
     return (
         <StyledHeader>
             <NavLink to = "/">
@@ -32,6 +50,11 @@ function Header() {
                 />
             </NavLink>
             <SearchBar />
+            {isAuthenticated && (
+                <StyledAuthButton type = "button" onClick = {handleLogout}>
+                    Log out
+                </StyledAuthButton>
+            )}
         </StyledHeader>
     );
 }

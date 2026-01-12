@@ -10,3 +10,6 @@ export const loginRequest = async ({ email, username, password }) => {
 
   return response;
 };
+
+// Logout helper for the users logout endpoint.
+export const logoutRequest = async () => post("/api/users/logout");
