@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { get, post, put } from '../api/api';
+import { get, post, put, del } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
 
 const StyledContainer = styled.section`
@@ -101,16 +101,33 @@ function MovieDetailPage() {
                 {user?.id &&
                   (review.userId === user.id || review.user?.id === user.id) &&
                   editingReviewId !== (review.id || review._id) && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEditingReviewId(review.id || review._id);
-                        setEditingBody(review.content || review.text || '');
-                        setEditingRating(String(review.rating || '5'));
-                      }}
-                    >
-                      Edit
-                    </button>
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingReviewId(review.id || review._id);
+                          setEditingBody(review.content || review.text || '');
+                          setEditingRating(String(review.rating || '5'));
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          setReviewError(null);
+                          try {
+                            await del(`/api/reviews/${review.id || review._id}`);
+                            const updated = await get(`/api/reviews/${id}`);
+                            setReviews(updated || []);
+                          } catch (err) {
+                            setReviewError(err?.message || 'Unable to delete review.');
+                          }
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </>
                   )}
                 {editingReviewId === (review.id || review._id) && (
                   <form
