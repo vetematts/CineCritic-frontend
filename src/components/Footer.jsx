@@ -3,6 +3,10 @@ import styled from "styled-components";
 
 // Create space between the main component and the footer
 const StyledFooter = styled.footer`
+    // Same width as the header    
+    width: 80%;
+    
+    //Create distance between the footer and the main body
     margin: 15rem 0 0 0;
 `;
 
@@ -31,7 +35,6 @@ const StyledFooterColumns = styled.div`
 
 // Create some distance away from the description and the footer links
 const StyledFooterTextContainer = styled.div`
-    flex: 1;
     margin: 5rem 0 0 0;
 `;
 
