@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from 'react';
 import { get } from '../api/api';
+import { getJwtPayload } from '../utils/jwt';
 
 const defaultState = {
   token: null,
@@ -19,9 +20,11 @@ export const AuthProvider = ({ children }) => {
       return defaultState;
     }
 
+    const payload = getJwtPayload(saved);
+
     return {
       token: saved,
-      user: null,
+      user: payload,
       isAuthenticated: true,
     };
   });
