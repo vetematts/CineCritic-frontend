@@ -26,7 +26,9 @@ const renderSignup = () =>
   );
 
 beforeEach(() => {
-  localStorage.clear();
+  if (globalThis.localStorage?.clear) {
+    globalThis.localStorage.clear();
+  }
   loginRequest.mockReset();
   signupRequest.mockReset();
   get.mockReset();
