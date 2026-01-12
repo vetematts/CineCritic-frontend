@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
 
     let isMounted = true;
 
+    // Restore the user profile from /me when a token is present.
     const restoreSession = async () => {
       try {
         const user = await get('/api/users/me');
