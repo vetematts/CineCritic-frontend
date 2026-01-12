@@ -58,18 +58,22 @@ const request = async (path, options = {}) => {
     const data = await parseJson(response);
 
     if (!response.ok) {
-      const error = data?.error || response.statusText || 'Request failed';
+      const message = data?.error || response.statusText || 'Request failed';
       const code = data?.code || response.status;
-      throw { error, code };
+      const err = new Error(message);
+      err.code = code;
+      throw err;
     }
 
     return data;
   } catch (err) {
-    if (err?.error) {
+    if (err instanceof Error) {
       throw err;
     }
 
-    throw { error: 'Network error', code: 'network_error' };
+    const networkError = new Error('Network error');
+    networkError.code = 'network_error';
+    throw networkError;
   }
 };
 
