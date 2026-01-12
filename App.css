@@ -12,6 +12,7 @@
   /* Alignment for the children inside the container */
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   flex-wrap: wrap;
 
   /* Font style */

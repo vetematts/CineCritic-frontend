@@ -4,6 +4,11 @@ import styled from 'styled-components';
 import { get } from '../api/api';
 
 // Styled components
+const StyledForm = styled.form`
+  display: flex;
+  flex: 1;
+`;
+
 // Give the search bar a flat transparent rounded look
 const StyledSearchBar = styled.input`
   /* Flat colour with transparency */
@@ -15,7 +20,8 @@ const StyledSearchBar = styled.input`
   border: 1px solid #ccc; /* Optional: Add a border for visibility */
   padding: 5px; /* Optional: Add padding so text doesn't touch the edges */
 
-  width: 80rem;
+  min-width: 5rem;
+  flex-basis: 80rem;
   color: #ffffff;
 `;
 
@@ -55,7 +61,7 @@ function SearchBar() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <StyledForm onSubmit={handleSubmit}>
       <label>
         <StyledSearchBar
           type="text"
@@ -74,7 +80,7 @@ function SearchBar() {
           ))}
         </ul>
       )}
-    </form>
+    </StyledForm>
   );
 }
 

@@ -11,29 +11,61 @@ import { get } from '../api/api';
 import banner from '../assets/cine_critic_logo.png';
 
 // Styled components
+const StyledHomeContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const StyledHomeRow = styled.div`
+    display: flex;    
+    flex: 1;
+
+    &#home-search-bar {
+        align-items: center;
+    }
+
+    &#home-advanced-search {
+        // Align the contents of the container under and 
+        // at the end of the search bar
+        justify-content: flex-end;
+    }
+
+    &#home-random-recommendations{
+        align-items: flex-start;
+    }
+`;
+
 // Align the home logo container to centre the image
-const StyledBannerContainer = styled.figure`
-  align-items: center;
-  justify-content: center;
+const StyledFigure = styled.figure`
+    // Figure is the flex container for the image
+    display: flex;    
+    flex: 1;
+    align-items: center;
+    justify-content: center;
 `;
 
 // Re-size the logo to be roughly 1/3rd to 1/4th of the screen
 const StyledHomeLogo = styled.img`
-  height: 20rem;
-  padding: 1.5em;
+    // This takes shape according to the parent, the figure 
+    // container
+    flex: 1;
+    width: 40%;
+
+    // Provide a bit of space between the logo and the search
+    // bar
+    padding: 0 0 2rem 0;
 `;
 
 // Style the advanced search link under the search bar
 const StyledAdvancedSearchLink = styled(NavLink)`
-  /* Same gold-ish colour scheme as headings */
-  color: #e9da57;
-  text-decoration: none;
+    // Same gold-ish colour scheme as headings
+    color: #e9da57;
+    text-decoration: none;
 
-  /* Align the contents of the container under and at the end of the search bar */
-  display: flex;
-  justify-content: flex-end;
-  padding: 1rem 0 0 2rem;
-  width: 80rem;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 0 0 2rem;
+    max-width: 80rem;
 `;
 
 const StyledRandomRecommendations = styled.h3`
@@ -93,29 +125,39 @@ function HomePage() {
 
   return (
     <>
-      <StyledBannerContainer>
-        <StyledHomeLogo src={banner} className="home_logo" alt="CineCritic Banner" />
-      </StyledBannerContainer>
-      <SearchBar />
-      <StyledAdvancedSearchLink to="/advancedSearch">Advanced Search</StyledAdvancedSearchLink>
-      <StyledRandomRecommendations>Random Recommendations</StyledRandomRecommendations>
-      {error && <StyledError>{error}</StyledError>}
-      <StyledTrendingList>
-        {trending.map((movie) => (
-          <StyledTrendingItem key={movie.id || movie.tmdbId}>
-            {movie.title || movie.name}
-          </StyledTrendingItem>
-        ))}
-      </StyledTrendingList>
-      <StyledRandomRecommendations>Top Rated</StyledRandomRecommendations>
-      <StyledTrendingList>
-        {topRated.map((movie) => (
-          <StyledTrendingItem key={movie.id || movie.tmdbId}>
-            {movie.title || movie.name}
-          </StyledTrendingItem>
-        ))}
-      </StyledTrendingList>
-      {/* Insert Recommendations Carousel */}
+      <StyledHomeContainer className="flex-container">
+        <StyledFigure id="banner-container">
+          <StyledHomeLogo src={banner} className="home_logo" alt="CineCritic Banner" />
+        </StyledFigure>
+        <StyledHomeRow id="home-search-bar">
+          <SearchBar />
+        </StyledHomeRow>
+        <StyledHomeRow id="home-advanced-search">
+          <StyledAdvancedSearchLink to="/advancedSearch">
+            Advanced Search
+          </StyledAdvancedSearchLink>
+        </StyledHomeRow>
+        <StyledHomeRow id="home-random-recommendations">
+          <StyledRandomRecommendations>Random Recommendations</StyledRandomRecommendations>
+        </StyledHomeRow>
+        {error && <StyledError>{error}</StyledError>}
+        <StyledTrendingList>
+          {trending.map((movie) => (
+            <StyledTrendingItem key={movie.id || movie.tmdbId}>
+              {movie.title || movie.name}
+            </StyledTrendingItem>
+          ))}
+        </StyledTrendingList>
+        <StyledRandomRecommendations>Top Rated</StyledRandomRecommendations>
+        <StyledTrendingList>
+          {topRated.map((movie) => (
+            <StyledTrendingItem key={movie.id || movie.tmdbId}>
+              {movie.title || movie.name}
+            </StyledTrendingItem>
+          ))}
+        </StyledTrendingList>
+        {/* Insert Recommendations Carousel */}
+      </StyledHomeContainer>
     </>
   );
 }

@@ -3,6 +3,10 @@ import styled from 'styled-components';
 
 // Create space between the main component and the footer
 const StyledFooter = styled.footer`
+  /* Same width as the header */
+  width: 76%;
+
+  /* Create distance between the footer and the main body */
   margin: 15rem 0 0 0;
 `;
 

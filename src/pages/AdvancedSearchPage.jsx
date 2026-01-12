@@ -4,6 +4,31 @@ import styled from 'styled-components';
 import { get } from '../api/api';
 
 // Styled components
+// This is the flex container for all the inputs
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  /* Set the form to be 100% of the main's width */
+  width: 100%;
+`;
+
+const StyledSearchRows = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  /* Allow the columns to shrink and grow depending on the screen size */
+  flex: 1;
+
+  /* Space the columns so they are now 1 column per row in mobile resolution */
+  width: 80%;
+  margin: 1rem;
+`;
+
 // Give all the labels the same gold colouring as headings
 const StyledLabels = styled.label`
   /* Same golden font as the headings */
@@ -11,7 +36,7 @@ const StyledLabels = styled.label`
 
   /* Response design */
   display: flex;
-  justify-content: flex-start;
+  align-items: flex-start;
 
   /* Spacing between itself and its input */
   padding: 2px;
@@ -31,9 +56,7 @@ const StyledInputs = styled.input`
   /* Set responsive design */
   display: flex;
   flex: 1; /* Shrink and grow in proportion to window size */
-  justify-content: flex-start;
-  flex-basis: 60rem; /* Ideal width if space permits */
-  width: 60rem; /* This is the ideal width */
+  flex-basis: 100%; /* Input will take up an entire row */
 
   /* Space away from other items */
   margin: 5px 0 20px 0;
@@ -43,10 +66,9 @@ const StyledInputs = styled.input`
 const StyledDropDown = styled.select`
   /* Make the drop down responsive */
   display: flex;
-  flex: 0;
+  flex: 1;
   justify-content: flex-start;
   align-items: flex-start;
-  height: auto;
 
   /* Space away from other items */
   margin: 5px 5px 20px 0;
@@ -57,11 +79,19 @@ const StyledRatingInput = styled.div`
   /* Set responsive design */
   display: flex;
   justify-content: flex-start;
-  width: 61rem;
+  flex: 1;
+  flex-basis: 100%;
+  flex-wrap: nowrap;
+
+  /* This container is 80% of the main's width */
+  width: 80%;
 `;
 
 // Space the submit button further away from the last query input
 const StyledSubmitButton = styled.button`
+  /* Make the button appear left for left reading */
+  align-self: flex-start;
+
   /* Roughly 50px distance between this and the Genres input field */
   margin: 4rem 0 0 0;
 
@@ -147,44 +177,56 @@ function AdvancedSearchPage() {
   };
 
   return (
-    <form onSubmit={handleSubmitSearch}>
-      <StyledLabels>Movie Title</StyledLabels>
-      <StyledInputs
-        value={title}
-        onChange={handleTitle}
-        placeholder="Any word in the name of the movie"
-      />
-      <StyledLabels>Release Year</StyledLabels>
-      <StyledInputs
-        value={releaseYear}
-        onChange={handleReleaseYear}
-        placeholder="Any number when the movie was released"
-      />
-      <StyledLabels>Film Crew</StyledLabels>
-      <StyledInputs
-        value={crew}
-        onChange={handleFilmCrew}
-        placeholder="Any word in the name of any film crew members"
-      />
-      <StyledLabels>Rating</StyledLabels>
-      <StyledRatingInput>
-        <StyledDropDown value={ratingComparator} onChange={handleRatingDropDown}>
-          {/* HTML entity codes: &lt is < and &gt is > */}
-          <option value="LESS_THAN">Less than</option>
-          <option value="LESS_OR_EQUAL">Less or equal to</option>
-          <option value="EQUAL_TO">Equal to</option>
-          <option value="GREATER_THAN">Greater than</option>
-          <option value="GREATER_OR_EQUAL">Greater or equal to</option>
-        </StyledDropDown>
+    <StyledForm onSubmit={handleSubmitSearch}>
+      <StyledSearchRows>
+        <StyledLabels>Movie Title</StyledLabels>
         <StyledInputs
-          value={rating}
-          onChange={handleRating}
-          placeholder="Any number between 0 and 5"
+          value={title}
+          onChange={handleTitle}
+          placeholder="Any word in the name of the movie"
         />
-      </StyledRatingInput>
-      <StyledLabels>Genres</StyledLabels>
-      <StyledInputs value={genres} onChange={handleGenres} placeholder="Enter any genre" />
-      <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
+      </StyledSearchRows>
+      <StyledSearchRows>
+        <StyledLabels>Release Year</StyledLabels>
+        <StyledInputs
+          value={releaseYear}
+          onChange={handleReleaseYear}
+          placeholder="Any number when the movie was released"
+        />
+      </StyledSearchRows>
+      <StyledSearchRows>
+        <StyledLabels>Film Crew</StyledLabels>
+        <StyledInputs
+          value={crew}
+          onChange={handleFilmCrew}
+          placeholder="Any word in the name of any film crew members"
+        />
+      </StyledSearchRows>
+      <StyledSearchRows>
+        <StyledLabels>Rating</StyledLabels>
+        <StyledRatingInput>
+          <StyledDropDown value={ratingComparator} onChange={handleRatingDropDown}>
+            {/* HTML entity codes: &lt is < and &gt is > */}
+            <option value="LESS_THAN">Less than</option>
+            <option value="LESS_OR_EQUAL">Less or equal to</option>
+            <option value="EQUAL_TO">Equal to</option>
+            <option value="GREATER_THAN">Greater than</option>
+            <option value="GREATER_OR_EQUAL">Greater or equal to</option>
+          </StyledDropDown>
+          <StyledInputs
+            value={rating}
+            onChange={handleRating}
+            placeholder="Any number between 0 and 5"
+          />
+        </StyledRatingInput>
+      </StyledSearchRows>
+      <StyledSearchRows>
+        <StyledLabels>Genres</StyledLabels>
+        <StyledInputs value={genres} onChange={handleGenres} placeholder="Enter any genre" />
+      </StyledSearchRows>
+      <StyledSearchRows>
+        <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
+      </StyledSearchRows>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {results.length > 0 && (
@@ -194,7 +236,7 @@ function AdvancedSearchPage() {
           ))}
         </ul>
       )}
-    </form>
+    </StyledForm>
   );
 }
 
