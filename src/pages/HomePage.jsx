@@ -14,6 +14,7 @@ import banner from '../assets/cine_critic_logo.png';
 const StyledHomeContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 76%;
 `;
 
 const StyledHomeRow = styled.div`
@@ -49,7 +50,8 @@ const StyledHomeLogo = styled.img`
   // This takes shape according to the parent, the figure
   // container
   flex: 1;
-  width: 40%;
+  width: 100%;
+  max-width: min(40vw, 420px);
 
   // Provide a bit of space between the logo and the search
   // bar
@@ -65,12 +67,12 @@ const StyledAdvancedSearchLink = styled(NavLink)`
   display: flex;
   justify-content: flex-end;
   padding: 1rem 0 0 2rem;
-  max-width: 80rem;
+  max-width: 100%;
 `;
 
 const StyledRandomRecommendations = styled.h3`
   align-items: flex-start;
-  width: 100rem;
+  max-width: 100%;
 `;
 
 const StyledTrendingList = styled.ul`
