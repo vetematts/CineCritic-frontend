@@ -1,70 +1,94 @@
 // Import packages
 
 // Import other components
-import SearchBar from "./SearchBar";
+import SearchBar from './SearchBar';
+import { useAuth } from '../contexts/AuthContext';
+import { logoutRequest } from '../api/auth';
 
 // Import image assets
-import logo from "../assets/cine_critic_logo_small.png";
-import styled from "styled-components";
-import { NavLink } from "react-router";
+import logo from '../assets/cine_critic_logo_small.png';
+import styled from 'styled-components';
+import { NavLink } from 'react-router';
 
 // Styled parts
 // Create a responsive header that doesn't wrap and maintains its shape
 // This is the flex container parent
 const StyledHeader = styled.header`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-evenly;
-    
-    // Give the header an actual width so the flex children
-    // have something to reference to
-    width: 76%; // This is taking 76% of the root containers width
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-evenly;
 
-    // Place a small gap between each item in the navbar
-    gap: 2rem;  
+  // Give the header an actual width so the flex children
+  // have something to reference to
+  width: 76%; // This is taking 76% of the root containers width
 
-    // Add space between the header and the main body
-    margin: 0 0 3rem 0;
+  // Place a small gap between each item in the navbar
+  gap: 2rem;
+
+  // Add space between the header and the main body
+  margin: 0 0 3rem 0;
 `;
 
 // These are the flex items within the flex container "Header"
 const StyledHeaderColumns = styled.div`
-    flex: 1;
-        
-    &#header-search-bar {
-        // Make this item fill up the rest of the container
-        flex-basis: 100%;
-    }
+  flex: 1;
+
+  &#header-search-bar {
+    // Make this item fill up the rest of the container
+    flex-basis: 100%;
+  }
 `;
 
 // Small icon that will grow and shrink with the rest of the header
-const StyledLogo = styled.img`
-    // display: flex;
-    // flex: 1 0 5%;
-    // flex: 1;    
+const StyledLogo = styled.img``;
+
+const StyledAuthButton = styled.button`
+  height: 2.4rem;
+`;
+
+const StyledAuthLink = styled(NavLink)`
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  color: #e9da57;
+  text-decoration: none;
 `;
 
 function Header() {
-    return (
-        <StyledHeader>
-            <StyledHeaderColumns id = "site-logo">
-                <NavLink to = "/">
-                    <StyledLogo 
-                        src = {logo} 
-                        alt = "CineCritic Logo"
-                    />
-                </NavLink>
-            </StyledHeaderColumns>
-            <StyledHeaderColumns id = "header-search-bar">
-                <SearchBar />
-            </StyledHeaderColumns>
-            <StyledHeaderColumns id = "user-menu">
-                {/* Add in the user profile/menu */}
-            </StyledHeaderColumns>
-        </StyledHeader>
-    );
+  const { isAuthenticated, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logoutRequest();
+    } catch {
+      // Ignore network failures; local logout still proceeds.
+    }
+    logout();
+  };
+
+  return (
+    <StyledHeader>
+      <StyledHeaderColumns id="site-logo">
+        <NavLink to="/">
+          <StyledLogo src={logo} alt="CineCritic Logo" />
+        </NavLink>
+      </StyledHeaderColumns>
+      <StyledHeaderColumns id="header-search-bar">
+        <SearchBar />
+      </StyledHeaderColumns>
+      <StyledHeaderColumns id="user-menu">
+        {isAuthenticated ? (
+          <StyledAuthButton type="button" onClick={handleLogout}>
+            Log out
+          </StyledAuthButton>
+        ) : (
+          <StyledAuthLink to="/login">Log in</StyledAuthLink>
+        )}
+      </StyledHeaderColumns>
+    </StyledHeader>
+  );
 }
 
 export default Header;

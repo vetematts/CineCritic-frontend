@@ -16,7 +16,7 @@
   flex-wrap: wrap;
 
   /* Font style */
-  font-family: "Google Sans", sans-serif;
+  font-family: 'Google Sans', sans-serif;
 }
 
 body {
@@ -24,6 +24,7 @@ body {
   background-color: #090f14;
 }
 
-h2, h3 {
+h2,
+h3 {
   color: #e9da57;
 }
