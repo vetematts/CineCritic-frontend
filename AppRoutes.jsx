@@ -7,6 +7,7 @@ import HomePage from "./src/pages/HomePage";
 import AdvancedSearchPage from "./src/pages/AdvancedSearchPage";
 import MovieDetailPage from "./src/pages/MovieDetailPage";
 import LoginPage from "./src/pages/LoginPage";
+import SignupPage from "./src/pages/SignupPage";
 
 // This component handles all the routing to the different pages
 function AppRoutes() {
@@ -19,6 +20,7 @@ function AppRoutes() {
                 <Route path = "/advancedSearch" element = {<AdvancedSearchPage />} />
                 <Route path = "/movies/:id" element = {<MovieDetailPage />} />
                 <Route path = "/login" element = {<LoginPage />} />
+                <Route path = "/signup" element = {<SignupPage />} />
             </Route>
         </Routes>
     )
