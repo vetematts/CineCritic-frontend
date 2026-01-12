@@ -2,7 +2,7 @@
 import { BrowserRouter } from 'react-router';
 
 // Import the routes to connect all the page interactions
-import AppRoutes from './AppRoutes';
+import AppRoutes from './src/router/AppRoutes';
 
 // Import the styling for the application
 import './App.css';
