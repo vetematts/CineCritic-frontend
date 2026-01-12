@@ -1,12 +1,12 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 // Read the JWT from localStorage (if it exists).
 const getToken = () => {
-  if (typeof localStorage === "undefined") {
+  if (typeof localStorage === 'undefined') {
     return null;
   }
 
-  return localStorage.getItem("token");
+  return localStorage.getItem('token');
 };
 
 // Build a full URL using the base API URL and optional query params.
@@ -16,7 +16,7 @@ const buildUrl = (path, params) => {
 
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== "") {
+      if (value !== undefined && value !== null && value !== '') {
         url.searchParams.set(key, value);
       }
     });
@@ -35,13 +35,13 @@ const parseJson = async (response) => {
 
 // Send a JSON request and normalise errors into { error, code }.
 const request = async (path, options = {}) => {
-  const { method = "GET", body, headers = {}, params } = options;
+  const { method = 'GET', body, headers = {}, params } = options;
   const url = buildUrl(path, params);
   const token = getToken();
   const requestHeaders = { ...headers };
 
   if (body !== undefined) {
-    requestHeaders["Content-Type"] = "application/json";
+    requestHeaders['Content-Type'] = 'application/json';
   }
 
   // Attach Authorisation header when a token is available.
@@ -58,27 +58,28 @@ const request = async (path, options = {}) => {
     const data = await parseJson(response);
 
     if (!response.ok) {
-      const error = data?.error || response.statusText || "Request failed";
+      const message = data?.error || response.statusText || 'Request failed';
       const code = data?.code || response.status;
-      throw { error, code };
+      const err = new Error(message);
+      err.code = code;
+      throw err;
     }
 
     return data;
   } catch (err) {
-    if (err?.error) {
+    if (err instanceof Error) {
       throw err;
     }
 
-    throw { error: "Network error", code: "network_error" };
+    const networkError = new Error('Network error');
+    networkError.code = 'network_error';
+    throw networkError;
   }
 };
 
-const get = (path, options) => request(path, { ...options, method: "GET" });
-const post = (path, body, options) =>
-  request(path, { ...options, method: "POST", body });
-const put = (path, body, options) =>
-  request(path, { ...options, method: "PUT", body });
-const del = (path, options) =>
-  request(path, { ...options, method: "DELETE" });
+const get = (path, options) => request(path, { ...options, method: 'GET' });
+const post = (path, body, options) => request(path, { ...options, method: 'POST', body });
+const put = (path, body, options) => request(path, { ...options, method: 'PUT', body });
+const del = (path, options) => request(path, { ...options, method: 'DELETE' });
 
 export { buildUrl, request, get, post, put, del };

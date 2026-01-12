@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from 'react';
 import { get } from '../api/api';
 
@@ -70,11 +71,7 @@ export const AuthProvider = ({ children }) => {
     setAuth(defaultState);
   };
 
-  return (
-    <AuthContext.Provider value={{ ...auth, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ ...auth, login, logout }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
