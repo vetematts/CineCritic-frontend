@@ -21,7 +21,7 @@ const renderLogin = () =>
       <AuthProvider>
         <LoginForm />
       </AuthProvider>
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 
 beforeEach(() => {

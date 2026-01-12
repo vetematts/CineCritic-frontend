@@ -78,7 +78,6 @@ const post = (path, body, options) =>
   request(path, { ...options, method: "POST", body });
 const put = (path, body, options) =>
   request(path, { ...options, method: "PUT", body });
-const del = (path, options) =>
-  request(path, { ...options, method: "DELETE" });
+const del = (path, options) => request(path, { ...options, method: "DELETE" });
 
 export { buildUrl, request, get, post, put, del };

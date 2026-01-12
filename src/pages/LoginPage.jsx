@@ -7,7 +7,7 @@ export default function LoginPage() {
       <h1>CineCritic</h1>
       <LoginForm />
       <p>
-        Don&apos;t have an account? <NavLink to = "/signup">Create one</NavLink>
+        Don&apos;t have an account? <NavLink to="/signup">Create one</NavLink>
       </p>
     </main>
   );

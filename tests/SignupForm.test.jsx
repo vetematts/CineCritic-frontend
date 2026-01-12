@@ -22,7 +22,7 @@ const renderSignup = () =>
       <AuthProvider>
         <SignupForm />
       </AuthProvider>
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 
 beforeEach(() => {
@@ -39,7 +39,7 @@ test("renders signup inputs and submit button", () => {
   expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
   expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
   expect(
-    screen.getByRole("button", { name: /create account/i })
+    screen.getByRole("button", { name: /create account/i }),
   ).toBeInTheDocument();
 });
 
@@ -53,7 +53,9 @@ test("submits signup details and logs in", async () => {
   await userEvent.type(screen.getByLabelText(/username/i), "newuser");
   await userEvent.type(screen.getByLabelText(/email/i), "new@example.com");
   await userEvent.type(screen.getByLabelText(/password/i), "secret123");
-  await userEvent.click(screen.getByRole("button", { name: /create account/i }));
+  await userEvent.click(
+    screen.getByRole("button", { name: /create account/i }),
+  );
 
   await waitFor(() => {
     expect(signupRequest).toHaveBeenCalledWith({
