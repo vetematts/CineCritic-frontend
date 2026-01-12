@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { get } from '../api/api';
 
 const defaultState = {
   token: null,
+  user: null,
   isAuthenticated: false,
 };
 
@@ -18,6 +20,7 @@ export const AuthProvider = ({ children }) => {
 
     return {
       token: saved,
+      user: null,
       isAuthenticated: true,
     };
   });
@@ -31,8 +34,35 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('token', auth.token);
   }, [auth]);
 
-  const login = ({ token }) => {
-    setAuth({ token, isAuthenticated: true });
+  useEffect(() => {
+    if (!auth.isAuthenticated || !auth.token) {
+      return;
+    }
+
+    let isMounted = true;
+
+    const restoreSession = async () => {
+      try {
+        const user = await get('/api/users/me');
+        if (isMounted) {
+          setAuth((prev) => ({ ...prev, user }));
+        }
+      } catch {
+        if (isMounted) {
+          setAuth(defaultState);
+        }
+      }
+    };
+
+    restoreSession();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [auth.isAuthenticated, auth.token]);
+
+  const login = ({ token, user = null }) => {
+    setAuth({ token, user, isAuthenticated: true });
   };
 
   const logout = () => {
