@@ -21,8 +21,25 @@ CineCritic is a full-stack web application that allows users to browse films and
 
 ## Setting up
 
-    npm install vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event --save-dev
+1) Install dependencies
 
-Notes:
-npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
-npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+   npm install
+
+2) Configure environment
+
+   Create a `.env` file using `.env.example` and set:
+   - `VITE_API_BASE_URL` (e.g. `http://localhost:4000`)
+
+3) Run the app
+
+   npm run dev
+
+## Scripts
+
+- `npm run dev` - start the development server
+- `npm run build` - build the production bundle
+- `npm run preview` - preview the production build
+- `npm run lint` - run ESLint
+- `npm run lint:fix` - fix lint issues
+- `npm run format` - format code with Prettier
+- `npm run test` - run Vitest
