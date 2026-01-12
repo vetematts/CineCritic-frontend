@@ -21,16 +21,16 @@ CineCritic is a full-stack web application that allows users to browse films and
 
 ## Setting up
 
-1) Install dependencies
+1. Install dependencies
 
    npm install
 
-2) Configure environment
+2. Configure environment
 
    Create a `.env` file using `.env.example` and set:
    - `VITE_API_BASE_URL` (e.g. `http://localhost:4000`)
 
-3) Run the app
+3. Run the app
 
    npm run dev
 
