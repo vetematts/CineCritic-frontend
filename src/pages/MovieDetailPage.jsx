@@ -25,6 +25,7 @@ const StyledError = styled.p`
 function MovieDetailPage() {
   const { id } = useParams();
   const { user } = useAuth();
+  const userId = user?.id ?? user?.sub ?? null;
   const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,6 +33,9 @@ function MovieDetailPage() {
   const [reviewBody, setReviewBody] = useState('');
   const [reviewRating, setReviewRating] = useState('5');
   const [reviewError, setReviewError] = useState(null);
+  const [watchlistStatus, setWatchlistStatus] = useState('planned');
+  const [watchlistEntry, setWatchlistEntry] = useState(null);
+  const [watchlistError, setWatchlistError] = useState(null);
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [editingBody, setEditingBody] = useState('');
   const [editingRating, setEditingRating] = useState('5');
@@ -187,12 +191,12 @@ function MovieDetailPage() {
       {!loading && (
         <>
           <h3>Write a review</h3>
-          {!user && <p>Please log in to submit a review.</p>}
+          {!userId && <p>Please log in to submit a review.</p>}
           {reviewError && <StyledError>{reviewError}</StyledError>}
           <form
             onSubmit={async (event) => {
               event.preventDefault();
-              if (!user?.id) {
+              if (!userId) {
                 setReviewError('You must be logged in.');
                 return;
               }
@@ -201,7 +205,7 @@ function MovieDetailPage() {
               try {
                 await post('/api/reviews', {
                   tmdbId: Number(id),
-                  userId: user.id,
+                  userId,
                   rating: Number(reviewRating),
                   body: reviewBody,
                   status: 'published',
@@ -221,7 +225,7 @@ function MovieDetailPage() {
               <select
                 value={reviewRating}
                 onChange={(event) => setReviewRating(event.target.value)}
-                disabled={!user}
+                disabled={!userId}
               >
                 <option value="0.5">0.5</option>
                 <option value="1">1</option>
@@ -240,13 +244,76 @@ function MovieDetailPage() {
               <textarea
                 value={reviewBody}
                 onChange={(event) => setReviewBody(event.target.value)}
-                disabled={!user}
+                disabled={!userId}
               />
             </label>
-            <button type="submit" disabled={!user}>
+            <button type="submit" disabled={!userId}>
               Submit review
             </button>
           </form>
+        </>
+      )}
+      {!loading && (
+        <>
+          <h3>Watchlist</h3>
+          {!userId && <p>Please log in to manage your watchlist.</p>}
+          {watchlistError && <StyledError>{watchlistError}</StyledError>}
+          <div>
+            <label>
+              Status
+              <select
+                value={watchlistStatus}
+                onChange={(event) => setWatchlistStatus(event.target.value)}
+                disabled={!userId}
+              >
+                <option value="planned">Planned</option>
+                <option value="watching">Watching</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+            <button
+              type="button"
+              disabled={!userId}
+              onClick={async () => {
+                setWatchlistError(null);
+                if (!userId) {
+                  setWatchlistError('You must be logged in.');
+                  return;
+                }
+
+                try {
+                  const entry = watchlistEntry?.id
+                    ? await put(`/api/watchlist/${watchlistEntry.id}`, { status: watchlistStatus })
+                    : await post('/api/watchlist', {
+                        tmdbId: Number(id),
+                        userId,
+                        status: watchlistStatus,
+                      });
+                  setWatchlistEntry(entry);
+                } catch (err) {
+                  setWatchlistError(err?.message || 'Unable to update watchlist.');
+                }
+              }}
+            >
+              {watchlistEntry?.id ? 'Update watchlist' : 'Add to watchlist'}
+            </button>
+            {watchlistEntry?.id && (
+              <button
+                type="button"
+                onClick={async () => {
+                  setWatchlistError(null);
+                  try {
+                    await del(`/api/watchlist/${watchlistEntry.id}`);
+                    setWatchlistEntry(null);
+                  } catch (err) {
+                    setWatchlistError(err?.message || 'Unable to remove from watchlist.');
+                  }
+                }}
+              >
+                Remove
+              </button>
+            )}
+          </div>
         </>
       )}
     </StyledContainer>
