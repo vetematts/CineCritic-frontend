@@ -31,6 +31,9 @@ export default defineConfig([
       },
     },
     rules: {
+      // Disable deprecated Google rules removed in ESLint v9.
+      'valid-jsdoc': 'off',
+      'require-jsdoc': 'off',
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
