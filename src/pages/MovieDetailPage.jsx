@@ -80,6 +80,35 @@ function MovieDetailPage() {
     };
   }, [id]);
 
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+
+    let isMounted = true;
+
+    const loadWatchlistEntry = async () => {
+      try {
+        const data = await get(`/api/watchlist/${userId}`);
+        if (isMounted) {
+          const entry = (data || []).find((item) => item.movie_id === Number(id));
+          setWatchlistEntry(entry || null);
+          setWatchlistStatus(entry?.status || 'planned');
+        }
+      } catch (err) {
+        if (isMounted) {
+          setWatchlistError(err?.message || 'Unable to load watchlist.');
+        }
+      }
+    };
+
+    loadWatchlistEntry();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id, userId]);
+
   return (
     <StyledContainer>
       {loading && <p>Loading...</p>}
@@ -271,6 +300,9 @@ function MovieDetailPage() {
                 <option value="completed">Completed</option>
               </select>
             </label>
+            {watchlistEntry?.id && (
+              <p>Current status: {watchlistEntry.status}</p>
+            )}
             <button
               type="button"
               disabled={!userId}
