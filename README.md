@@ -19,6 +19,35 @@ CineCritic is a full-stack web application that allows users to browse films and
 | [@testing-library/user-event](https://www.npmjs.com/package/@testing-library/user-event) | Library with testing features that simulate users interacting with the web application.           |
 | [Styled-Components](https://styled-components.com/)                                      | Adds styling capabilities to React Components.                                                    |
 
+## Technology choices
+
+- **React + React Router**: component model and client-side routing for a multi-page style app.
+- **Vite**: fast dev server and build pipeline, simpler than older bundlers like Webpack or CRA.
+- **styled-components**: scoped component styling to avoid global CSS collisions; keeps styles near components.
+- **Vitest + Testing Library**: lightweight unit/integration tests for UI behaviour.
+- **ESLint + Prettier (Google style)**: consistent formatting and linting across frontend and backend.
+
+### Alternatives considered
+
+- **Webpack/CRA**: more boilerplate and slower builds than Vite.
+- **CSS modules / plain CSS**: less co-location and reusability compared to styled-components.
+- **Jest**: heavier for Vite; Vitest integrates better with the Vite toolchain.
+
+## Requirements
+
+- **Node.js**: 18+ recommended.
+- **npm**: 9+ recommended.
+- **Hardware**: any modern laptop/desktop; 4 GB RAM minimum (8 GB recommended).
+- **Backend**: CineCritic backend running locally or deployed; set `VITE_API_BASE_URL`.
+
+## Style guide
+
+We follow the **Google JavaScript Style Guide** via ESLint, with Prettier enforcing formatting rules.
+
+## Licensing
+
+This project uses the repository `LICENSE` file. Third-party libraries are used under their respective licences.
+
 ## Setting up
 
 1. Install dependencies
