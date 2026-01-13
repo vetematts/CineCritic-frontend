@@ -128,11 +128,10 @@ function MovieDetailPage() {
           <ul>
             {reviews.map((review) => (
               <li key={review.id || review._id}>
-                <p>{review.content || review.text}</p>
+                <p>{review.body || review.content || review.text}</p>
                 {review.rating && <StyledMeta>Rating {review.rating}</StyledMeta>}
-                {review.author && <StyledMeta>By {review.author}</StyledMeta>}
                 {user?.id &&
-                  (review.userId === user.id || review.user?.id === user.id) &&
+                  (review.user_id === user.id || review.userId === user.id || review.user?.id === user.id) &&
                   editingReviewId !== (review.id || review._id) && (
                     <>
                       <button
