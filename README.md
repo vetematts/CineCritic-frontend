@@ -22,17 +22,17 @@ ESLint is configured to defer formatting rules to Prettier to avoid conflicts.
 
 ## 📦 Dependencies
 
-| Name                                                                                     | Description                                            |
-| ---------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| [react](https://www.npmjs.com/package/react)                                              | UI library                                              |
-| [react-router](https://www.npmjs.com/package/react-router)                                | Client-side routing                                    |
-| [styled-components](https://www.npmjs.com/package/styled-components)                      | Component-scoped styling                               |
-| [vite](https://www.npmjs.com/package/vite)                                               | Build tool and dev server                              |
-| [vitest](https://www.npmjs.com/package/vitest)                                           | Unit testing                                           |
-| [@testing-library/react](https://www.npmjs.com/package/@testing-library/react)           | UI testing utilities                                   |
-| [@testing-library/jest-dom](https://www.npmjs.com/package/@testing-library/jest-dom)     | DOM assertions                                         |
-| [@testing-library/user-event](https://www.npmjs.com/package/@testing-library/user-event) | User interaction testing                               |
-| [eslint](https://www.npmjs.com/package/eslint), [prettier](https://www.npmjs.com/package/prettier) | Linting and formatting                          |
+| Name                                                                                               | Description               |
+| -------------------------------------------------------------------------------------------------- | ------------------------- |
+| [react](https://www.npmjs.com/package/react)                                                       | UI library                |
+| [react-router](https://www.npmjs.com/package/react-router)                                         | Client-side routing       |
+| [styled-components](https://www.npmjs.com/package/styled-components)                               | Component-scoped styling  |
+| [vite](https://www.npmjs.com/package/vite)                                                         | Build tool and dev server |
+| [vitest](https://www.npmjs.com/package/vitest)                                                     | Unit testing              |
+| [@testing-library/react](https://www.npmjs.com/package/@testing-library/react)                     | UI testing utilities      |
+| [@testing-library/jest-dom](https://www.npmjs.com/package/@testing-library/jest-dom)               | DOM assertions            |
+| [@testing-library/user-event](https://www.npmjs.com/package/@testing-library/user-event)           | User interaction testing  |
+| [eslint](https://www.npmjs.com/package/eslint), [prettier](https://www.npmjs.com/package/prettier) | Linting and formatting    |
 
 ## 💻 Hardware Requirements
 
@@ -64,19 +64,19 @@ See each dependency's npm page for details.
 
 ## 🛠️ Frontend Install Instructions
 
-1) **Clone the repo**
+1. **Clone the repo**
    ```bash
    git clone https://github.com/vetematts/CineCritic-frontend.git
    ```
-2) **Install dependencies**
+2. **Install dependencies**
    ```bash
    npm install
    ```
-3) **Create `.env`**
+3. **Create `.env`**
    ```sh
    VITE_API_BASE_URL="http://localhost:4000"
    ```
-4) **Start the app**
+4. **Start the app**
    ```bash
    npm run dev
    ```
