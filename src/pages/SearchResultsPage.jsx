@@ -8,7 +8,11 @@ function SearchResults() {
             // Show an error image 
         // else
             // Show the film cards a maximum of 25 per page
-            <SearchResultCard />
+            <SearchResultCard
+                title = {title}
+                releaseYear = {releaseYear}
+                description = {description}
+            />
     );
 }
 

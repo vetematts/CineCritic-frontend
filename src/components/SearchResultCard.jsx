@@ -23,7 +23,17 @@ const StyledFilmCardContents = styled.div`
 
 // These are div blocks that show the films poster 
 // and details when they match a search query
-function SearchResultCard({title, releaseYear, description}) {
+function SearchResultCard(prop) {
+    // ---Prop Name--- //                   // ---DESCRPTION--- //
+    const title = prop.title;               // Used for the title of the film 
+                                            // in the card, to create the URL 
+                                            // to the film page
+    const releaseYear = prop.releaseYear;   // Used to display year film is 
+                                            // released in the card
+    const description = prop.description;   // Fills the rest of the card with 
+                                            // the film's description
+    
+    // Create the link to the film
     const filmPage = `/film/${title}`;
 
     return (
