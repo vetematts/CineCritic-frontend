@@ -300,9 +300,7 @@ function MovieDetailPage() {
                 <option value="completed">Completed</option>
               </select>
             </label>
-            {watchlistEntry?.id && (
-              <p>Current status: {watchlistEntry.status}</p>
-            )}
+            {watchlistEntry?.id && <p>Current status: {watchlistEntry.status}</p>}
             <button
               type="button"
               disabled={!userId}

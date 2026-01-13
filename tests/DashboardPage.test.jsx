@@ -16,9 +16,7 @@ vi.mock('../src/api/api', () => ({
 }));
 
 test('loads and displays watchlist entries', async () => {
-  get.mockResolvedValue([
-    { id: 1, title: 'Test Movie', release_year: 2020, status: 'planned' },
-  ]);
+  get.mockResolvedValue([{ id: 1, title: 'Test Movie', release_year: 2020, status: 'planned' }]);
 
   render(<DashboardPage />);
 
