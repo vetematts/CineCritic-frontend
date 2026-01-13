@@ -27,3 +27,15 @@ test('loads and displays watchlist entries', async () => {
   expect(screen.getByText(/watchlist/i)).toBeInTheDocument();
   expect(screen.getByText('Test Movie (2020) - planned')).toBeInTheDocument();
 });
+
+test('shows empty state when watchlist is empty', async () => {
+  get.mockResolvedValue([]);
+
+  render(<DashboardPage />);
+
+  await waitFor(() => {
+    expect(get).toHaveBeenCalledWith('/api/watchlist/1');
+  });
+
+  expect(screen.getByText(/no items in your watchlist yet/i)).toBeInTheDocument();
+});
