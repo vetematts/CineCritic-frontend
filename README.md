@@ -44,6 +44,11 @@ CineCritic is a full-stack web application that allows users to browse films and
 
 We follow the **Google JavaScript Style Guide** via ESLint, with Prettier enforcing formatting rules.
 
+## Auth
+
+Login returns a JWT which is stored in `localStorage` and sent on protected requests as
+`Authorization: Bearer <token>`.
+
 ## Licensing
 
 This project uses the repository `LICENSE` file. Third-party libraries are used under their respective licences.
