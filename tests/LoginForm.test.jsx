@@ -25,7 +25,9 @@ const renderLogin = () =>
   );
 
 beforeEach(() => {
-  localStorage.clear();
+  if (globalThis.localStorage?.clear) {
+    globalThis.localStorage.clear();
+  }
   loginRequest.mockReset();
   get.mockReset();
 });

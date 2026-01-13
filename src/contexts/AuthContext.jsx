@@ -13,8 +13,29 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   // Initialise auth state from localStorage, if a token is already saved.
+  const readToken = () => {
+    if (typeof localStorage === 'undefined' || typeof localStorage.getItem !== 'function') {
+      return null;
+    }
+    return localStorage.getItem('token');
+  };
+
+  const writeToken = (token) => {
+    if (typeof localStorage === 'undefined' || typeof localStorage.setItem !== 'function') {
+      return;
+    }
+    localStorage.setItem('token', token);
+  };
+
+  const clearToken = () => {
+    if (typeof localStorage === 'undefined' || typeof localStorage.removeItem !== 'function') {
+      return;
+    }
+    localStorage.removeItem('token');
+  };
+
   const [auth, setAuth] = useState(() => {
-    const saved = localStorage.getItem('token');
+    const saved = readToken();
 
     if (!saved) {
       return defaultState;
@@ -31,11 +52,11 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (!auth.isAuthenticated) {
-      localStorage.removeItem('token');
+      clearToken();
       return;
     }
 
-    localStorage.setItem('token', auth.token);
+    writeToken(auth.token);
   }, [auth]);
 
   useEffect(() => {

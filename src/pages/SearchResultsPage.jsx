@@ -1,4 +1,4 @@
-import SearchResultCard from "../components/SearchResultCard";
+import SearchResultCard from '../components/SearchResultCard';
 
 function SearchResults() {
     return (
