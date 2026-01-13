@@ -85,6 +85,12 @@ const StyledTrendingItem = styled.li`
   padding: 0.5rem 0;
 `;
 
+const StyledRandomList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+`;
+
 const StyledError = styled.p`
   color: #ffb4a2;
 `;
@@ -93,6 +99,7 @@ const StyledError = styled.p`
 function HomePage() {
   const [trending, setTrending] = useState([]);
   const [topRated, setTopRated] = useState([]);
+  const [randomRecs, setRandomRecs] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -108,8 +115,15 @@ function HomePage() {
           get('/api/movies/top-rated'),
         ]);
         if (isMounted) {
-          setTrending(trendingData || []);
-          setTopRated(topRatedData || []);
+          const trendingList = trendingData || [];
+          const topRatedList = topRatedData || [];
+          setTrending(trendingList);
+          setTopRated(topRatedList);
+
+          // Pick a small random selection from the combined lists.
+          const combined = [...trendingList, ...topRatedList];
+          const shuffled = combined.sort(() => Math.random() - 0.5);
+          setRandomRecs(shuffled.slice(0, 5));
         }
       } catch (err) {
         if (isMounted) {
@@ -140,6 +154,13 @@ function HomePage() {
         <StyledHomeRow id="home-random-recommendations">
           <StyledRandomRecommendations>Random Recommendations</StyledRandomRecommendations>
         </StyledHomeRow>
+        <StyledRandomList>
+          {randomRecs.map((movie) => (
+            <StyledTrendingItem key={movie.id || movie.tmdbId}>
+              {movie.title || movie.name}
+            </StyledTrendingItem>
+          ))}
+        </StyledRandomList>
         {error && <StyledError>{error}</StyledError>}
         <StyledTrendingList>
           {trending.map((movie) => (
