@@ -1,5 +1,6 @@
 import { expect, test, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import HomePage from '../src/pages/HomePage';
 import { get } from '../src/api/api';
 
@@ -12,7 +13,11 @@ test('renders trending and top-rated lists', async () => {
     .mockResolvedValueOnce([{ id: 1, title: 'Trending Movie' }])
     .mockResolvedValueOnce([{ id: 2, title: 'Top Rated Movie' }]);
 
-  render(<HomePage />);
+  render(
+    <MemoryRouter>
+      <HomePage />
+    </MemoryRouter>
+  );
 
   await waitFor(() => {
     expect(get).toHaveBeenCalledWith('/api/movies/trending');
