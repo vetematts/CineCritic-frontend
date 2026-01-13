@@ -131,7 +131,9 @@ function MovieDetailPage() {
                 <p>{review.body || review.content || review.text}</p>
                 {review.rating && <StyledMeta>Rating {review.rating}</StyledMeta>}
                 {user?.id &&
-                  (review.user_id === user.id || review.userId === user.id || review.user?.id === user.id) &&
+                  (review.user_id === user.id ||
+                    review.userId === user.id ||
+                    review.user?.id === user.id) &&
                   editingReviewId !== (review.id || review._id) && (
                     <>
                       <button
