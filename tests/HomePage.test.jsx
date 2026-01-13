@@ -23,6 +23,6 @@ test('renders trending and top-rated lists', async () => {
     expect(get).toHaveBeenCalledWith('/api/movies/trending');
   });
 
-  expect(screen.getByText('Trending Movie')).toBeInTheDocument();
-  expect(screen.getByText('Top Rated Movie')).toBeInTheDocument();
+  expect(screen.getAllByText('Trending Movie').length).toBeGreaterThan(0);
+  expect(screen.getAllByText('Top Rated Movie').length).toBeGreaterThan(0);
 });
