@@ -3,9 +3,8 @@
 
 // Film search endpoint
 function getSearchURL(searchQuery) {
-  return new URL(`/search/?q=${searchQuery}`);
+  const searchURL = `/search?q=${searchQuery}`;
+  return new URL(searchURL, import.meta.url).href;
 }
 
-export default {
-  getSearchURL,
-};
+export default getSearchURL;
