@@ -1,7 +1,10 @@
 // Import packages
 import { useState } from 'react';
 import styled from 'styled-components';
-import { get } from '../api/api';
+import { useNavigate } from 'react-router';
+
+// Utility - formats URL after submitting search query
+import getSearchURL from '../utilities/query-endpoints';
 
 // Styled components
 const StyledForm = styled.form`
@@ -27,34 +30,16 @@ const StyledSearchBar = styled.input`
 
 // Search bar handles the processing of any queries submitted anywhere the component exists
 function SearchBar() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
+  
+  // Goto the search results page with the query being in the URL
   const handleSubmit = async (event) => {
     event.preventDefault(); // Stop the default reloading page
-
-    const trimmed = searchTerm.trim();
-    if (!trimmed) {
-      return;
-    }
-
-    // Query the backend search endpoint with the user's term.
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await get('/api/movies/search', {
-        params: { q: trimmed },
-      });
-      setResults(data || []);
-    } catch (err) {
-      setError(err?.error || 'Unable to load search results.');
-    } finally {
-      setLoading(false);
-    }
-  };
+    const searchQueryPage = getSearchURL(searchTerm);
+    // navigate(searchQueryPage, {searchTerm: {searchTerm}});
+    navigate(searchQueryPage);
+  }
 
   const handleSearchTerm = (event) => {
     setSearchTerm(event.target.value);
@@ -62,24 +47,13 @@ function SearchBar() {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <label>
-        <StyledSearchBar
-          type="text"
-          className="search-bar"
-          value={searchTerm}
-          onChange={handleSearchTerm}
-          placeholder="Search"
-        />
-      </label>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      {results.length > 0 && (
-        <ul>
-          {results.map((movie) => (
-            <li key={movie.id || movie.tmdbId}>{movie.title || movie.name}</li>
-          ))}
-        </ul>
-      )}
+      <StyledSearchBar
+        type="text"
+        className="search-bar"
+        value={searchTerm}
+        onChange={handleSearchTerm}
+        placeholder="Search"
+      />
     </StyledForm>
   );
 }

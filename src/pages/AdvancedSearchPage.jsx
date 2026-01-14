@@ -99,6 +99,7 @@ const StyledSubmitButton = styled.button`
   height: 30px;
 `;
 
+// This is the search results list
 function AdvancedSearchPage() {
   const [title, setTitle] = useState('');
   const [releaseYear, setReleaseYear] = useState('');
