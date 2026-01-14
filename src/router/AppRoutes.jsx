@@ -5,7 +5,7 @@ import { Route, Routes, useLocation } from 'react-router';
 import PageLayout from '../pages/PageLayout';
 import HomePage from '../pages/HomePage';
 import AdvancedSearchPage from '../pages/AdvancedSearchPage';
-import SearchResults from '../pages/SearchResultsPage';
+import SearchResultsPage from '../pages/SearchResultsPage';
 import MovieDetailPage from '../pages/MovieDetailPage';
 import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
@@ -24,7 +24,7 @@ function AppRoutes() {
         {/* Parent Route */}
         <Route index element={<HomePage />} /> {/* Rendered in the <Outlet /> */}
         <Route path="/advancedSearch" element={<AdvancedSearchPage />} />
-        <Route path="/search" element={<SearchResults />} />
+        <Route path="/search" element={<SearchResultsPage />} />
         <Route path="/movies/:id" element={<MovieDetailPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
