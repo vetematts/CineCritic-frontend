@@ -103,13 +103,13 @@ function Footer() {
           <StyledFooterHeadings>Developers</StyledFooterHeadings>
           <StyledList>
             <StyledFooterLinkList>
-              <StyledFooterLinks>API Documentation</StyledFooterLinks>
+              <StyledFooterLinks to = "https://github.com/vetematts/CineCritic-frontend">API Documentation</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
-              <StyledFooterLinks>Contact Us</StyledFooterLinks>
+              <StyledFooterLinks to = "https://x.com/vetematts">Contact Us</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
-              <StyledFooterLinks>Our GitHub</StyledFooterLinks>
+              <StyledFooterLinks to = "https://github.com/users/vetematts/projects/2">Our GitHub</StyledFooterLinks>
             </StyledFooterLinkList>
           </StyledList>
         </StyledFooterColumns>
