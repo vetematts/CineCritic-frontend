@@ -6,4 +6,4 @@ function getImageURL(name) {
   return new URL(`../assets/imgs/${name}`, import.meta.url).href;
 }
 
-export default { getImageURL };
+export default getImageURL;
