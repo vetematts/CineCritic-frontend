@@ -2,8 +2,38 @@
 import { useEffect, useState } from 'react';
 import { get } from '../api/api';
 import { useSearchParams } from 'react-router';
+import styled from 'styled-components';
 
 import SearchResultCard from '../components/SearchResultCard';
+
+// Container for search results with proper constraints
+const StyledSearchResultsContainer = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+const StyledLoading = styled.p`
+  text-align: center;
+  color: rgba(255, 255, 255, 0.87);
+  padding: 2rem;
+`;
+
+const StyledError = styled.p`
+  color: #ffb4a2;
+  text-align: center;
+  padding: 2rem;
+`;
+
+const StyledNoResults = styled.p`
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 2rem;
+`;
 
 // Takes results as a prop and renders the results
 function SearchResults() {
@@ -45,11 +75,13 @@ function SearchResults() {
   }, [searchTerm]);
 
   return (
-    <>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+    <StyledSearchResultsContainer>
+      {loading && <StyledLoading>Loading...</StyledLoading>}
+      {error && <StyledError>{error}</StyledError>}
 
-      {!loading && !error && results.length === 0 && searchTerm?.trim() && <p>No results found.</p>}
+      {!loading && !error && results.length === 0 && searchTerm?.trim() && (
+        <StyledNoResults>No results found for "{searchTerm}".</StyledNoResults>
+      )}
 
       {results.length > 0 &&
         results.map((movie) => (
@@ -62,7 +94,7 @@ function SearchResults() {
             posterUrl={movie.posterUrl}
           />
         ))}
-    </>
+    </StyledSearchResultsContainer>
   );
 }
 

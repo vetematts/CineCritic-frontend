@@ -5,19 +5,97 @@ import styled from 'styled-components';
 // Import poster URL utility for TMDB images
 import getPosterUrl from '../utilities/image-pathing';
 
-// Make the card flexible, able to grow and shrink
-// depending on the resolution size. Place the film
-// poster and the description block side-by-side
-const StyledFilmCard = styled.div`
-  display: flex;
-  flex-direction: row; // On smaller narrower screens flip to column
-  flex-wrap: wrap;
+// Styled NavLink to remove default link styling and ensure proper layout
+const StyledNavLink = styled(NavLink)`
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+  max-width: 100%;
 `;
 
+// Card container with proper constraints and responsive layout
+const StyledFilmCard = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  max-width: 100%;
+  overflow: hidden;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+  }
+  
+  // On smaller screens, stack vertically
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+// Poster container with fixed dimensions
 const StyledFilmCardContents = styled.div`
-  // Allow the columns to shrink and grow depending
-  // on the screen size
-  flex: 1;
+  flex-shrink: 0;
+  
+  &#mini-movie-poster {
+    width: 200px;
+    height: 300px;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    
+    @media (max-width: 768px) {
+      width: 150px;
+      height: 225px;
+    }
+  }
+  
+  &#film-description {
+    flex: 1;
+    min-width: 0; // Important for text truncation
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.87);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    
+    h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: normal;
+    }
+    
+    p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.5;
+      // Limit description to 4-5 lines with ellipsis
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+  }
 `;
 
 // These are div blocks that show the films poster
@@ -41,7 +119,7 @@ function SearchResultCard(prop) {
 
   return (
     // The whole card is clickable
-    <NavLink to={filmPage}>
+    <StyledNavLink to={filmPage}>
       <StyledFilmCard id="flex-card">
         {/* Separate the image and the description 
                     body into two columns */}
@@ -51,13 +129,14 @@ function SearchResultCard(prop) {
           ) : (
             <div
               style={{
-                width: '200px',
-                height: '300px',
+                width: '100%',
+                height: '100%',
                 backgroundColor: '#5a5b5f',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#bdbdbd',
+                borderRadius: '5px',
               }}
             >
               No poster
@@ -72,7 +151,7 @@ function SearchResultCard(prop) {
           <p>{description}</p>
         </StyledFilmCardContents>
       </StyledFilmCard>
-    </NavLink>
+    </StyledNavLink>
   );
 }
 
