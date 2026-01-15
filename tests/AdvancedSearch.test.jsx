@@ -29,12 +29,13 @@ test('Test Case 2: Check labels are correctly rendered', () => {
   const releaseYearLabel = screen.getByText(/Release Year/i);
   const filmCrewLabel = screen.getByText(/Film Crew/i);
   const ratingLabel = screen.getByText(/Rating/i);
-  const genresLabel = screen.getByText(/Genres/i);
+  // Genres label - use getAllByText since "Genres" appears in both label and loading text
+  const genresLabels = screen.getAllByText(/Genres/i);
+  expect(genresLabels.length).toBeGreaterThan(0);
   expect(titleLabel).toBeInTheDocument();
   expect(releaseYearLabel).toBeInTheDocument();
   expect(filmCrewLabel).toBeInTheDocument();
   expect(ratingLabel).toBeInTheDocument();
-  expect(genresLabel).toBeInTheDocument();
 });
 
 // Test Case 3: Check the placeholder text in the input fields
@@ -53,11 +54,12 @@ test('Test Case 3: Check correct placeholder text in inputs', () => {
   );
   const ratingDropDownPlaceholder = screen.getByDisplayValue(/Equal to/i);
   const ratingPlaceholder = screen.getByPlaceholderText(/Any number between 0 and 5/i);
-  const genresPlaceholder = screen.getByPlaceholderText(/Enter any genre/i);
+  // Genres is now a dropdown, not an input - check for loading state or dropdown instead
+  const genresLoadingText = screen.getByText(/Loading genres/i);
   expect(titlePlaceholder).toBeInTheDocument();
   expect(releaseYearPlaceholder).toBeInTheDocument();
   expect(filmCrewPlaceholder).toBeInTheDocument();
   expect(ratingDropDownPlaceholder).toBeInTheDocument();
   expect(ratingPlaceholder).toBeInTheDocument();
-  expect(genresPlaceholder).toBeInTheDocument();
+  expect(genresLoadingText).toBeInTheDocument();
 });
