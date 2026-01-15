@@ -19,6 +19,11 @@ const StyledForm = styled.form`
   max-width: 24rem;
 `;
 
+// Give the labels a grayish white colour
+const StyledSignupLabels = styled.label`
+  color: #cec8c8ff;
+`;
+
 // Add visual interest to the login input fields
 const StyledInput = styled.input`
   padding: 0.4rem 0.6rem;
@@ -62,30 +67,33 @@ export default function SignupForm() {
 
   return (
     <StyledForm onSubmit={handleSignupSubmit}>
-      <label>
+      <StyledSignupLabels htmlFor="enter-signup-username">
         Username
-      </label>
+      </StyledSignupLabels>
       <StyledInput
+        id="enter-signup-username"
         type="text"
         value={username}
         onChange={(event) => setUsername(event.target.value)}
         placeholder="Enter your username"
         required
       />
-      <label>
+      <StyledSignupLabels htmlFor="enter-signup-email">
         Email
-      </label>
+      </StyledSignupLabels>
       <StyledInput
+        id="enter-signup-email"
         type="email"
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         placeholder="Enter your email"
         required
       />
-      <label>
+      <StyledSignupLabels htmlFor="enter-signup-password">
         Password
-      </label>
+      </StyledSignupLabels>
       <StyledInput
+        id="enter-signup-password"
         type="password"
         value={password}
         onChange={(event) => setPassword(event.target.value)}
