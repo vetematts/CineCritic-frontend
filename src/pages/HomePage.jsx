@@ -160,6 +160,25 @@ const StyledMovieTitle = styled.span`
   color: rgba(255, 255, 255, 0.87);
 `;
 
+// Styled NavLink for movie cards - make entire card clickable
+const StyledMovieCardLink = styled(NavLink)`
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  &:hover ${StyledMovieTitle} {
+    color: #e9da57; // Gold color on hover
+  }
+`;
+
 const StyledRandomList = styled.ul`
   list-style: none;
   padding: 0;
@@ -261,14 +280,18 @@ function HomePage() {
         <StyledRandomList>
           {randomRecs.map((movie) => {
             const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
+            const movieId = movie.id || movie.tmdbId;
+            const movieTitle = movie.title || movie.name;
             return (
-              <StyledTrendingItem key={movie.id || movie.tmdbId}>
-                {posterUrl ? (
-                  <StyledPoster src={posterUrl} alt={`${movie.title || movie.name} poster`} />
-                ) : (
-                  <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
-                )}
-                <StyledMovieTitle>{movie.title || movie.name}</StyledMovieTitle>
+              <StyledTrendingItem key={movieId}>
+                <StyledMovieCardLink to={`/movies/${movieId}`}>
+                  {posterUrl ? (
+                    <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                  ) : (
+                    <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                  )}
+                  <StyledMovieTitle>{movieTitle}</StyledMovieTitle>
+                </StyledMovieCardLink>
               </StyledTrendingItem>
             );
           })}
@@ -282,14 +305,18 @@ function HomePage() {
         <StyledTrendingList>
           {trending.map((movie) => {
             const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
+            const movieId = movie.id || movie.tmdbId;
+            const movieTitle = movie.title || movie.name;
             return (
-              <StyledTrendingItem key={movie.id || movie.tmdbId}>
-                {posterUrl ? (
-                  <StyledPoster src={posterUrl} alt={`${movie.title || movie.name} poster`} />
-                ) : (
-                  <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
-                )}
-                <StyledMovieTitle>{movie.title || movie.name}</StyledMovieTitle>
+              <StyledTrendingItem key={movieId}>
+                <StyledMovieCardLink to={`/movies/${movieId}`}>
+                  {posterUrl ? (
+                    <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                  ) : (
+                    <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                  )}
+                  <StyledMovieTitle>{movieTitle}</StyledMovieTitle>
+                </StyledMovieCardLink>
               </StyledTrendingItem>
             );
           })}
@@ -302,14 +329,18 @@ function HomePage() {
         <StyledTrendingList>
           {topRated.map((movie) => {
             const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
+            const movieId = movie.id || movie.tmdbId;
+            const movieTitle = movie.title || movie.name;
             return (
-              <StyledTrendingItem key={movie.id || movie.tmdbId}>
-                {posterUrl ? (
-                  <StyledPoster src={posterUrl} alt={`${movie.title || movie.name} poster`} />
-                ) : (
-                  <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
-                )}
-                <StyledMovieTitle>{movie.title || movie.name}</StyledMovieTitle>
+              <StyledTrendingItem key={movieId}>
+                <StyledMovieCardLink to={`/movies/${movieId}`}>
+                  {posterUrl ? (
+                    <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                  ) : (
+                    <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                  )}
+                  <StyledMovieTitle>{movieTitle}</StyledMovieTitle>
+                </StyledMovieCardLink>
               </StyledTrendingItem>
             );
           })}

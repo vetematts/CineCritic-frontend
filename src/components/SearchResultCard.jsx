@@ -103,8 +103,7 @@ const StyledFilmCardContents = styled.div`
 function SearchResultCard(prop) {
   // ---PROP NAME--- //                   // ---DESCRPTION--- //
   const title = prop.title; // Used for the title of the film
-  // in the card, to create the URL
-  // to the film page
+  const movieId = prop.id || prop.movieId || prop.tmdbId; // Movie ID for routing
   const releaseYear = prop.releaseYear; // Used to display year film is
   // released in the card
   const releaseDate = prop.release_date || prop.releaseDate; // Alternative date field
@@ -125,15 +124,15 @@ function SearchResultCard(prop) {
     }
   }
 
-  // Create the link to the film
-  const filmPage = `/film/${title}`;
+  // Create the link to the movie detail page using movie ID
+  const filmPage = movieId ? `/movies/${movieId}` : '#';
 
   // Get poster URL from TMDB, or use placeholder if missing
   const posterUrl = getPosterUrl(posterPath, 'w300');
 
   return (
     // The whole card is clickable
-    <StyledNavLink to={filmPage}>
+    <StyledNavLink to={filmPage} onClick={!movieId ? (e) => e.preventDefault() : undefined}>
       <StyledFilmCard id="flex-card">
         {/* Separate the image and the description 
                     body into two columns */}

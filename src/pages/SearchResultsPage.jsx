@@ -87,6 +87,9 @@ function SearchResults() {
         results.map((movie) => (
           <SearchResultCard
             key={movie.id}
+            id={movie.id || movie.tmdbId}
+            movieId={movie.id || movie.tmdbId}
+            tmdbId={movie.tmdbId}
             title={movie.title || movie.name}
             releaseYear={movie.release_year || movie.releaseYear}
             release_date={movie.release_date}
