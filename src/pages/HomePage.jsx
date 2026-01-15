@@ -223,10 +223,11 @@ function HomePage() {
           setTrending(trendingList);
           setTopRated(topRatedList);
 
-          // Pick a small random selection from the combined lists.
+          // Pick a random selection from the combined lists for recommendations.
+          // Use 8-10 movies for a good single-row display
           const combined = [...trendingList, ...topRatedList];
           const shuffled = combined.sort(() => Math.random() - 0.5);
-          setRandomRecs(shuffled.slice(0, 5));
+          setRandomRecs(shuffled.slice(0, 10));
         }
       } catch (err) {
         if (isMounted) {
@@ -273,6 +274,11 @@ function HomePage() {
           })}
         </StyledRandomList>
         {error && <StyledError>{error}</StyledError>}
+        
+        {/* Trending Section */}
+        <StyledHomeRow id="home-trending">
+          <StyledRandomRecommendations>Trending</StyledRandomRecommendations>
+        </StyledHomeRow>
         <StyledTrendingList>
           {trending.map((movie) => {
             const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
@@ -288,7 +294,11 @@ function HomePage() {
             );
           })}
         </StyledTrendingList>
-        <StyledRandomRecommendations>Top Rated</StyledRandomRecommendations>
+        
+        {/* Top Rated Section */}
+        <StyledHomeRow id="home-top-rated">
+          <StyledRandomRecommendations>Top Rated</StyledRandomRecommendations>
+        </StyledHomeRow>
         <StyledTrendingList>
           {topRated.map((movie) => {
             const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
