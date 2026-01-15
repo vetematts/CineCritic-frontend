@@ -4,19 +4,28 @@ import styled from 'styled-components';
 import { loginRequest } from '../api/auth';
 import { useAuth } from '../contexts/AuthContext';
 
+// Make the form a flex-container
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  
+  // Add spacing between the labels and inputs
   gap: 0.75rem;
+  
+  // Make the form 100% the width of the login div container
+  // but capped at 24rem
+  width: 100%;
   max-width: 24rem;
 `;
 
+// Add visual interest to the login input fields
 const StyledInput = styled.input`
   padding: 0.4rem 0.6rem;
   border-radius: 6px;
   border: 1px solid rgba(204, 204, 204, 0.5);
 `;
 
+// Give the error message a salmon pink appearance
 const StyledError = styled.p`
   color: #ffb4a2;
 `;
@@ -26,8 +35,13 @@ const StyledLoginLabels = styled.label`
   color: #cec8c8ff;
 `;
 
+// Add space above the login button and the bottom of the login form
 const StyledLoginButton = styled.button`
-  margin: 0.75rem 0 0 0;
+  // Give the button a bit more meat  
+  height: 2rem;
+
+  // Space the login button from the password input
+  margin: 2rem 0 0 0;
 `;
 
 export default function LoginForm() {
