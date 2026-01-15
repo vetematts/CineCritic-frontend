@@ -33,3 +33,64 @@ test('renders movie detail and reviews', async () => {
   expect(screen.getByText(/released 1979-05-25/i)).toBeInTheDocument();
   expect(screen.getByText('Great movie')).toBeInTheDocument();
 });
+
+test('renders movie poster when poster_path is provided', async () => {
+  get
+    .mockResolvedValueOnce({ title: 'Alien', poster_path: '/alien-poster.jpg', release_date: '1979-05-25' })
+    .mockResolvedValueOnce([]);
+
+  render(
+    <MemoryRouter initialEntries={['/movies/123']}>
+      <Routes>
+        <Route path="/movies/:id" element={<MovieDetailPage />} />
+      </Routes>
+    </MemoryRouter>
+  );
+
+  await waitFor(() => {
+    const poster = screen.getByAltText('Alien poster');
+    expect(poster).toBeInTheDocument();
+    expect(poster).toHaveAttribute('src', 'https://image.tmdb.org/t/p/w500/alien-poster.jpg');
+  });
+});
+
+test('renders placeholder when poster_path is missing', async () => {
+  get
+    .mockResolvedValueOnce({ title: 'Alien', release_date: '1979-05-25' })
+    .mockResolvedValueOnce([]);
+
+  render(
+    <MemoryRouter initialEntries={['/movies/123']}>
+      <Routes>
+        <Route path="/movies/:id" element={<MovieDetailPage />} />
+      </Routes>
+    </MemoryRouter>
+  );
+
+  await waitFor(() => {
+    expect(screen.getByText('No poster available')).toBeInTheDocument();
+  });
+});
+
+test('handles posterUrl (full URL) from backend', async () => {
+  get
+    .mockResolvedValueOnce({
+      title: 'Alien',
+      posterUrl: 'https://image.tmdb.org/t/p/w500/custom-alien.jpg',
+      release_date: '1979-05-25',
+    })
+    .mockResolvedValueOnce([]);
+
+  render(
+    <MemoryRouter initialEntries={['/movies/123']}>
+      <Routes>
+        <Route path="/movies/:id" element={<MovieDetailPage />} />
+      </Routes>
+    </MemoryRouter>
+  );
+
+  await waitFor(() => {
+    const poster = screen.getByAltText('Alien poster');
+    expect(poster).toHaveAttribute('src', 'https://image.tmdb.org/t/p/w500/custom-alien.jpg');
+  });
+});
