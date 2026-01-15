@@ -76,31 +76,68 @@ const StyledRandomRecommendations = styled.h3`
   max-width: 100%;
 `;
 
+// Horizontal scrolling container for movie cards
 const StyledTrendingList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #5a5b5f #242424;
+  
+  // Hide scrollbar for webkit browsers but keep functionality
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #242424;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #5a5b5f;
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: #6a6b6f;
+  }
+  
+  // Prevent cards from shrinking below their minimum size
+  & > li {
+    flex-shrink: 0;
+  }
 `;
 
 const StyledTrendingItem = styled.li`
-  padding: 0.5rem 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
-// Styled poster image for movie lists
+// Styled poster image for movie lists - card style matching wireframe
 const StyledPoster = styled.img`
-  width: 100px;
-  height: 150px;
+  width: 120px;
+  height: 180px;
   object-fit: cover;
   border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 // Placeholder for missing posters
 const StyledPosterPlaceholder = styled.div`
-  width: 100px;
-  height: 150px;
+  width: 120px;
+  height: 180px;
   background-color: #5a5b5f;
   border-radius: 5px;
   display: flex;
@@ -108,12 +145,53 @@ const StyledPosterPlaceholder = styled.div`
   justify-content: center;
   color: #bdbdbd;
   font-size: 0.8em;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+`;
+
+// Movie title below poster (optional, can be hidden if wireframe doesn't show it)
+const StyledMovieTitle = styled.span`
+  font-size: 0.85em;
+  text-align: center;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.87);
 `;
 
 const StyledRandomList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0 0 1rem 0;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #5a5b5f #242424;
+  
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #242424;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #5a5b5f;
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: #6a6b6f;
+  }
+  
+  & > li {
+    flex-shrink: 0;
+  }
 `;
 
 const StyledError = styled.p`
@@ -189,7 +267,7 @@ function HomePage() {
                 ) : (
                   <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
                 )}
-                <span>{movie.title || movie.name}</span>
+                <StyledMovieTitle>{movie.title || movie.name}</StyledMovieTitle>
               </StyledTrendingItem>
             );
           })}
@@ -205,7 +283,7 @@ function HomePage() {
                 ) : (
                   <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
                 )}
-                <span>{movie.title || movie.name}</span>
+                <StyledMovieTitle>{movie.title || movie.name}</StyledMovieTitle>
               </StyledTrendingItem>
             );
           })}
@@ -221,7 +299,7 @@ function HomePage() {
                 ) : (
                   <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
                 )}
-                <span>{movie.title || movie.name}</span>
+                <StyledMovieTitle>{movie.title || movie.name}</StyledMovieTitle>
               </StyledTrendingItem>
             );
           })}
