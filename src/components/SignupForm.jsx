@@ -36,6 +36,15 @@ const StyledError = styled.p`
   color: #ffb4a2;
 `;
 
+// Add space above the signup button and the bottom of the signup form
+const StyledSignupButton = styled.button`
+  // Give the button a bit more meat  
+  height: 2rem;
+
+  // Space the signup button from the password input
+  margin: 2rem 0 0 0;
+`;
+
 export default function SignupForm() {
   const { login, isAuthenticated } = useAuth();
   const [username, setUsername] = useState('');
@@ -101,7 +110,7 @@ export default function SignupForm() {
         required
       />
       {message && <StyledError>{message}</StyledError>}
-      <button type="submit">Create account</button>
+      <StyledSignupButton type="submit">Create account</StyledSignupButton>
     </StyledForm>
   );
 }
