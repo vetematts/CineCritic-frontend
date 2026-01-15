@@ -27,8 +27,8 @@ const StyledLoginLogo = styled.img`
   // This takes shape according to the parent, the figure
   // container
   flex: 1;
-  width: 60%;
-  max-width: min(40vw, 420px);
+  width: 100%;
+  max-width: min(40vw, 360px);
 
   // Provide a bit of space between the logo and the search
   // bar
