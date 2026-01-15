@@ -21,6 +21,11 @@ const StyledError = styled.p`
   color: #ffb4a2;
 `;
 
+// Give the labels a grayish white colour
+const StyledLoginLabels = styled.label`
+  color: #cec8c8ff;
+`;
+
 export default function LoginForm() {
   const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
@@ -51,7 +56,7 @@ export default function LoginForm() {
 
   return (
     <StyledForm onSubmit={handleLoginSubmit}>
-      <label>
+      <StyledLoginLabels>
         Email
         <StyledInput
           type="email"
@@ -59,8 +64,8 @@ export default function LoginForm() {
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Enter your email"
         />
-      </label>
-      <label>
+      </StyledLoginLabels>
+      <StyledLoginLabels>
         Username
         <StyledInput
           type="text"
@@ -68,8 +73,8 @@ export default function LoginForm() {
           onChange={(event) => setUsername(event.target.value)}
           placeholder="Enter your username"
         />
-      </label>
-      <label>
+      </StyledLoginLabels>
+      <StyledLoginLabels>
         Password
         <StyledInput
           type="password"
@@ -78,7 +83,7 @@ export default function LoginForm() {
           placeholder="Enter your password"
           required
         />
-      </label>
+      </StyledLoginLabels>
       {message && <StyledError>{message}</StyledError>}
       <button type="submit">Log in</button>
     </StyledForm>
