@@ -1,5 +1,5 @@
 // Import packges
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { get } from '../api/api';
 
@@ -110,6 +110,8 @@ function AdvancedSearchPage() {
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [availableGenres, setAvailableGenres] = useState([]);
+  const [genresError, setGenresError] = useState(null);
 
   const handleTitle = (event) => {
     setTitle(event.target.value);
@@ -134,6 +136,31 @@ function AdvancedSearchPage() {
   const handleGenres = (event) => {
     setGenres(event.target.value);
   };
+
+  // Fetch available genres from the API on component mount
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchGenres = async () => {
+      setGenresError(null);
+      try {
+        const data = await get('/api/movies/genres');
+        if (isMounted) {
+          setAvailableGenres(data || []);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setGenresError(err?.error || 'Unable to load genres.');
+        }
+      }
+    };
+
+    fetchGenres();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleSubmitSearch = async (event) => {
     event.preventDefault();
@@ -224,6 +251,12 @@ function AdvancedSearchPage() {
       <StyledSearchRows>
         <StyledLabels>Genres</StyledLabels>
         <StyledInputs value={genres} onChange={handleGenres} placeholder="Enter any genre" />
+        {genresError && <p style={{ color: '#ffb4a2' }}>{genresError}</p>}
+        {!genresError && availableGenres.length > 0 && (
+          <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>
+            {availableGenres.length} genres available
+          </p>
+        )}
       </StyledSearchRows>
       <StyledSearchRows>
         <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
