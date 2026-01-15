@@ -293,6 +293,16 @@ function AdvancedSearchPage() {
                 </option>
               ))}
             </StyledGenreSelect>
+            <p
+              style={{
+                fontSize: '0.85em',
+                color: '#bdbdbd',
+                marginTop: '-15px',
+                marginBottom: '5px',
+              }}
+            >
+              Hold Ctrl (Cmd on Mac) to select multiple genres
+            </p>
             {selectedGenreIds.length > 0 && (
               <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>
                 {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''} selected
