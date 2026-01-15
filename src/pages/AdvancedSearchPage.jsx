@@ -74,6 +74,28 @@ const StyledDropDown = styled.select`
   margin: 5px 5px 20px 0;
 `;
 
+// Multi-select dropdown for genre selection - matches existing input styling
+const StyledGenreSelect = styled.select`
+  /* White background matching other inputs */
+  background-color: #ffffffff;
+  opacity: 0.9;
+
+  /* Round the corners */
+  border-radius: 10px;
+  padding: 5px;
+
+  /* Set responsive design */
+  display: flex;
+  flex: 1;
+  flex-basis: 100%;
+
+  /* Space away from other items */
+  margin: 5px 0 20px 0;
+
+  /* Allow multiple selections with appropriate height */
+  min-height: 100px;
+`;
+
 // Create a div container for the ratings drop down and input
 const StyledRatingInput = styled.div`
   /* Set responsive design */
@@ -106,7 +128,7 @@ function AdvancedSearchPage() {
   const [crew, setCrew] = useState('');
   const [ratingComparator, setRatingComparator] = useState('EQUAL_TO');
   const [rating, setRating] = useState('');
-  const [genres, setGenres] = useState('');
+  const [selectedGenreIds, setSelectedGenreIds] = useState([]);
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -133,8 +155,11 @@ function AdvancedSearchPage() {
     setRating(event.target.value);
   };
 
+  // Handle multi-select genre changes - convert selected options to array of IDs
   const handleGenres = (event) => {
-    setGenres(event.target.value);
+    const selectedOptions = Array.from(event.target.selectedOptions);
+    const genreIds = selectedOptions.map((option) => Number(option.value));
+    setSelectedGenreIds(genreIds);
   };
 
   // Fetch available genres from the API on component mount
@@ -183,12 +208,15 @@ function AdvancedSearchPage() {
       }
     }
 
+    // Convert selected genre IDs array to comma-separated string for API
+    const genresParam = selectedGenreIds.length > 0 ? selectedGenreIds.join(',') : undefined;
+
     try {
       const data = await get('/api/movies/advanced', {
         params: {
           query: title,
           year: releaseYear,
-          genres,
+          genres: genresParam,
           crew,
           ratingMin,
           ratingMax,
@@ -250,12 +278,29 @@ function AdvancedSearchPage() {
       </StyledSearchRows>
       <StyledSearchRows>
         <StyledLabels>Genres</StyledLabels>
-        <StyledInputs value={genres} onChange={handleGenres} placeholder="Enter any genre" />
-        {genresError && <p style={{ color: '#ffb4a2' }}>{genresError}</p>}
-        {!genresError && availableGenres.length > 0 && (
-          <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>
-            {availableGenres.length} genres available
-          </p>
+        {genresError ? (
+          <p style={{ color: '#ffb4a2' }}>{genresError}</p>
+        ) : availableGenres.length > 0 ? (
+          <>
+            <StyledGenreSelect
+              multiple
+              value={selectedGenreIds.map(String)}
+              onChange={handleGenres}
+            >
+              {availableGenres.map((genre) => (
+                <option key={genre.id} value={genre.id}>
+                  {genre.name}
+                </option>
+              ))}
+            </StyledGenreSelect>
+            {selectedGenreIds.length > 0 && (
+              <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>
+                {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''} selected
+              </p>
+            )}
+          </>
+        ) : (
+          <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>Loading genres...</p>
         )}
       </StyledSearchRows>
       <StyledSearchRows>
