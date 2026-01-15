@@ -38,6 +38,10 @@ const StyledLoginLogo = styled.img`
 // Give the message a grayish colour similar to the footer
 const StyledMessage = styled.p`
   color: #9b9393ff;
+  font-size: 0.8rem;
+
+  // Provide some space between this text and the login button
+  margin: 1.5rem 0 0 0;
 `;
 
 export default function LoginPage() {
