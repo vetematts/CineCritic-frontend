@@ -107,9 +107,23 @@ function SearchResultCard(prop) {
   // to the film page
   const releaseYear = prop.releaseYear; // Used to display year film is
   // released in the card
+  const releaseDate = prop.release_date || prop.releaseDate; // Alternative date field
   const description = prop.description; // Fills the rest of the card with
   // the film's description
   const posterPath = prop.poster_path || prop.posterUrl; // TMDB poster path or full URL
+
+  // Extract year from releaseYear or releaseDate
+  // If releaseYear is valid, use it; otherwise try to extract from releaseDate
+  let displayYear = null;
+  if (releaseYear && releaseYear !== 0) {
+    displayYear = releaseYear;
+  } else if (releaseDate) {
+    // Extract year from date string (e.g., "2021-10-22" -> "2021")
+    const yearMatch = String(releaseDate).match(/^(\d{4})/);
+    if (yearMatch) {
+      displayYear = yearMatch[1];
+    }
+  }
 
   // Create the link to the film
   const filmPage = `/film/${title}`;
@@ -147,7 +161,7 @@ function SearchResultCard(prop) {
                     transparency */}
         <StyledFilmCardContents id="film-description">
           <h2>{title}</h2>
-          <h3>({releaseYear})</h3>
+          {displayYear && <h3>({displayYear})</h3>}
           <p>{description}</p>
         </StyledFilmCardContents>
       </StyledFilmCard>

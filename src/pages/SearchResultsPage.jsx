@@ -89,6 +89,8 @@ function SearchResults() {
             key={movie.id}
             title={movie.title || movie.name}
             releaseYear={movie.release_year || movie.releaseYear}
+            release_date={movie.release_date}
+            releaseDate={movie.releaseDate}
             description={movie.overview || movie.description}
             poster_path={movie.poster_path}
             posterUrl={movie.posterUrl}
