@@ -108,8 +108,11 @@ const StyledTrendingList = styled.ul`
   }
   
   // Prevent cards from shrinking below their minimum size
+  // Add padding to prevent hover overflow
   & > li {
     flex-shrink: 0;
+    padding: 0.5rem;
+    margin: -0.5rem 0; // Compensate for padding to maintain spacing
   }
 `;
 
@@ -118,23 +121,33 @@ const StyledTrendingItem = styled.li`
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  overflow: visible; // Allow hover effects to extend
+`;
+
+// Wrapper for poster to maintain rounded borders during hover
+const StyledPosterWrapper = styled.div`
+  width: 120px;
+  height: 180px;
+  border-radius: 5px;
+  overflow: hidden; // Keep rounded borders intact
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
 `;
 
 // Styled poster image for movie lists - card style matching wireframe
 const StyledPoster = styled.img`
-  width: 120px;
-  height: 180px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease;
-  
-  &:hover {
-    transform: scale(1.05);
-  }
+  display: block;
 `;
 
-// Placeholder for missing posters
+// Placeholder for missing posters - wrapped to maintain rounded borders
 const StyledPosterPlaceholder = styled.div`
   width: 120px;
   height: 180px;
@@ -147,17 +160,25 @@ const StyledPosterPlaceholder = styled.div`
   font-size: 0.8em;
   flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
 `;
 
-// Movie title below poster (optional, can be hidden if wireframe doesn't show it)
+// Movie title below poster - fixed width to match poster
 const StyledMovieTitle = styled.span`
   font-size: 0.85em;
   text-align: center;
-  max-width: 120px;
+  width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: rgba(255, 255, 255, 0.87);
+  transition: color 0.2s ease;
+  padding: 0 2px; // Small padding to prevent edge clipping
 `;
 
 // Styled NavLink for movie cards - make entire card clickable
@@ -168,11 +189,7 @@ const StyledMovieCardLink = styled(NavLink)`
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  transition: transform 0.2s ease;
-  
-  &:hover {
-    transform: scale(1.05);
-  }
+  width: 100%;
   
   &:hover ${StyledMovieTitle} {
     color: #e9da57; // Gold color on hover
@@ -208,8 +225,12 @@ const StyledRandomList = styled.ul`
     background: #6a6b6f;
   }
   
+  // Prevent cards from shrinking below their minimum size
+  // Add padding to prevent hover overflow
   & > li {
     flex-shrink: 0;
+    padding: 0.5rem;
+    margin: -0.5rem 0; // Compensate for padding to maintain spacing
   }
 `;
 
@@ -286,7 +307,9 @@ function HomePage() {
               <StyledTrendingItem key={movieId}>
                 <StyledMovieCardLink to={`/movies/${movieId}`}>
                   {posterUrl ? (
-                    <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                    <StyledPosterWrapper>
+                      <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                    </StyledPosterWrapper>
                   ) : (
                     <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
                   )}
@@ -311,7 +334,9 @@ function HomePage() {
               <StyledTrendingItem key={movieId}>
                 <StyledMovieCardLink to={`/movies/${movieId}`}>
                   {posterUrl ? (
-                    <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                    <StyledPosterWrapper>
+                      <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                    </StyledPosterWrapper>
                   ) : (
                     <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
                   )}
@@ -335,7 +360,9 @@ function HomePage() {
               <StyledTrendingItem key={movieId}>
                 <StyledMovieCardLink to={`/movies/${movieId}`}>
                   {posterUrl ? (
-                    <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                    <StyledPosterWrapper>
+                      <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                    </StyledPosterWrapper>
                   ) : (
                     <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
                   )}
