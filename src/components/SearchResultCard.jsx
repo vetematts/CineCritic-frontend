@@ -2,9 +2,8 @@
 import { NavLink } from 'react-router';
 import styled from 'styled-components';
 
-// Import URL pathing utility, this allows us to
-// dynamically add images to the react applcation
-import getImageURL from '../utilities/image-pathing';
+// Import poster URL utility for TMDB images
+import getPosterUrl from '../utilities/image-pathing';
 
 // Make the card flexible, able to grow and shrink
 // depending on the resolution size. Place the film
@@ -32,9 +31,13 @@ function SearchResultCard(prop) {
   // released in the card
   const description = prop.description; // Fills the rest of the card with
   // the film's description
+  const posterPath = prop.poster_path || prop.posterUrl; // TMDB poster path or full URL
 
   // Create the link to the film
   const filmPage = `/film/${title}`;
+
+  // Get poster URL from TMDB, or use placeholder if missing
+  const posterUrl = getPosterUrl(posterPath, 'w300');
 
   return (
     // The whole card is clickable
@@ -43,7 +46,23 @@ function SearchResultCard(prop) {
         {/* Separate the image and the description 
                     body into two columns */}
         <StyledFilmCardContents id="mini-movie-poster">
-          <img src={getImageURL(title)} />
+          {posterUrl ? (
+            <img src={posterUrl} alt={`${title} poster`} />
+          ) : (
+            <div
+              style={{
+                width: '200px',
+                height: '300px',
+                backgroundColor: '#5a5b5f',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#bdbdbd',
+              }}
+            >
+              No poster
+            </div>
+          )}
         </StyledFilmCardContents>
         {/* Show maximum 3 lines, gradient into full 
                     transparency */}
