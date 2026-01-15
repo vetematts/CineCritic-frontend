@@ -65,6 +65,9 @@ const StyledList = styled.ul`
 // Remove the list dots
 const StyledFooterLinkList = styled.li`
   list-style: none;
+
+  // Space out the links
+  padding: 0 0 0.5rem 0;
 `;
 
 // Three div containers to flex as columns that contain different links
