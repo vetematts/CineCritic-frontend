@@ -1,7 +1,43 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
 import { get } from '../api/api';
+import getPosterUrl from '../utilities/image-pathing';
+
+// Styled components for watchlist display
+const StyledWatchlistItem = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  list-style: none;
+`;
+
+const StyledWatchlistPoster = styled.img`
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+`;
+
+const StyledWatchlistPosterPlaceholder = styled.div`
+  width: 100px;
+  height: 150px;
+  background-color: #5a5b5f;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bdbdbd;
+  font-size: 0.8em;
+`;
+
+const StyledWatchlistList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
 
 export default function DashboardPage() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -53,13 +89,23 @@ export default function DashboardPage() {
         {watchlistError && <p>{watchlistError}</p>}
         {watchlist.length === 0 && <p>No items in your watchlist yet.</p>}
         {watchlist.length > 0 && (
-          <ul>
-            {watchlist.map((entry) => (
-              <li key={entry.id}>
-                {entry.title} ({entry.release_year}) - {entry.status}
-              </li>
-            ))}
-          </ul>
+          <StyledWatchlistList>
+            {watchlist.map((entry) => {
+              const posterUrl = getPosterUrl(entry.poster_url || entry.poster_path, 'w200');
+              return (
+                <StyledWatchlistItem key={entry.id}>
+                  {posterUrl ? (
+                    <StyledWatchlistPoster src={posterUrl} alt={`${entry.title} poster`} />
+                  ) : (
+                    <StyledWatchlistPosterPlaceholder>No poster</StyledWatchlistPosterPlaceholder>
+                  )}
+                  <div>
+                    <strong>{entry.title}</strong> ({entry.release_year}) - {entry.status}
+                  </div>
+                </StyledWatchlistItem>
+              );
+            })}
+          </StyledWatchlistList>
         )}
       </section>
       <button type="button" onClick={() => logout()}>

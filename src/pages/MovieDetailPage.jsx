@@ -3,10 +3,47 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { get, post, put, del } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
+import getPosterUrl from '../utilities/image-pathing';
 
 const StyledContainer = styled.section`
   width: 100rem;
   padding: 1rem 0 2rem 0;
+`;
+
+// Container for movie poster and details side-by-side
+const StyledMovieHeader = styled.div`
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+`;
+
+// Large poster for movie detail page
+const StyledPoster = styled.img`
+  width: 300px;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+`;
+
+// Placeholder for missing poster
+const StyledPosterPlaceholder = styled.div`
+  width: 300px;
+  height: 450px;
+  background-color: #5a5b5f;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bdbdbd;
+  flex-shrink: 0;
+`;
+
+// Container for movie details (title, meta, overview)
+const StyledMovieDetails = styled.div`
+  flex: 1;
+  min-width: 300px;
 `;
 
 const StyledTitle = styled.h2`
@@ -115,11 +152,23 @@ function MovieDetailPage() {
       {error && <StyledError>{error}</StyledError>}
       {!loading && movie && (
         <>
-          <StyledTitle>{movie.title || movie.name}</StyledTitle>
-          {movie.release_date && <StyledMeta>Released {movie.release_date}</StyledMeta>}
-          {movie.runtime && <StyledMeta>Runtime {movie.runtime} minutes</StyledMeta>}
-          {movie.vote_average && <StyledMeta>Rating {movie.vote_average}</StyledMeta>}
-          {movie.overview && <p>{movie.overview}</p>}
+          <StyledMovieHeader>
+            {(() => {
+              const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w500');
+              return posterUrl ? (
+                <StyledPoster src={posterUrl} alt={`${movie.title || movie.name} poster`} />
+              ) : (
+                <StyledPosterPlaceholder>No poster available</StyledPosterPlaceholder>
+              );
+            })()}
+            <StyledMovieDetails>
+              <StyledTitle>{movie.title || movie.name}</StyledTitle>
+              {movie.release_date && <StyledMeta>Released {movie.release_date}</StyledMeta>}
+              {movie.runtime && <StyledMeta>Runtime {movie.runtime} minutes</StyledMeta>}
+              {movie.vote_average && <StyledMeta>Rating {movie.vote_average}</StyledMeta>}
+              {movie.overview && <p>{movie.overview}</p>}
+            </StyledMovieDetails>
+          </StyledMovieHeader>
         </>
       )}
       {!loading && reviews.length > 0 && (
