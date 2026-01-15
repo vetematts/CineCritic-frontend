@@ -55,9 +55,11 @@ function SearchResults() {
         results.map((movie) => (
           <SearchResultCard
             key={movie.id}
-            title={movie.title}
-            releaseYear={movie.releaseYear}
-            description={movie.description}
+            title={movie.title || movie.name}
+            releaseYear={movie.release_year || movie.releaseYear}
+            description={movie.overview || movie.description}
+            poster_path={movie.poster_path}
+            posterUrl={movie.posterUrl}
           />
         ))}
     </>
