@@ -10,7 +10,7 @@ const StyledForm = styled.form`
   flex-direction: column;
   
   // Add spacing between the labels and inputs
-  gap: 0.75rem;
+  gap: 1.25rem;
   
   // Make the form 100% the width of the login div container
   // but capped at 24rem
@@ -44,6 +44,7 @@ const StyledLoginButton = styled.button`
   margin: 2rem 0 0 0;
 `;
 
+// The login input and submit button component
 export default function LoginForm() {
   const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
@@ -52,8 +53,10 @@ export default function LoginForm() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
+  // Return the user home if logged in
   if (isAuthenticated) return <Navigate to="/" />;
 
+  // Login Attempt
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     setMessage('');
