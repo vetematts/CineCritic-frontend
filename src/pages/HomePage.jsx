@@ -6,6 +6,7 @@ import styled from 'styled-components';
 // Import the Search Bar component
 import SearchBar from '../components/SearchBar';
 import { get } from '../api/api';
+import getPosterUrl from '../utilities/image-pathing';
 
 // Import image assets
 import banner from '../assets/cine_critic_logo.png';
@@ -83,6 +84,30 @@ const StyledTrendingList = styled.ul`
 
 const StyledTrendingItem = styled.li`
   padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+// Styled poster image for movie lists
+const StyledPoster = styled.img`
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+`;
+
+// Placeholder for missing posters
+const StyledPosterPlaceholder = styled.div`
+  width: 100px;
+  height: 150px;
+  background-color: #5a5b5f;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bdbdbd;
+  font-size: 0.8em;
 `;
 
 const StyledRandomList = styled.ul`
@@ -155,27 +180,51 @@ function HomePage() {
           <StyledRandomRecommendations>Random Recommendations</StyledRandomRecommendations>
         </StyledHomeRow>
         <StyledRandomList>
-          {randomRecs.map((movie) => (
-            <StyledTrendingItem key={movie.id || movie.tmdbId}>
-              {movie.title || movie.name}
-            </StyledTrendingItem>
-          ))}
+          {randomRecs.map((movie) => {
+            const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
+            return (
+              <StyledTrendingItem key={movie.id || movie.tmdbId}>
+                {posterUrl ? (
+                  <StyledPoster src={posterUrl} alt={`${movie.title || movie.name} poster`} />
+                ) : (
+                  <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                )}
+                <span>{movie.title || movie.name}</span>
+              </StyledTrendingItem>
+            );
+          })}
         </StyledRandomList>
         {error && <StyledError>{error}</StyledError>}
         <StyledTrendingList>
-          {trending.map((movie) => (
-            <StyledTrendingItem key={movie.id || movie.tmdbId}>
-              {movie.title || movie.name}
-            </StyledTrendingItem>
-          ))}
+          {trending.map((movie) => {
+            const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
+            return (
+              <StyledTrendingItem key={movie.id || movie.tmdbId}>
+                {posterUrl ? (
+                  <StyledPoster src={posterUrl} alt={`${movie.title || movie.name} poster`} />
+                ) : (
+                  <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                )}
+                <span>{movie.title || movie.name}</span>
+              </StyledTrendingItem>
+            );
+          })}
         </StyledTrendingList>
         <StyledRandomRecommendations>Top Rated</StyledRandomRecommendations>
         <StyledTrendingList>
-          {topRated.map((movie) => (
-            <StyledTrendingItem key={movie.id || movie.tmdbId}>
-              {movie.title || movie.name}
-            </StyledTrendingItem>
-          ))}
+          {topRated.map((movie) => {
+            const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
+            return (
+              <StyledTrendingItem key={movie.id || movie.tmdbId}>
+                {posterUrl ? (
+                  <StyledPoster src={posterUrl} alt={`${movie.title || movie.name} poster`} />
+                ) : (
+                  <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                )}
+                <span>{movie.title || movie.name}</span>
+              </StyledTrendingItem>
+            );
+          })}
         </StyledTrendingList>
         {/* Insert Recommendations Carousel */}
       </StyledHomeContainer>
