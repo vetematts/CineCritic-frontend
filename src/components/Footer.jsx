@@ -92,7 +92,7 @@ function Footer() {
               <StyledFooterLinks>Your Account</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
-              <StyledFooterLinks>Register</StyledFooterLinks>
+              <StyledFooterLinks to = "/signup">Register</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
               <StyledFooterLinks>Terms of Service</StyledFooterLinks>
