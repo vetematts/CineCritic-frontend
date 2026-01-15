@@ -56,7 +56,7 @@ export default function LoginForm() {
 
   return (
     <StyledForm onSubmit={handleLoginSubmit}>
-      <StyledLoginLabels for="enter-login-email">
+      <StyledLoginLabels htmlFor="enter-login-email">
         Email
       </StyledLoginLabels>
       <StyledInput
@@ -66,7 +66,7 @@ export default function LoginForm() {
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Enter your email"
         />
-      <StyledLoginLabels for="enter-login-username">
+      <StyledLoginLabels htmlFor="enter-login-username">
         Username
       </StyledLoginLabels>
       <StyledInput
@@ -76,7 +76,7 @@ export default function LoginForm() {
           onChange={(event) => setUsername(event.target.value)}
           placeholder="Enter your username"
         />
-      <StyledLoginLabels for="enter-login-password">
+      <StyledLoginLabels htmlFor="enter-login-password">
         Password
       </StyledLoginLabels>
       <StyledInput
