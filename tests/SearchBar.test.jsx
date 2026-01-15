@@ -1,25 +1,27 @@
 import { expect, test, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import SearchBar from '../src/components/SearchBar';
-import { get } from '../src/api/api';
 
-vi.mock('../src/api/api', () => ({
-  get: vi.fn(),
+// Mock useNavigate before importing SearchBar
+const mockNavigate = vi.fn();
+vi.mock('react-router', () => ({
+  useNavigate: () => mockNavigate,
 }));
 
-test('submits search term and calls search endpoint', async () => {
-  get.mockResolvedValue([]);
+import SearchBar from '../src/components/SearchBar';
 
-  render(<SearchBar />);
+test('submits search term and navigates to search results', async () => {
+  render(
+    <MemoryRouter>
+      <SearchBar />
+    </MemoryRouter>
+  );
 
-  await userEvent.type(screen.getByPlaceholderText(/search/i), 'alien');
-  await userEvent.click(screen.getByRole('textbox'));
+  const input = screen.getByPlaceholderText(/search/i);
+  await userEvent.type(input, 'alien');
   await userEvent.keyboard('{Enter}');
 
-  await waitFor(() => {
-    expect(get).toHaveBeenCalledWith('/api/movies/search', {
-      params: { q: 'alien' },
-    });
-  });
+  // SearchBar navigates to /search?q=alien
+  expect(mockNavigate).toHaveBeenCalledWith('/search?q=alien');
 });

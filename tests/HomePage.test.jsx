@@ -1,12 +1,19 @@
 import { expect, test, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import HomePage from '../src/pages/HomePage';
-import { get } from '../src/api/api';
+
+// Mock useNavigate before importing components that use it
+const mockNavigate = vi.fn();
+vi.mock('react-router', () => ({
+  useNavigate: () => mockNavigate,
+}));
 
 vi.mock('../src/api/api', () => ({
   get: vi.fn(),
 }));
+
+import HomePage from '../src/pages/HomePage';
+import { get } from '../src/api/api';
 
 test('renders trending and top-rated lists', async () => {
   get
