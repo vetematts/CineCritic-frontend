@@ -32,14 +32,14 @@ const StyledSearchBar = styled.input`
 function SearchBar() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   // Goto the search results page with the query being in the URL
   const handleSubmit = async (event) => {
     event.preventDefault(); // Stop the default reloading page
     const searchQueryPage = getSearchURL(searchTerm);
     // navigate(searchQueryPage, {searchTerm: {searchTerm}});
     navigate(searchQueryPage);
-  }
+  };
 
   const handleSearchTerm = (event) => {
     setSearchTerm(event.target.value);
