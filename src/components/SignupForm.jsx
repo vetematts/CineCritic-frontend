@@ -5,19 +5,28 @@ import { signupRequest } from '../api/auth';
 import { loginRequest } from '../api/auth';
 import { useAuth } from '../contexts/AuthContext';
 
+// Make the form a flex-container
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  
+  // Add spacing between the labels and inputs
+  gap: 1.25rem;
+  
+  // Make the form 100% the width of the login div container
+  // but capped at 24rem
+  width: 100%;
   max-width: 24rem;
 `;
 
+// Add visual interest to the login input fields
 const StyledInput = styled.input`
   padding: 0.4rem 0.6rem;
   border-radius: 6px;
   border: 1px solid rgba(204, 204, 204, 0.5);
 `;
 
+// Give the error message a salmon pink appearance
 const StyledError = styled.p`
   color: #ffb4a2;
 `;
@@ -55,34 +64,34 @@ export default function SignupForm() {
     <StyledForm onSubmit={handleSignupSubmit}>
       <label>
         Username
-        <StyledInput
-          type="text"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-          placeholder="Enter your username"
-          required
-        />
       </label>
+      <StyledInput
+        type="text"
+        value={username}
+        onChange={(event) => setUsername(event.target.value)}
+        placeholder="Enter your username"
+        required
+      />
       <label>
         Email
-        <StyledInput
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="Enter your email"
-          required
-        />
       </label>
+      <StyledInput
+        type="email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        placeholder="Enter your email"
+        required
+      />
       <label>
         Password
-        <StyledInput
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Enter your password"
-          required
-        />
       </label>
+      <StyledInput
+        type="password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+        placeholder="Enter your password"
+        required
+      />
       {message && <StyledError>{message}</StyledError>}
       <button type="submit">Create account</button>
     </StyledForm>
