@@ -26,6 +26,10 @@ const StyledLoginLabels = styled.label`
   color: #cec8c8ff;
 `;
 
+const StyledLoginButton = styled.button`
+  margin: 0.75rem 0 0 0;
+`;
+
 export default function LoginForm() {
   const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
@@ -88,7 +92,7 @@ export default function LoginForm() {
           required
         />
       {message && <StyledError>{message}</StyledError>}
-      <button type="submit">Log in</button>
+      <StyledLoginButton type="submit">Log in</StyledLoginButton>
     </StyledForm>
   );
 }
