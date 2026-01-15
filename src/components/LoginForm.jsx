@@ -58,32 +58,32 @@ export default function LoginForm() {
     <StyledForm onSubmit={handleLoginSubmit}>
       <StyledLoginLabels>
         Email
-        <StyledInput
+      </StyledLoginLabels>
+      <StyledInput
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Enter your email"
         />
-      </StyledLoginLabels>
       <StyledLoginLabels>
         Username
-        <StyledInput
+      </StyledLoginLabels>
+      <StyledInput
           type="text"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
           placeholder="Enter your username"
         />
-      </StyledLoginLabels>
       <StyledLoginLabels>
         Password
-        <StyledInput
+      </StyledLoginLabels>
+      <StyledInput
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Enter your password"
           required
         />
-      </StyledLoginLabels>
       {message && <StyledError>{message}</StyledError>}
       <button type="submit">Log in</button>
     </StyledForm>
