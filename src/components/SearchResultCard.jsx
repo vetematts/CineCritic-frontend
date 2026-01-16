@@ -23,15 +23,17 @@ const StyledFilmCard = styled.div`
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
   max-width: 100%;
   overflow: hidden;
-  
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.08);
     transform: translateY(-2px);
   }
-  
+
   // On smaller screens, stack vertically
   @media (max-width: 768px) {
     flex-direction: column;
@@ -42,31 +44,31 @@ const StyledFilmCard = styled.div`
 // Poster container with fixed dimensions
 const StyledFilmCardContents = styled.div`
   flex-shrink: 0;
-  
+
   &#mini-movie-poster {
     width: 200px;
     height: 300px;
-    
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 5px;
     }
-    
+
     @media (max-width: 768px) {
       width: 150px;
       height: 225px;
     }
   }
-  
+
   &#film-description {
     flex: 1;
     min-width: 0; // Important for text truncation
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    
+
     h2 {
       margin: 0;
       font-size: 1.5rem;
@@ -74,14 +76,14 @@ const StyledFilmCardContents = styled.div`
       word-wrap: break-word;
       overflow-wrap: break-word;
     }
-    
+
     h3 {
       margin: 0;
       font-size: 1rem;
       color: rgba(255, 255, 255, 0.6);
       font-weight: normal;
     }
-    
+
     p {
       margin: 0;
       color: rgba(255, 255, 255, 0.7);

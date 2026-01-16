@@ -8,10 +8,10 @@ import { useAuth } from '../contexts/AuthContext';
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  
+
   // Add spacing between the labels and inputs
   gap: 1.25rem;
-  
+
   // Make the form 100% the width of the login div container
   // but capped at 24rem
   width: 100%;
@@ -37,7 +37,7 @@ const StyledLoginLabels = styled.label`
 
 // Add space above the login button and the bottom of the login form
 const StyledLoginButton = styled.button`
-  // Give the button a bit more meat  
+  // Give the button a bit more meat
   height: 2rem;
 
   // Space the login button from the password input
@@ -77,37 +77,31 @@ export default function LoginForm() {
 
   return (
     <StyledForm onSubmit={handleLoginSubmit}>
-      <StyledLoginLabels htmlFor="enter-login-email">
-        Email
-      </StyledLoginLabels>
+      <StyledLoginLabels htmlFor="enter-login-email">Email</StyledLoginLabels>
       <StyledInput
-          id="enter-login-email"
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="Enter your email"
-        />
-      <StyledLoginLabels htmlFor="enter-login-username">
-        Username
-      </StyledLoginLabels>
+        id="enter-login-email"
+        type="email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        placeholder="Enter your email"
+      />
+      <StyledLoginLabels htmlFor="enter-login-username">Username</StyledLoginLabels>
       <StyledInput
-          id="enter-login-username"
-          type="text"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-          placeholder="Enter your username"
-        />
-      <StyledLoginLabels htmlFor="enter-login-password">
-        Password
-      </StyledLoginLabels>
+        id="enter-login-username"
+        type="text"
+        value={username}
+        onChange={(event) => setUsername(event.target.value)}
+        placeholder="Enter your username"
+      />
+      <StyledLoginLabels htmlFor="enter-login-password">Password</StyledLoginLabels>
       <StyledInput
-          id="enter-login-password"
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Enter your password"
-          required
-        />
+        id="enter-login-password"
+        type="password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+        placeholder="Enter your password"
+        required
+      />
       {message && <StyledError>{message}</StyledError>}
       <StyledLoginButton type="submit">Log in</StyledLoginButton>
     </StyledForm>

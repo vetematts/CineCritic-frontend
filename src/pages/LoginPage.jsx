@@ -46,7 +46,7 @@ const StyledMessage = styled.p`
 
 export default function LoginPage() {
   return (
-    <StyledFlexContainer className = "flex-container">
+    <StyledFlexContainer className="flex-container">
       <StyledFigure id="banner-container">
         <StyledLoginLogo src={banner} className="home_logo" alt="CineCritic Banner" />
       </StyledFigure>

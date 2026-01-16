@@ -36,7 +36,11 @@ test('renders movie detail and reviews', async () => {
 
 test('renders movie poster when poster_path is provided', async () => {
   get
-    .mockResolvedValueOnce({ title: 'Alien', poster_path: '/alien-poster.jpg', release_date: '1979-05-25' })
+    .mockResolvedValueOnce({
+      title: 'Alien',
+      poster_path: '/alien-poster.jpg',
+      release_date: '1979-05-25',
+    })
     .mockResolvedValueOnce([]);
 
   render(

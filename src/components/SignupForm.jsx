@@ -9,10 +9,10 @@ import { useAuth } from '../contexts/AuthContext';
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  
+
   // Add spacing between the labels and inputs
   gap: 1.25rem;
-  
+
   // Make the form 100% the width of the login div container
   // but capped at 24rem
   width: 100%;
@@ -38,7 +38,7 @@ const StyledError = styled.p`
 
 // Add space above the signup button and the bottom of the signup form
 const StyledSignupButton = styled.button`
-  // Give the button a bit more meat  
+  // Give the button a bit more meat
   height: 2rem;
 
   // Space the signup button from the password input
@@ -76,9 +76,7 @@ export default function SignupForm() {
 
   return (
     <StyledForm onSubmit={handleSignupSubmit}>
-      <StyledSignupLabels htmlFor="enter-signup-username">
-        Username
-      </StyledSignupLabels>
+      <StyledSignupLabels htmlFor="enter-signup-username">Username</StyledSignupLabels>
       <StyledInput
         id="enter-signup-username"
         type="text"
@@ -87,9 +85,7 @@ export default function SignupForm() {
         placeholder="Enter your username"
         required
       />
-      <StyledSignupLabels htmlFor="enter-signup-email">
-        Email
-      </StyledSignupLabels>
+      <StyledSignupLabels htmlFor="enter-signup-email">Email</StyledSignupLabels>
       <StyledInput
         id="enter-signup-email"
         type="email"
@@ -98,9 +94,7 @@ export default function SignupForm() {
         placeholder="Enter your email"
         required
       />
-      <StyledSignupLabels htmlFor="enter-signup-password">
-        Password
-      </StyledSignupLabels>
+      <StyledSignupLabels htmlFor="enter-signup-password">Password</StyledSignupLabels>
       <StyledInput
         id="enter-signup-password"
         type="password"

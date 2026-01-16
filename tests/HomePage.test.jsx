@@ -36,7 +36,9 @@ test('renders trending and top-rated lists', async () => {
 
 test('renders movie posters when poster_path is provided', async () => {
   get
-    .mockResolvedValueOnce([{ id: 1, title: 'Trending Movie', poster_path: '/trending-poster.jpg' }])
+    .mockResolvedValueOnce([
+      { id: 1, title: 'Trending Movie', poster_path: '/trending-poster.jpg' },
+    ])
     .mockResolvedValueOnce([{ id: 2, title: 'Top Rated Movie', poster_path: '/top-poster.jpg' }]);
 
   render(
@@ -48,7 +50,10 @@ test('renders movie posters when poster_path is provided', async () => {
   await waitFor(() => {
     const posters = screen.getAllByAltText('Trending Movie poster');
     expect(posters.length).toBeGreaterThan(0);
-    expect(posters[0]).toHaveAttribute('src', 'https://image.tmdb.org/t/p/w200/trending-poster.jpg');
+    expect(posters[0]).toHaveAttribute(
+      'src',
+      'https://image.tmdb.org/t/p/w200/trending-poster.jpg'
+    );
   });
 });
 

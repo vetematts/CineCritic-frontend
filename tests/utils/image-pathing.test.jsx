@@ -15,7 +15,9 @@ test('uses different image sizes correctly', () => {
   expect(getPosterUrl('/poster.jpg', 'w200')).toBe('https://image.tmdb.org/t/p/w200/poster.jpg');
   expect(getPosterUrl('/poster.jpg', 'w300')).toBe('https://image.tmdb.org/t/p/w300/poster.jpg');
   expect(getPosterUrl('/poster.jpg', 'w500')).toBe('https://image.tmdb.org/t/p/w500/poster.jpg');
-  expect(getPosterUrl('/poster.jpg', 'original')).toBe('https://image.tmdb.org/t/p/original/poster.jpg');
+  expect(getPosterUrl('/poster.jpg', 'original')).toBe(
+    'https://image.tmdb.org/t/p/original/poster.jpg'
+  );
 });
 
 test('defaults to w500 size when size not provided', () => {
