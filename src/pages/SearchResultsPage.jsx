@@ -40,7 +40,6 @@ function SearchResults() {
   // Check the URL for the query
   const [searchParams] = useSearchParams();
   const searchTerm = searchParams.get('q'); // Checks after "search?q="
-  console.log(searchTerm);
 
   // Hooks
   const [results, setResults] = useState([]);
