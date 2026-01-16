@@ -65,6 +65,9 @@ const StyledList = styled.ul`
 // Remove the list dots
 const StyledFooterLinkList = styled.li`
   list-style: none;
+
+  // Space out the links
+  padding: 0 0 0.5rem 0;
 `;
 
 // Three div containers to flex as columns that contain different links
@@ -92,7 +95,7 @@ function Footer() {
               <StyledFooterLinks>Your Account</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
-              <StyledFooterLinks>Register</StyledFooterLinks>
+              <StyledFooterLinks to = "/signup">Register</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
               <StyledFooterLinks>Terms of Service</StyledFooterLinks>
