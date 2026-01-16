@@ -17,8 +17,8 @@ import { get } from '../src/api/api';
 
 test('renders trending and top-rated lists', async () => {
   get
-    .mockResolvedValueOnce([{ id: 1, title: 'Trending Movie' }])
-    .mockResolvedValueOnce([{ id: 2, title: 'Top Rated Movie' }]);
+    .mockResolvedValueOnce([{ id: 1, title: 'Trending Movie', poster_path: '/trending-poster.jpg' }])
+    .mockResolvedValueOnce([{ id: 2, title: 'Top Rated Movie', poster_path: '/top-poster.jpg' }]);
 
   render(
     <MemoryRouter>
@@ -30,8 +30,13 @@ test('renders trending and top-rated lists', async () => {
     expect(get).toHaveBeenCalledWith('/api/movies/trending');
   });
 
-  expect(screen.getAllByText('Trending Movie').length).toBeGreaterThan(0);
-  expect(screen.getAllByText('Top Rated Movie').length).toBeGreaterThan(0);
+  // Check for section headings
+  expect(screen.getByText('Trending')).toBeInTheDocument();
+  expect(screen.getByText('Top Rated')).toBeInTheDocument();
+
+  // Check that movie titles are rendered (when posters are present)
+  expect(screen.getByText('Trending Movie')).toBeInTheDocument();
+  expect(screen.getByText('Top Rated Movie')).toBeInTheDocument();
 });
 
 test('renders movie posters when poster_path is provided', async () => {

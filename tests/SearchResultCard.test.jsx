@@ -91,6 +91,7 @@ test('creates correct link to movie detail page', () => {
   render(
     <MemoryRouter>
       <SearchResultCard
+        id={123}
         title="Test Movie"
         releaseYear="2023"
         description="A test movie description"
@@ -100,5 +101,5 @@ test('creates correct link to movie detail page', () => {
   );
 
   const link = screen.getByRole('link');
-  expect(link).toHaveAttribute('href', '/film/Test Movie');
+  expect(link).toHaveAttribute('href', '/movies/123');
 });
