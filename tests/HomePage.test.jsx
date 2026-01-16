@@ -35,8 +35,10 @@ test('renders trending and top-rated lists', async () => {
   expect(screen.getByText('Top Rated')).toBeInTheDocument();
 
   // Check that movie titles are rendered (when posters are present)
-  expect(screen.getByText('Trending Movie')).toBeInTheDocument();
-  expect(screen.getByText('Top Rated Movie')).toBeInTheDocument();
+  // Movies appear in multiple sections (Random Recommendations, Trending, Top Rated)
+  // so we use getAllByText to handle multiple occurrences
+  expect(screen.getAllByText('Trending Movie').length).toBeGreaterThan(0);
+  expect(screen.getAllByText('Top Rated Movie').length).toBeGreaterThan(0);
 });
 
 test('renders movie posters when poster_path is provided', async () => {
