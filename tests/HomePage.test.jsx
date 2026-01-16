@@ -17,7 +17,9 @@ import { get } from '../src/api/api';
 
 test('renders trending and top-rated lists', async () => {
   get
-    .mockResolvedValueOnce([{ id: 1, title: 'Trending Movie', poster_path: '/trending-poster.jpg' }])
+    .mockResolvedValueOnce([
+      { id: 1, title: 'Trending Movie', poster_path: '/trending-poster.jpg' },
+    ])
     .mockResolvedValueOnce([{ id: 2, title: 'Top Rated Movie', poster_path: '/top-poster.jpg' }]);
 
   render(
