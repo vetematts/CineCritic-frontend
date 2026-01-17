@@ -309,17 +309,21 @@ function AdvancedSearchPage() {
     // Convert selected genre IDs array to comma-separated string for API
     const genresParam = selectedGenreIds.length > 0 ? selectedGenreIds.join(',') : undefined;
 
+    // Debug: Log what's being sent
+    const searchParams = {
+      query: title,
+      year: releaseYear,
+      genres: genresParam,
+      crew,
+      ratingMin,
+      ratingMax,
+      page: 1,
+    };
+    console.log('Advanced search params:', searchParams);
+
     try {
       const data = await get('/api/movies/advanced', {
-        params: {
-          query: title,
-          year: releaseYear,
-          genres: genresParam,
-          crew,
-          ratingMin,
-          ratingMax,
-          page: 1,
-        },
+        params: searchParams,
       });
 
       setResults(data || []);
