@@ -50,6 +50,9 @@ const StyledInputs = styled.input`
   background-color: #ffffffff;
   opacity: 0.9;
 
+  /* Dark text color for visibility on white background */
+  color: #242424;
+
   /* Round the corners */
   border-radius: 10px; /* More pixel value for more roundness */
   padding: 5px; /* Optional: Add padding so text doesn't touch the edges */
@@ -70,6 +73,10 @@ const StyledDropDown = styled.select`
   flex: 1;
   justify-content: flex-start;
   align-items: flex-start;
+
+  /* Dark text color for visibility */
+  color: #242424;
+  background-color: #ffffffff;
 
   /* Space away from other items */
   margin: 5px 5px 20px 0;
