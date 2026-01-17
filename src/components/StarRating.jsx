@@ -34,8 +34,7 @@ const GoldStarSvg = styled.svg`
   height: 100%;
   fill: #e9da57;
   transition: clip-path 0.15s ease;
-  clip-path: ${(props) =>
-    props.$isHalf ? 'inset(0 50% 0 0)' : 'inset(0 0 0 0)'};
+  clip-path: ${(props) => (props.$isHalf ? 'inset(0 50% 0 0)' : 'inset(0 0 0 0)')};
 `;
 
 // Clickable areas

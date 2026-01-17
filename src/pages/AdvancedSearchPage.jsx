@@ -409,34 +409,38 @@ function AdvancedSearchPage() {
 
       {/* Results Section */}
       {(loading || error || hasSearched) && (
-          <StyledResultsContainer>
-            <StyledResultsWrapper>
-              {loading && <StyledLoading>Loading...</StyledLoading>}
-              {error && <StyledError>{error}</StyledError>}
+        <StyledResultsContainer>
+          <StyledResultsWrapper>
+            {loading && <StyledLoading>Loading...</StyledLoading>}
+            {error && <StyledError>{error}</StyledError>}
 
-              {!loading && !error && results.length === 0 && (
-                <StyledNoResults>No results found. Try adjusting your search criteria.</StyledNoResults>
-              )}
+            {!loading && !error && results.length === 0 && (
+              <StyledNoResults>
+                No results found. Try adjusting your search criteria.
+              </StyledNoResults>
+            )}
 
-              {!loading && !error && results.length > 0 &&
-                results.map((movie) => (
-                  <SearchResultCard
-                    key={movie.id || movie.tmdbId}
-                    id={movie.id || movie.tmdbId}
-                    movieId={movie.id || movie.tmdbId}
-                    tmdbId={movie.tmdbId}
-                    title={movie.title || movie.name}
-                    releaseYear={movie.release_year || movie.releaseYear}
-                    release_date={movie.release_date}
-                    releaseDate={movie.releaseDate}
-                    description={movie.overview || movie.description}
-                    poster_path={movie.poster_path}
-                    posterUrl={movie.posterUrl}
-                  />
-                ))}
-            </StyledResultsWrapper>
-          </StyledResultsContainer>
-        )}
+            {!loading &&
+              !error &&
+              results.length > 0 &&
+              results.map((movie) => (
+                <SearchResultCard
+                  key={movie.id || movie.tmdbId}
+                  id={movie.id || movie.tmdbId}
+                  movieId={movie.id || movie.tmdbId}
+                  tmdbId={movie.tmdbId}
+                  title={movie.title || movie.name}
+                  releaseYear={movie.release_year || movie.releaseYear}
+                  release_date={movie.release_date}
+                  releaseDate={movie.releaseDate}
+                  description={movie.overview || movie.description}
+                  poster_path={movie.poster_path}
+                  posterUrl={movie.posterUrl}
+                />
+              ))}
+          </StyledResultsWrapper>
+        </StyledResultsContainer>
+      )}
     </StyledForm>
   );
 }

@@ -292,10 +292,7 @@ function MovieDetailPage() {
                     <label>
                       Rating
                       <div style={{ marginTop: '0.5rem' }}>
-                        <StarRating
-                          value={editingRating}
-                          onChange={setEditingRating}
-                        />
+                        <StarRating value={editingRating} onChange={setEditingRating} />
                       </div>
                     </label>
                     <label>
