@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { get } from '../api/api';
+import SearchResultCard from '../components/SearchResultCard';
 
 // Styled components
 // This is the flex container for all the inputs
@@ -144,6 +145,41 @@ const StyledSubmitButton = styled.button`
   height: 30px;
 `;
 
+// Container for search results - matches form width and styling
+const StyledResultsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+`;
+
+// Results wrapper to match form's width constraint (80%)
+const StyledResultsWrapper = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+const StyledLoading = styled.p`
+  text-align: center;
+  color: rgba(255, 255, 255, 0.87);
+  padding: 2rem;
+`;
+
+const StyledError = styled.p`
+  color: #ffb4a2;
+  text-align: center;
+  padding: 2rem;
+`;
+
+const StyledNoResults = styled.p`
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 2rem;
+`;
+
 // This is the search results list
 function AdvancedSearchPage() {
   const [title, setTitle] = useState('');
@@ -155,6 +191,7 @@ function AdvancedSearchPage() {
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   const [availableGenres, setAvailableGenres] = useState([]);
   const [genresError, setGenresError] = useState(null);
 
@@ -220,6 +257,7 @@ function AdvancedSearchPage() {
     event.preventDefault();
     setLoading(true);
     setError(null);
+    setHasSearched(true);
 
     // Map the rating comparator to ratingMin/ratingMax query params.
     const trimmedRating = rating.trim();
@@ -340,15 +378,37 @@ function AdvancedSearchPage() {
       <StyledSearchRows>
         <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
       </StyledSearchRows>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      {results.length > 0 && (
-        <ul>
-          {results.map((movie) => (
-            <li key={movie.id || movie.tmdbId}>{movie.title || movie.name}</li>
-          ))}
-        </ul>
-      )}
+
+      {/* Results Section */}
+      {(loading || error || hasSearched) && (
+          <StyledResultsContainer>
+            <StyledResultsWrapper>
+              {loading && <StyledLoading>Loading...</StyledLoading>}
+              {error && <StyledError>{error}</StyledError>}
+
+              {!loading && !error && results.length === 0 && (
+                <StyledNoResults>No results found. Try adjusting your search criteria.</StyledNoResults>
+              )}
+
+              {!loading && !error && results.length > 0 &&
+                results.map((movie) => (
+                  <SearchResultCard
+                    key={movie.id || movie.tmdbId}
+                    id={movie.id || movie.tmdbId}
+                    movieId={movie.id || movie.tmdbId}
+                    tmdbId={movie.tmdbId}
+                    title={movie.title || movie.name}
+                    releaseYear={movie.release_year || movie.releaseYear}
+                    release_date={movie.release_date}
+                    releaseDate={movie.releaseDate}
+                    description={movie.overview || movie.description}
+                    poster_path={movie.poster_path}
+                    posterUrl={movie.posterUrl}
+                  />
+                ))}
+            </StyledResultsWrapper>
+          </StyledResultsContainer>
+        )}
     </StyledForm>
   );
 }
