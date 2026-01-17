@@ -74,26 +74,49 @@ const StyledDropDown = styled.select`
   margin: 5px 5px 20px 0;
 `;
 
-// Multi-select dropdown for genre selection - matches existing input styling
-const StyledGenreSelect = styled.select`
-  /* White background matching other inputs */
-  background-color: #ffffffff;
-  opacity: 0.9;
-
-  /* Round the corners */
-  border-radius: 10px;
-  padding: 5px;
-
-  /* Set responsive design */
+// Container for genre buttons/pills
+const StyledGenreContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   flex: 1;
   flex-basis: 100%;
-
-  /* Space away from other items */
   margin: 5px 0 20px 0;
+`;
 
-  /* Allow multiple selections with appropriate height */
-  min-height: 100px;
+// Genre button/pill - clickable to toggle selection
+const StyledGenreButton = styled.button`
+  /* Unselected state */
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  /* Selected state */
+  ${(props) =>
+    props.$isSelected &&
+    `
+    background-color: #e9da57;
+    color: #242424;
+    border-color: #e9da57;
+    font-weight: 600;
+  `}
+
+  /* Hover state */
+  &:hover {
+    background-color: ${(props) => (props.$isSelected ? '#f5e866' : 'rgba(255, 255, 255, 0.2)')};
+    border-color: ${(props) => (props.$isSelected ? '#f5e866' : 'rgba(255, 255, 255, 0.5)')};
+    transform: translateY(-1px);
+  }
+
+  /* Active/pressed state */
+  &:active {
+    transform: translateY(0);
+  }
 `;
 
 // Create a div container for the ratings drop down and input
@@ -155,11 +178,17 @@ function AdvancedSearchPage() {
     setRating(event.target.value);
   };
 
-  // Handle multi-select genre changes - convert selected options to array of IDs
-  const handleGenres = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions);
-    const genreIds = selectedOptions.map((option) => Number(option.value));
-    setSelectedGenreIds(genreIds);
+  // Handle genre toggle - click to select/deselect
+  const handleGenreToggle = (genreId) => {
+    setSelectedGenreIds((prev) => {
+      if (prev.includes(genreId)) {
+        // Remove genre if already selected
+        return prev.filter((id) => id !== genreId);
+      } else {
+        // Add genre if not selected
+        return [...prev, genreId];
+      }
+    });
   };
 
   // Fetch available genres from the API on component mount
@@ -282,29 +311,24 @@ function AdvancedSearchPage() {
           <p style={{ color: '#ffb4a2' }}>{genresError}</p>
         ) : availableGenres.length > 0 ? (
           <>
-            <StyledGenreSelect
-              multiple
-              value={selectedGenreIds.map(String)}
-              onChange={handleGenres}
-            >
-              {availableGenres.map((genre) => (
-                <option key={genre.id} value={genre.id}>
-                  {genre.name}
-                </option>
-              ))}
-            </StyledGenreSelect>
-            <p
-              style={{
-                fontSize: '0.85em',
-                color: '#bdbdbd',
-                marginTop: '-15px',
-                marginBottom: '5px',
-              }}
-            >
-              Hold Ctrl (Cmd on Mac) to select multiple genres
-            </p>
+            <StyledGenreContainer>
+              {availableGenres.map((genre) => {
+                const isSelected = selectedGenreIds.includes(genre.id);
+                return (
+                  <StyledGenreButton
+                    key={genre.id}
+                    type="button"
+                    $isSelected={isSelected}
+                    onClick={() => handleGenreToggle(genre.id)}
+                    aria-pressed={isSelected}
+                  >
+                    {genre.name}
+                  </StyledGenreButton>
+                );
+              })}
+            </StyledGenreContainer>
             {selectedGenreIds.length > 0 && (
-              <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>
+              <p style={{ fontSize: '0.9em', color: '#bdbdbd', marginTop: '-10px' }}>
                 {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''} selected
               </p>
             )}
