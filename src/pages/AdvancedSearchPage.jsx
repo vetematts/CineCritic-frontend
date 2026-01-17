@@ -282,18 +282,27 @@ function AdvancedSearchPage() {
     setHasSearched(true);
 
     // Map the rating comparator to ratingMin/ratingMax query params.
-    const trimmedRating = rating.trim();
+    // Rating comes from StarRating as a string like "2.5" or "0" when not set
+    // Convert from our 5-star scale (0-5) to TMDB's 10-point scale (0-10)
+    const ratingNum = rating ? Number(rating) : 0;
     let ratingMin;
     let ratingMax;
 
-    if (trimmedRating) {
+    // Only process rating if it's a valid number > 0
+    if (ratingNum > 0) {
+      // Convert 5-star scale to TMDB 10-point scale (multiply by 2)
+      // 1 star = 2.0, 2 stars = 4.0, 2.5 stars = 5.0, 4 stars = 8.0, 5 stars = 10.0
+      const tmdbRating = (ratingNum * 2).toFixed(1); // Keep 1 decimal for half-stars
+      const ratingValue = String(tmdbRating);
+
       if (ratingComparator === 'LESS_THAN' || ratingComparator === 'LESS_OR_EQUAL') {
-        ratingMax = trimmedRating;
+        ratingMax = ratingValue;
       } else if (ratingComparator === 'GREATER_THAN' || ratingComparator === 'GREATER_OR_EQUAL') {
-        ratingMin = trimmedRating;
+        ratingMin = ratingValue;
       } else {
-        ratingMin = trimmedRating;
-        ratingMax = trimmedRating;
+        // EQUAL_TO - set both min and max to the same value
+        ratingMin = ratingValue;
+        ratingMax = ratingValue;
       }
     }
 
