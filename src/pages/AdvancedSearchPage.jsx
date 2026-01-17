@@ -234,6 +234,7 @@ function AdvancedSearchPage() {
   };
 
   const handleRating = (newRating) => {
+    console.log('AdvancedSearchPage received rating:', newRating);
     setRating(newRating);
   };
 
