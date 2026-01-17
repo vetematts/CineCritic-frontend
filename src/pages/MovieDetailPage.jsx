@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { get, post, put, del } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
@@ -60,9 +61,58 @@ const StyledError = styled.p`
   color: #ffb4a2;
 `;
 
+// Prominent average rating display
+const StyledAverageRating = styled.div`
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: rgba(233, 218, 87, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #e9da57;
+`;
+
+const StyledAverageRatingLabel = styled.p`
+  margin: 0 0 0.25rem 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+`;
+
+const StyledAverageRatingValue = styled.p`
+  margin: 0;
+  color: #e9da57;
+  font-size: 1.5rem;
+  font-weight: 600;
+`;
+
+// Sign in prompt for rating
+const StyledSignInPrompt = styled.div`
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+`;
+
+const StyledSignInText = styled.p`
+  margin: 0 0 0.5rem 0;
+  color: rgba(255, 255, 255, 0.7);
+`;
+
+const StyledSignInLink = styled(Link)`
+  color: #e9da57;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #f5e866;
+  }
+`;
+
 function MovieDetailPage() {
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const userId = user?.id ?? user?.sub ?? null;
   const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -166,7 +216,14 @@ function MovieDetailPage() {
               <StyledTitle>{movie.title || movie.name}</StyledTitle>
               {movie.release_date && <StyledMeta>Released {movie.release_date}</StyledMeta>}
               {movie.runtime && <StyledMeta>Runtime {movie.runtime} minutes</StyledMeta>}
-              {movie.vote_average && <StyledMeta>Rating {movie.vote_average}</StyledMeta>}
+              {movie.vote_average && (
+                <StyledAverageRating>
+                  <StyledAverageRatingLabel>Average Rating</StyledAverageRatingLabel>
+                  <StyledAverageRatingValue>
+                    {movie.vote_average.toFixed(1)} / 10
+                  </StyledAverageRatingValue>
+                </StyledAverageRating>
+              )}
               {movie.overview && <p>{movie.overview}</p>}
             </StyledMovieDetails>
           </StyledMovieHeader>
@@ -261,58 +318,53 @@ function MovieDetailPage() {
       )}
       {!loading && (
         <>
-          <h3>Write a review</h3>
-          {!userId && <p>Please log in to submit a review.</p>}
+          <h3>Rate & Review</h3>
           {reviewError && <StyledError>{reviewError}</StyledError>}
-          <form
-            onSubmit={async (event) => {
-              event.preventDefault();
-              if (!userId) {
-                setReviewError('You must be logged in.');
-                return;
-              }
+          {isAuthenticated ? (
+            <form
+              onSubmit={async (event) => {
+                event.preventDefault();
+                setReviewError(null);
+                try {
+                  await post('/api/reviews', {
+                    tmdbId: Number(id),
+                    userId,
+                    rating: Number(reviewRating),
+                    body: reviewBody,
+                    status: 'published',
+                  });
 
-              setReviewError(null);
-              try {
-                await post('/api/reviews', {
-                  tmdbId: Number(id),
-                  userId,
-                  rating: Number(reviewRating),
-                  body: reviewBody,
-                  status: 'published',
-                });
-
-                const updated = await get(`/api/reviews/${id}`);
-                setReviews(updated || []);
-                setReviewBody('');
-                setReviewRating('5');
-              } catch (err) {
-                setReviewError(err?.message || 'Unable to submit review.');
-              }
-            }}
-          >
-            <label>
-              Rating
-              <div style={{ marginTop: '0.5rem' }}>
-                <StarRating
-                  value={reviewRating}
-                  onChange={setReviewRating}
-                  disabled={!userId}
+                  const updated = await get(`/api/reviews/${id}`);
+                  setReviews(updated || []);
+                  setReviewBody('');
+                  setReviewRating('5');
+                } catch (err) {
+                  setReviewError(err?.message || 'Unable to submit review.');
+                }
+              }}
+            >
+              <label>
+                Rating
+                <div style={{ marginTop: '0.5rem' }}>
+                  <StarRating value={reviewRating} onChange={setReviewRating} />
+                </div>
+              </label>
+              <label>
+                Review
+                <textarea
+                  value={reviewBody}
+                  onChange={(event) => setReviewBody(event.target.value)}
                 />
-              </div>
-            </label>
-            <label>
-              Review
-              <textarea
-                value={reviewBody}
-                onChange={(event) => setReviewBody(event.target.value)}
-                disabled={!userId}
-              />
-            </label>
-            <button type="submit" disabled={!userId}>
-              Submit review
-            </button>
-          </form>
+              </label>
+              <button type="submit">Submit review</button>
+            </form>
+          ) : (
+            <StyledSignInPrompt>
+              <StyledSignInText>
+                <StyledSignInLink to="/login">Sign in</StyledSignInLink> to write a review
+              </StyledSignInText>
+            </StyledSignInPrompt>
+          )}
         </>
       )}
       {!loading && (

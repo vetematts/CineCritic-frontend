@@ -64,7 +64,6 @@ export default function StarRating({ value = 0, onChange, disabled = false }) {
     if (disabled) return;
     const newRating = starIndex + (isLeftHalf ? 0.5 : 1);
     const normalizedRating = normalizeValue(newRating);
-    console.log('StarRating click:', { starIndex, isLeftHalf, newRating, normalizedRating });
     onChange?.(String(normalizedRating));
   };
 

@@ -234,7 +234,6 @@ function AdvancedSearchPage() {
   };
 
   const handleRating = (newRating) => {
-    console.log('AdvancedSearchPage received rating:', newRating);
     setRating(newRating);
   };
 
@@ -310,21 +309,17 @@ function AdvancedSearchPage() {
     // Convert selected genre IDs array to comma-separated string for API
     const genresParam = selectedGenreIds.length > 0 ? selectedGenreIds.join(',') : undefined;
 
-    // Debug: Log what's being sent
-    const searchParams = {
-      query: title,
-      year: releaseYear,
-      genres: genresParam,
-      crew,
-      ratingMin,
-      ratingMax,
-      page: 1,
-    };
-    console.log('Advanced search params:', searchParams);
-
     try {
       const data = await get('/api/movies/advanced', {
-        params: searchParams,
+        params: {
+          query: title,
+          year: releaseYear,
+          genres: genresParam,
+          crew,
+          ratingMin,
+          ratingMax,
+          page: 1,
+        },
       });
 
       setResults(data || []);
