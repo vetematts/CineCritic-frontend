@@ -47,7 +47,7 @@ const ClickableArea = styled.div`
   ${(props) => (props.$isLeft ? 'left: 0;' : 'right: 0;')}
 `;
 
-// Letterboxd-style star rating component
+// Star rating component
 export default function StarRating({ value = 0, onChange, disabled = false }) {
   const [hoverValue, setHoverValue] = useState(null);
 

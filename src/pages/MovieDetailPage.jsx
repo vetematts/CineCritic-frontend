@@ -152,7 +152,8 @@ function MovieDetailPage() {
         }
       } catch (err) {
         if (isMounted) {
-          setError(err?.error || 'Unable to load movie details.');
+          // err.message contains the error message from the API
+          setError(err?.message || 'Unable to load movie details.');
         }
       } finally {
         if (isMounted) {
