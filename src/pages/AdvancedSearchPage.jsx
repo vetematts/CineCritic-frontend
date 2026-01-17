@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { get } from '../api/api';
 import SearchResultCard from '../components/SearchResultCard';
+import StarRating from '../components/StarRating';
 
 // Styled components
 // This is the flex container for all the inputs
@@ -127,17 +128,31 @@ const StyledGenreButton = styled.button`
   }
 `;
 
-// Create a div container for the ratings drop down and input
+// Container for rating selection with stars and comparator
 const StyledRatingInput = styled.div`
   /* Set responsive design */
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
+  gap: 0.75rem;
   flex: 1;
   flex-basis: 100%;
-  flex-wrap: nowrap;
 
   /* This container is 80% of the main's width */
   width: 80%;
+`;
+
+// Comparator dropdown styling
+const StyledComparatorSelect = styled.select`
+  /* White background matching other inputs */
+  background-color: #ffffffff;
+  color: #242424;
+  opacity: 0.9;
+  border-radius: 10px;
+  padding: 5px;
+  display: flex;
+  flex: 1;
+  flex-basis: 100%;
+  margin: 5px 0 20px 0;
 `;
 
 // Space the submit button further away from the last query input
@@ -218,8 +233,8 @@ function AdvancedSearchPage() {
     setRatingComparator(event.target.value);
   };
 
-  const handleRating = (event) => {
-    setRating(event.target.value);
+  const handleRating = (newRating) => {
+    setRating(newRating);
   };
 
   // Handle genre toggle - click to select/deselect
@@ -335,19 +350,16 @@ function AdvancedSearchPage() {
       <StyledSearchRows>
         <StyledLabels>Rating</StyledLabels>
         <StyledRatingInput>
-          <StyledDropDown value={ratingComparator} onChange={handleRatingDropDown}>
-            {/* HTML entity codes: &lt is < and &gt is > */}
+          <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
             <option value="LESS_THAN">Less than</option>
             <option value="LESS_OR_EQUAL">Less or equal to</option>
             <option value="EQUAL_TO">Equal to</option>
             <option value="GREATER_THAN">Greater than</option>
             <option value="GREATER_OR_EQUAL">Greater or equal to</option>
-          </StyledDropDown>
-          <StyledInputs
-            value={rating}
-            onChange={handleRating}
-            placeholder="Any number between 0 and 5"
-          />
+          </StyledComparatorSelect>
+          <div style={{ marginTop: '0.5rem' }}>
+            <StarRating value={rating || '0'} onChange={handleRating} />
+          </div>
         </StyledRatingInput>
       </StyledSearchRows>
       <StyledSearchRows>
