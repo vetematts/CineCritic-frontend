@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { get } from '../api/api';
 import SearchResultCard from '../components/SearchResultCard';
+import StarRating from '../components/StarRating';
 
 // Styled components
 // This is the flex container for all the inputs
@@ -127,17 +128,31 @@ const StyledGenreButton = styled.button`
   }
 `;
 
-// Create a div container for the ratings drop down and input
+// Container for rating selection with stars and comparator
 const StyledRatingInput = styled.div`
   /* Set responsive design */
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
+  gap: 0.75rem;
   flex: 1;
   flex-basis: 100%;
-  flex-wrap: nowrap;
 
   /* This container is 80% of the main's width */
   width: 80%;
+`;
+
+// Comparator dropdown styling
+const StyledComparatorSelect = styled.select`
+  /* White background matching other inputs */
+  background-color: #ffffffff;
+  color: #242424;
+  opacity: 0.9;
+  border-radius: 10px;
+  padding: 5px;
+  display: flex;
+  flex: 1;
+  flex-basis: 100%;
+  margin: 5px 0 20px 0;
 `;
 
 // Space the submit button further away from the last query input
@@ -218,8 +233,8 @@ function AdvancedSearchPage() {
     setRatingComparator(event.target.value);
   };
 
-  const handleRating = (event) => {
-    setRating(event.target.value);
+  const handleRating = (newRating) => {
+    setRating(newRating);
   };
 
   // Handle genre toggle - click to select/deselect
@@ -267,18 +282,27 @@ function AdvancedSearchPage() {
     setHasSearched(true);
 
     // Map the rating comparator to ratingMin/ratingMax query params.
-    const trimmedRating = rating.trim();
+    // Rating comes from StarRating as a string like "2.5" or "0" when not set
+    // Convert from our 5-star scale (0-5) to TMDB's 10-point scale (0-10)
+    const ratingNum = rating ? Number(rating) : 0;
     let ratingMin;
     let ratingMax;
 
-    if (trimmedRating) {
+    // Only process rating if it's a valid number > 0
+    if (ratingNum > 0) {
+      // Convert 5-star scale to TMDB 10-point scale (multiply by 2)
+      // 1 star = 2.0, 2 stars = 4.0, 2.5 stars = 5.0, 4 stars = 8.0, 5 stars = 10.0
+      const tmdbRating = (ratingNum * 2).toFixed(1); // Keep 1 decimal for half-stars
+      const ratingValue = String(tmdbRating);
+
       if (ratingComparator === 'LESS_THAN' || ratingComparator === 'LESS_OR_EQUAL') {
-        ratingMax = trimmedRating;
+        ratingMax = ratingValue;
       } else if (ratingComparator === 'GREATER_THAN' || ratingComparator === 'GREATER_OR_EQUAL') {
-        ratingMin = trimmedRating;
+        ratingMin = ratingValue;
       } else {
-        ratingMin = trimmedRating;
-        ratingMax = trimmedRating;
+        // EQUAL_TO - set both min and max to the same value
+        ratingMin = ratingValue;
+        ratingMax = ratingValue;
       }
     }
 
@@ -335,19 +359,16 @@ function AdvancedSearchPage() {
       <StyledSearchRows>
         <StyledLabels>Rating</StyledLabels>
         <StyledRatingInput>
-          <StyledDropDown value={ratingComparator} onChange={handleRatingDropDown}>
-            {/* HTML entity codes: &lt is < and &gt is > */}
+          <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
             <option value="LESS_THAN">Less than</option>
             <option value="LESS_OR_EQUAL">Less or equal to</option>
             <option value="EQUAL_TO">Equal to</option>
             <option value="GREATER_THAN">Greater than</option>
             <option value="GREATER_OR_EQUAL">Greater or equal to</option>
-          </StyledDropDown>
-          <StyledInputs
-            value={rating}
-            onChange={handleRating}
-            placeholder="Any number between 0 and 5"
-          />
+          </StyledComparatorSelect>
+          <div style={{ marginTop: '0.5rem' }}>
+            <StarRating value={rating || '0'} onChange={handleRating} />
+          </div>
         </StyledRatingInput>
       </StyledSearchRows>
       <StyledSearchRows>
@@ -388,34 +409,38 @@ function AdvancedSearchPage() {
 
       {/* Results Section */}
       {(loading || error || hasSearched) && (
-          <StyledResultsContainer>
-            <StyledResultsWrapper>
-              {loading && <StyledLoading>Loading...</StyledLoading>}
-              {error && <StyledError>{error}</StyledError>}
+        <StyledResultsContainer>
+          <StyledResultsWrapper>
+            {loading && <StyledLoading>Loading...</StyledLoading>}
+            {error && <StyledError>{error}</StyledError>}
 
-              {!loading && !error && results.length === 0 && (
-                <StyledNoResults>No results found. Try adjusting your search criteria.</StyledNoResults>
-              )}
+            {!loading && !error && results.length === 0 && (
+              <StyledNoResults>
+                No results found. Try adjusting your search criteria.
+              </StyledNoResults>
+            )}
 
-              {!loading && !error && results.length > 0 &&
-                results.map((movie) => (
-                  <SearchResultCard
-                    key={movie.id || movie.tmdbId}
-                    id={movie.id || movie.tmdbId}
-                    movieId={movie.id || movie.tmdbId}
-                    tmdbId={movie.tmdbId}
-                    title={movie.title || movie.name}
-                    releaseYear={movie.release_year || movie.releaseYear}
-                    release_date={movie.release_date}
-                    releaseDate={movie.releaseDate}
-                    description={movie.overview || movie.description}
-                    poster_path={movie.poster_path}
-                    posterUrl={movie.posterUrl}
-                  />
-                ))}
-            </StyledResultsWrapper>
-          </StyledResultsContainer>
-        )}
+            {!loading &&
+              !error &&
+              results.length > 0 &&
+              results.map((movie) => (
+                <SearchResultCard
+                  key={movie.id || movie.tmdbId}
+                  id={movie.id || movie.tmdbId}
+                  movieId={movie.id || movie.tmdbId}
+                  tmdbId={movie.tmdbId}
+                  title={movie.title || movie.name}
+                  releaseYear={movie.release_year || movie.releaseYear}
+                  release_date={movie.release_date}
+                  releaseDate={movie.releaseDate}
+                  description={movie.overview || movie.description}
+                  poster_path={movie.poster_path}
+                  posterUrl={movie.posterUrl}
+                />
+              ))}
+          </StyledResultsWrapper>
+        </StyledResultsContainer>
+      )}
     </StyledForm>
   );
 }
