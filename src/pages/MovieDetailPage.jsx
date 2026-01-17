@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { get, post, put, del } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
 import getPosterUrl from '../utilities/image-pathing';
+import StarRating from '../components/StarRating';
 
 const StyledContainer = styled.section`
   width: 100rem;
@@ -233,21 +234,12 @@ function MovieDetailPage() {
                   >
                     <label>
                       Rating
-                      <select
-                        value={editingRating}
-                        onChange={(event) => setEditingRating(event.target.value)}
-                      >
-                        <option value="0.5">0.5</option>
-                        <option value="1">1</option>
-                        <option value="1.5">1.5</option>
-                        <option value="2">2</option>
-                        <option value="2.5">2.5</option>
-                        <option value="3">3</option>
-                        <option value="3.5">3.5</option>
-                        <option value="4">4</option>
-                        <option value="4.5">4.5</option>
-                        <option value="5">5</option>
-                      </select>
+                      <div style={{ marginTop: '0.5rem' }}>
+                        <StarRating
+                          value={editingRating}
+                          onChange={setEditingRating}
+                        />
+                      </div>
                     </label>
                     <label>
                       Review
@@ -301,22 +293,13 @@ function MovieDetailPage() {
           >
             <label>
               Rating
-              <select
-                value={reviewRating}
-                onChange={(event) => setReviewRating(event.target.value)}
-                disabled={!userId}
-              >
-                <option value="0.5">0.5</option>
-                <option value="1">1</option>
-                <option value="1.5">1.5</option>
-                <option value="2">2</option>
-                <option value="2.5">2.5</option>
-                <option value="3">3</option>
-                <option value="3.5">3.5</option>
-                <option value="4">4</option>
-                <option value="4.5">4.5</option>
-                <option value="5">5</option>
-              </select>
+              <div style={{ marginTop: '0.5rem' }}>
+                <StarRating
+                  value={reviewRating}
+                  onChange={setReviewRating}
+                  disabled={!userId}
+                />
+              </div>
             </label>
             <label>
               Review
