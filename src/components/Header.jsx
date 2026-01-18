@@ -45,14 +45,19 @@ const StyledHeaderColumns = styled.div`
 const StyledLogo = styled.img``;
 
 const StyledAuthButton = styled.button`
-  padding: 0.6rem 1.2rem;
+  padding: 0.5rem 1rem;
   background-color: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.87);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
+  white-space: nowrap;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
@@ -70,16 +75,20 @@ const StyledAuthButton = styled.button`
 `;
 
 const StyledAuthLink = styled(NavLink)`
-  padding: 0.6rem 1.2rem;
+  padding: 0.5rem 1rem;
   background-color: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.87);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
-  display: inline-block;
+  white-space: nowrap;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
