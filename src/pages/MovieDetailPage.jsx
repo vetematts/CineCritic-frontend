@@ -417,96 +417,101 @@ function MovieDetailPage() {
               <>
                 <StyledHeading>Reviews</StyledHeading>
                 <StyledList>
-                  {reviews.map((review) => (
-                    <StyledListItem key={review.id || review._id}>
-                      <StyledReviewAuthor>
-                        {review.user?.username ||
-                          review.username ||
-                          review.user?.name ||
-                          review.user_name ||
-                          'Anonymous'}
-                      </StyledReviewAuthor>
-                      {review.rating && (
-                        <div style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
-                          <StarRating value={String(review.rating)} disabled={true} />
-                        </div>
-                      )}
-                      <StyledParagraph>
-                        {review.body || review.content || review.text}
-                      </StyledParagraph>
-                      {user?.id &&
-                        (review.user_id === user.id ||
-                          review.userId === user.id ||
-                          review.user?.id === user.id) &&
-                        editingReviewId !== (review.id || review._id) && (
-                          <>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setEditingReviewId(review.id || review._id);
-                                setEditingBody(review.content || review.text || '');
-                                setEditingRating(String(review.rating || '5'));
-                              }}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              type="button"
-                              onClick={async () => {
-                                setReviewError(null);
-                                try {
-                                  await del(`/api/reviews/${review.id || review._id}`);
-                                  const updated = await get(`/api/reviews/${id}`);
-                                  setReviews(updated || []);
-                                } catch (err) {
-                                  setReviewError(err?.message || 'Unable to delete review.');
-                                }
-                              }}
-                            >
-                              Delete
-                            </button>
-                          </>
+                  {reviews.map((review) => {
+                    // Debug: log review structure to see what fields are available
+                    console.log('Review object:', review);
+                    return (
+                      <StyledListItem key={review.id || review._id}>
+                        <StyledReviewAuthor>
+                          {review.user?.username ||
+                            review.username ||
+                            review.user?.name ||
+                            review.user_name ||
+                            review.user?.email?.split('@')[0] ||
+                            'Anonymous'}
+                        </StyledReviewAuthor>
+                        {review.rating && (
+                          <div style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                            <StarRating value={String(review.rating)} disabled={true} />
+                          </div>
                         )}
-                      {editingReviewId === (review.id || review._id) && (
-                        <form
-                          onSubmit={async (event) => {
-                            event.preventDefault();
-                            setReviewError(null);
-                            try {
-                              await put(`/api/reviews/${editingReviewId}`, {
-                                rating: Number(editingRating),
-                                body: editingBody,
-                              });
+                        <StyledParagraph>
+                          {review.body || review.content || review.text}
+                        </StyledParagraph>
+                        {user?.id &&
+                          (review.user_id === user.id ||
+                            review.userId === user.id ||
+                            review.user?.id === user.id) &&
+                          editingReviewId !== (review.id || review._id) && (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setEditingReviewId(review.id || review._id);
+                                  setEditingBody(review.content || review.text || '');
+                                  setEditingRating(String(review.rating || '5'));
+                                }}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                type="button"
+                                onClick={async () => {
+                                  setReviewError(null);
+                                  try {
+                                    await del(`/api/reviews/${review.id || review._id}`);
+                                    const updated = await get(`/api/reviews/${id}`);
+                                    setReviews(updated || []);
+                                  } catch (err) {
+                                    setReviewError(err?.message || 'Unable to delete review.');
+                                  }
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </>
+                          )}
+                        {editingReviewId === (review.id || review._id) && (
+                          <form
+                            onSubmit={async (event) => {
+                              event.preventDefault();
+                              setReviewError(null);
+                              try {
+                                await put(`/api/reviews/${editingReviewId}`, {
+                                  rating: Number(editingRating),
+                                  body: editingBody,
+                                });
 
-                              const updated = await get(`/api/reviews/${id}`);
-                              setReviews(updated || []);
-                              setEditingReviewId(null);
-                            } catch (err) {
-                              setReviewError(err?.message || 'Unable to update review.');
-                            }
-                          }}
-                        >
-                          <label>
-                            Rating
-                            <div style={{ marginTop: '0.5rem' }}>
-                              <StarRating value={editingRating} onChange={setEditingRating} />
-                            </div>
-                          </label>
-                          <label>
-                            Review
-                            <textarea
-                              value={editingBody}
-                              onChange={(event) => setEditingBody(event.target.value)}
-                            />
-                          </label>
-                          <button type="submit">Save</button>
-                          <button type="button" onClick={() => setEditingReviewId(null)}>
-                            Cancel
-                          </button>
-                        </form>
-                      )}
-                    </StyledListItem>
-                  ))}
+                                const updated = await get(`/api/reviews/${id}`);
+                                setReviews(updated || []);
+                                setEditingReviewId(null);
+                              } catch (err) {
+                                setReviewError(err?.message || 'Unable to update review.');
+                              }
+                            }}
+                          >
+                            <label>
+                              Rating
+                              <div style={{ marginTop: '0.5rem' }}>
+                                <StarRating value={editingRating} onChange={setEditingRating} />
+                              </div>
+                            </label>
+                            <label>
+                              Review
+                              <textarea
+                                value={editingBody}
+                                onChange={(event) => setEditingBody(event.target.value)}
+                              />
+                            </label>
+                            <button type="submit">Save</button>
+                            <button type="button" onClick={() => setEditingReviewId(null)}>
+                              Cancel
+                            </button>
+                          </form>
+                        )}
+                      </StyledListItem>
+                    );
+                  })}
                 </StyledList>
               </>
             )}
