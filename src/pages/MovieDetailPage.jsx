@@ -246,9 +246,199 @@ const StyledWatchlistButton = styled.button`
   }
 `;
 
+// Review Modal
+const StyledModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+`;
+
+const StyledModal = styled.div`
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+`;
+
+const StyledModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+const StyledModalTitle = styled.h3`
+  margin: 0;
+  color: #e9da57;
+  font-size: 1.5rem;
+`;
+
+const StyledCloseButton = styled.button`
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+  }
+`;
+
+const StyledModalContent = styled.div`
+  padding: 1.5rem;
+`;
+
+const StyledModalForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+const StyledModalLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 1rem;
+`;
+
+const StyledModalTextarea = styled.textarea`
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 120px;
+
+  &:focus {
+    outline: none;
+    border-color: #e9da57;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+`;
+
+const StyledModalButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+`;
+
+const StyledModalButton = styled.button`
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+const StyledSubmitButton = styled(StyledModalButton)`
+  background-color: #e9da57;
+  color: #242424;
+  border: none;
+
+  &:hover:not(:disabled) {
+    background-color: #f5e866;
+  }
+`;
+
+const StyledCancelButton = styled(StyledModalButton)`
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+`;
+
+const StyledOpenReviewButton = styled.button`
+  padding: 0.75rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+`;
+
+const StyledSignInReviewButton = styled(Link)`
+  padding: 0.75rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+`;
+
+const StyledActionButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+`;
+
 function MovieDetailPage() {
   const { id } = useParams();
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
   const userId = user?.id ?? user?.sub ?? null;
   const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -262,6 +452,7 @@ function MovieDetailPage() {
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [editingBody, setEditingBody] = useState('');
   const [editingRating, setEditingRating] = useState('5');
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   useEffect(() => {
     if (!id) {
@@ -332,29 +523,6 @@ function MovieDetailPage() {
     };
   }, [id, userId]);
 
-  // Load user's existing review into the form when reviews are loaded
-  useEffect(() => {
-    if (!userId || !reviews.length) {
-      return;
-    }
-
-    // Find the current user's review for this movie
-    const userReview = reviews.find(
-      (review) =>
-        review.user_id === userId || review.userId === userId || review.user?.id === userId
-    );
-
-    if (userReview) {
-      // Pre-populate rating with existing review rating, but keep review body empty
-      setReviewRating(String(userReview.rating || ''));
-      setReviewBody('');
-    } else {
-      // Reset to empty if no existing review
-      setReviewRating('');
-      setReviewBody('');
-    }
-  }, [reviews, userId]);
-
   return (
     <StyledContainer>
       <StyledBackButton to="/">
@@ -414,86 +582,125 @@ function MovieDetailPage() {
                 </StyledAverageRating>
               )}
               {movie.overview && <StyledParagraph>{movie.overview}</StyledParagraph>}
-              {userId && (
-                <div style={{ marginTop: '1.5rem' }}>
-                  <StyledWatchlistButton
-                    type="button"
-                    onClick={async () => {
-                      setWatchlistError(null);
-                      try {
-                        if (watchlistEntry?.id) {
-                          // Remove from watchlist
-                          await del(`/api/watchlist/${watchlistEntry.id}`);
-                          setWatchlistEntry(null);
-                        } else {
-                          // Add to watchlist
-                          const entry = await post('/api/watchlist', {
+              <StyledActionButtons>
+                {userId ? (
+                  <>
+                    <StyledWatchlistButton
+                      type="button"
+                      onClick={async () => {
+                        setWatchlistError(null);
+                        try {
+                          if (watchlistEntry?.id) {
+                            // Remove from watchlist
+                            await del(`/api/watchlist/${watchlistEntry.id}`);
+                            setWatchlistEntry(null);
+                          } else {
+                            // Add to watchlist
+                            const entry = await post('/api/watchlist', {
+                              tmdbId: Number(id),
+                              userId,
+                              status: 'planned',
+                            });
+                            setWatchlistEntry(entry);
+                          }
+                        } catch (err) {
+                          setWatchlistError(err?.message || 'Unable to update watchlist.');
+                        }
+                      }}
+                    >
+                      {watchlistEntry?.id ? 'Remove from Watchlist' : 'Add to Watchlist'}
+                    </StyledWatchlistButton>
+                    <StyledOpenReviewButton
+                      type="button"
+                      onClick={() => {
+                        // Always start fresh for new review
+                        setReviewRating('');
+                        setReviewBody('');
+                        setIsReviewModalOpen(true);
+                      }}
+                    >
+                      Rate & Review
+                    </StyledOpenReviewButton>
+                  </>
+                ) : (
+                  <StyledSignInReviewButton to="/login">
+                    Sign in to Rate & Review
+                  </StyledSignInReviewButton>
+                )}
+              </StyledActionButtons>
+              {watchlistError && <StyledError>{watchlistError}</StyledError>}
+            </StyledMovieDetails>
+            {isReviewModalOpen && (
+              <StyledModalOverlay
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) {
+                    setIsReviewModalOpen(false);
+                  }
+                }}
+              >
+                <StyledModal onClick={(e) => e.stopPropagation()}>
+                  <StyledModalHeader>
+                    <StyledModalTitle>Rate & Review</StyledModalTitle>
+                    <StyledCloseButton type="button" onClick={() => setIsReviewModalOpen(false)}>
+                      ×
+                    </StyledCloseButton>
+                  </StyledModalHeader>
+                  <StyledModalContent>
+                    {reviewError && <StyledError>{reviewError}</StyledError>}
+                    <StyledModalForm
+                      onSubmit={async (event) => {
+                        event.preventDefault();
+                        setReviewError(null);
+                        try {
+                          await post('/api/reviews', {
                             tmdbId: Number(id),
                             userId,
-                            status: 'planned',
+                            rating: Number(reviewRating),
+                            body: reviewBody,
+                            status: 'published',
                           });
-                          setWatchlistEntry(entry);
-                        }
-                      } catch (err) {
-                        setWatchlistError(err?.message || 'Unable to update watchlist.');
-                      }
-                    }}
-                  >
-                    {watchlistEntry?.id ? 'Remove from Watchlist' : 'Add to Watchlist'}
-                  </StyledWatchlistButton>
-                  {watchlistError && <StyledError>{watchlistError}</StyledError>}
-                </div>
-              )}
-            </StyledMovieDetails>
-            <div>
-              <StyledHeading>Rate & Review</StyledHeading>
-              {reviewError && <StyledError>{reviewError}</StyledError>}
-              {isAuthenticated ? (
-                <form
-                  onSubmit={async (event) => {
-                    event.preventDefault();
-                    setReviewError(null);
-                    try {
-                      await post('/api/reviews', {
-                        tmdbId: Number(id),
-                        userId,
-                        rating: Number(reviewRating),
-                        body: reviewBody,
-                        status: 'published',
-                      });
 
-                      const updated = await get(`/api/reviews/${id}`);
-                      setReviews(updated || []);
-                      setReviewBody('');
-                      setReviewRating('');
-                    } catch (err) {
-                      setReviewError(err?.message || 'Unable to submit review.');
-                    }
-                  }}
-                >
-                  <label>
-                    Rating
-                    <div style={{ marginTop: '0.5rem' }}>
-                      <StarRating value={reviewRating} onChange={setReviewRating} />
-                    </div>
-                  </label>
-                  <label>
-                    Review
-                    <textarea
-                      value={reviewBody}
-                      onChange={(event) => setReviewBody(event.target.value)}
-                    />
-                  </label>
-                  <button type="submit">Submit review</button>
-                </form>
-              ) : (
-                <StyledSignInPrompt>
-                  <StyledSignInText>
-                    <StyledSignInLink to="/login">Sign in</StyledSignInLink> to write a review
-                  </StyledSignInText>
-                </StyledSignInPrompt>
-              )}
-            </div>
+                          const updated = await get(`/api/reviews/${id}`);
+                          setReviews(updated || []);
+                          setReviewBody('');
+                          setReviewRating('');
+                          setIsReviewModalOpen(false);
+                        } catch (err) {
+                          setReviewError(err?.message || 'Unable to submit review.');
+                        }
+                      }}
+                    >
+                      <StyledModalLabel>
+                        Rating
+                        <div style={{ marginTop: '0.5rem' }}>
+                          <StarRating value={reviewRating} onChange={setReviewRating} />
+                        </div>
+                      </StyledModalLabel>
+                      <StyledModalLabel>
+                        Review
+                        <StyledModalTextarea
+                          value={reviewBody}
+                          onChange={(event) => setReviewBody(event.target.value)}
+                          placeholder="Add a review..."
+                        />
+                      </StyledModalLabel>
+                      <StyledModalButtons>
+                        <StyledCancelButton
+                          type="button"
+                          onClick={() => {
+                            setIsReviewModalOpen(false);
+                            setReviewError(null);
+                          }}
+                        >
+                          Cancel
+                        </StyledCancelButton>
+                        <StyledSubmitButton type="submit">Save</StyledSubmitButton>
+                      </StyledModalButtons>
+                    </StyledModalForm>
+                  </StyledModalContent>
+                </StyledModal>
+              </StyledModalOverlay>
+            )}
             {reviews.length > 0 && (
               <>
                 <StyledHeading>Reviews</StyledHeading>
