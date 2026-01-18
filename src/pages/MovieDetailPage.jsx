@@ -255,7 +255,7 @@ function MovieDetailPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [reviewBody, setReviewBody] = useState('');
-  const [reviewRating, setReviewRating] = useState('5');
+  const [reviewRating, setReviewRating] = useState('');
   const [reviewError, setReviewError] = useState(null);
   const [watchlistStatus, setWatchlistStatus] = useState('planned');
   const [watchlistEntry, setWatchlistEntry] = useState(null);
@@ -348,11 +348,11 @@ function MovieDetailPage() {
 
     if (userReview) {
       // Pre-populate rating with existing review rating, but keep review body empty
-      setReviewRating(String(userReview.rating || '5'));
+      setReviewRating(String(userReview.rating || ''));
       setReviewBody('');
     } else {
-      // Reset to defaults if no existing review
-      setReviewRating('5');
+      // Reset to empty if no existing review
+      setReviewRating('');
       setReviewBody('');
     }
   }, [reviews, userId]);
@@ -464,7 +464,7 @@ function MovieDetailPage() {
                       const updated = await get(`/api/reviews/${id}`);
                       setReviews(updated || []);
                       setReviewBody('');
-                      setReviewRating('5');
+                      setReviewRating('');
                     } catch (err) {
                       setReviewError(err?.message || 'Unable to submit review.');
                     }
