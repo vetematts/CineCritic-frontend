@@ -224,6 +224,29 @@ function MovieDetailPage() {
     };
   }, [id, userId]);
 
+  // Load user's existing review into the form when reviews are loaded
+  useEffect(() => {
+    if (!userId || !reviews.length) {
+      return;
+    }
+
+    // Find the current user's review for this movie
+    const userReview = reviews.find(
+      (review) =>
+        review.user_id === userId || review.userId === userId || review.user?.id === userId
+    );
+
+    if (userReview) {
+      // Pre-populate form with existing review data
+      setReviewRating(String(userReview.rating || '5'));
+      setReviewBody(userReview.body || userReview.content || userReview.text || '');
+    } else {
+      // Reset to defaults if no existing review
+      setReviewRating('5');
+      setReviewBody('');
+    }
+  }, [reviews, userId]);
+
   return (
     <StyledContainer>
       {loading && <p>Loading...</p>}
