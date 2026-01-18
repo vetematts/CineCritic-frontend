@@ -62,11 +62,11 @@ const StyledMovieDetails = styled.div`
 
 const StyledTitle = styled.h2`
   margin-bottom: 0.5rem;
-  color: #e9da57;
+  color: rgba(255, 255, 255, 0.95);
 `;
 
 const StyledHeading = styled.h3`
-  color: #e9da57;
+  color: #cec8c8ff;
 `;
 
 const StyledParagraph = styled.p`
@@ -138,7 +138,7 @@ const StyledAverageRating = styled.div`
 
 const StyledAverageRatingLabel = styled.p`
   margin: 0 0 0.25rem 0;
-  color: rgba(255, 255, 255, 0.6);
+  color: #cec8c8ff;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -282,7 +282,7 @@ const StyledModalHeader = styled.div`
 
 const StyledModalTitle = styled.h3`
   margin: 0;
-  color: #e9da57;
+  color: #cec8c8ff;
   font-size: 1.5rem;
 `;
 
@@ -323,7 +323,7 @@ const StyledModalLabel = styled.label`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  color: rgba(255, 255, 255, 0.87);
+  color: #cec8c8ff;
   font-size: 1rem;
 `;
 
@@ -369,12 +369,13 @@ const StyledModalButton = styled.button`
 `;
 
 const StyledSubmitButton = styled(StyledModalButton)`
-  background-color: #e9da57;
+  background-color: #cec8c8ff;
   color: #242424;
-  border: none;
+  border: 1px solid #cec8c8ff;
 
   &:hover:not(:disabled) {
-    background-color: #f5e866;
+    background-color: #d6d0d0;
+    border-color: #d6d0d0;
   }
 `;
 

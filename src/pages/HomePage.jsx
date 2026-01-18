@@ -64,8 +64,7 @@ const StyledHomeLogo = styled.img`
 
 // Style the advanced search link under the search bar
 const StyledAdvancedSearchLink = styled(NavLink)`
-  // Same gold-ish colour scheme as headings
-  color: #e9da57;
+  color: #cec8c8ff;
   text-decoration: none;
 
   display: flex;
@@ -77,6 +76,7 @@ const StyledAdvancedSearchLink = styled(NavLink)`
 const StyledRandomRecommendations = styled.h3`
   align-items: flex-start;
   max-width: 100%;
+  color: #cec8c8ff;
 `;
 
 // Horizontal scrolling container for movie cards

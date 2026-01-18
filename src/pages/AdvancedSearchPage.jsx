@@ -31,10 +31,9 @@ const StyledSearchRows = styled.div`
   margin: 1rem;
 `;
 
-// Give all the labels the same gold colouring as headings
+// Give all the labels uniform color
 const StyledLabels = styled.label`
-  /* Same golden font as the headings */
-  color: #e9da57;
+  color: #cec8c8ff;
 
   /* Response design */
   display: flex;
@@ -109,16 +108,16 @@ const StyledGenreButton = styled.button`
   ${(props) =>
     props.$isSelected &&
     `
-    background-color: #e9da57;
+    background-color: #cec8c8ff;
     color: #242424;
-    border-color: #e9da57;
+    border-color: #cec8c8ff;
     font-weight: 600;
   `}
 
   /* Hover state */
   &:hover {
-    background-color: ${(props) => (props.$isSelected ? '#f5e866' : 'rgba(255, 255, 255, 0.2)')};
-    border-color: ${(props) => (props.$isSelected ? '#f5e866' : 'rgba(255, 255, 255, 0.5)')};
+    background-color: ${(props) => (props.$isSelected ? '#d6d0d0' : 'rgba(255, 255, 255, 0.2)')};
+    border-color: ${(props) => (props.$isSelected ? '#d6d0d0' : 'rgba(255, 255, 255, 0.5)')};
     transform: translateY(-1px);
   }
 
