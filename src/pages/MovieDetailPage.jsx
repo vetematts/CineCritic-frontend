@@ -304,6 +304,70 @@ function MovieDetailPage() {
                 </StyledSignInPrompt>
               )}
             </div>
+            <div>
+              <StyledHeading>Watchlist</StyledHeading>
+              {!userId && <p>Please log in to manage your watchlist.</p>}
+              {watchlistError && <StyledError>{watchlistError}</StyledError>}
+              <div>
+                <label>
+                  Status
+                  <select
+                    value={watchlistStatus}
+                    onChange={(event) => setWatchlistStatus(event.target.value)}
+                    disabled={!userId}
+                  >
+                    <option value="planned">Planned</option>
+                    <option value="watching">Watching</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </label>
+                {watchlistEntry?.id && <p>Current status: {watchlistEntry.status}</p>}
+                <button
+                  type="button"
+                  disabled={!userId}
+                  onClick={async () => {
+                    setWatchlistError(null);
+                    if (!userId) {
+                      setWatchlistError('You must be logged in.');
+                      return;
+                    }
+
+                    try {
+                      const entry = watchlistEntry?.id
+                        ? await put(`/api/watchlist/${watchlistEntry.id}`, {
+                            status: watchlistStatus,
+                          })
+                        : await post('/api/watchlist', {
+                            tmdbId: Number(id),
+                            userId,
+                            status: watchlistStatus,
+                          });
+                      setWatchlistEntry(entry);
+                    } catch (err) {
+                      setWatchlistError(err?.message || 'Unable to update watchlist.');
+                    }
+                  }}
+                >
+                  {watchlistEntry?.id ? 'Update watchlist' : 'Add to watchlist'}
+                </button>
+                {watchlistEntry?.id && (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      setWatchlistError(null);
+                      try {
+                        await del(`/api/watchlist/${watchlistEntry.id}`);
+                        setWatchlistEntry(null);
+                      } catch (err) {
+                        setWatchlistError(err?.message || 'Unable to remove from watchlist.');
+                      }
+                    }}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            </div>
             {reviews.length > 0 && (
               <>
                 <StyledHeading>Reviews</StyledHeading>
@@ -390,70 +454,6 @@ function MovieDetailPage() {
                 </StyledList>
               </>
             )}
-            <div>
-              <StyledHeading>Watchlist</StyledHeading>
-              {!userId && <p>Please log in to manage your watchlist.</p>}
-              {watchlistError && <StyledError>{watchlistError}</StyledError>}
-              <div>
-                <label>
-                  Status
-                  <select
-                    value={watchlistStatus}
-                    onChange={(event) => setWatchlistStatus(event.target.value)}
-                    disabled={!userId}
-                  >
-                    <option value="planned">Planned</option>
-                    <option value="watching">Watching</option>
-                    <option value="completed">Completed</option>
-                  </select>
-                </label>
-                {watchlistEntry?.id && <p>Current status: {watchlistEntry.status}</p>}
-                <button
-                  type="button"
-                  disabled={!userId}
-                  onClick={async () => {
-                    setWatchlistError(null);
-                    if (!userId) {
-                      setWatchlistError('You must be logged in.');
-                      return;
-                    }
-
-                    try {
-                      const entry = watchlistEntry?.id
-                        ? await put(`/api/watchlist/${watchlistEntry.id}`, {
-                            status: watchlistStatus,
-                          })
-                        : await post('/api/watchlist', {
-                            tmdbId: Number(id),
-                            userId,
-                            status: watchlistStatus,
-                          });
-                      setWatchlistEntry(entry);
-                    } catch (err) {
-                      setWatchlistError(err?.message || 'Unable to update watchlist.');
-                    }
-                  }}
-                >
-                  {watchlistEntry?.id ? 'Update watchlist' : 'Add to watchlist'}
-                </button>
-                {watchlistEntry?.id && (
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      setWatchlistError(null);
-                      try {
-                        await del(`/api/watchlist/${watchlistEntry.id}`);
-                        setWatchlistEntry(null);
-                      } catch (err) {
-                        setWatchlistError(err?.message || 'Unable to remove from watchlist.');
-                      }
-                    }}
-                  >
-                    Remove
-                  </button>
-                )}
-              </div>
-            </div>
           </StyledTextColumn>
         </StyledMainContent>
       )}
