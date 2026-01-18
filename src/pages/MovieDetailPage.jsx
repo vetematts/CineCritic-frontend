@@ -96,10 +96,10 @@ const StyledListItem = styled.li`
 `;
 
 const StyledReviewAuthor = styled.p`
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
-  margin: 0.5rem 0 0.25rem 0;
-  font-style: italic;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
 `;
 
 const StyledReviewAuthorLine = styled.div`
