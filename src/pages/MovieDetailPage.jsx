@@ -71,14 +71,28 @@ const StyledParagraph = styled.p`
 `;
 
 const StyledList = styled.ul`
-  color: rgba(255, 255, 255, 0.87);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 `;
 
 const StyledListItem = styled.li`
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1.25rem;
   color: rgba(255, 255, 255, 0.87);
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
 `;
 
 const StyledReviewAuthor = styled.p`
