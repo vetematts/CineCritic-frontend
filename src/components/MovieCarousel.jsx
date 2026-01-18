@@ -14,6 +14,7 @@ function MovieCarousel({moviesArray}) {
                                         movie.poster_path || 
                                         movie.posterUrl, 
                                         'w200');
+                    console.log(posterURL);
                     const movieId = movie.id || 
                                     movie.tmdbId;
                     const movieTitle = movie.title || 
