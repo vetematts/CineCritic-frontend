@@ -62,15 +62,29 @@ const StyledHomeLogo = styled.img`
   padding: 0 0 2rem 0;
 `;
 
-// Style the advanced search link under the search bar
-const StyledAdvancedSearchLink = styled(NavLink)`
+// Style the advanced search button under the search bar
+const StyledAdvancedSearchButton = styled(NavLink)`
   color: #cec8c8ff;
   text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 
-  display: flex;
-  justify-content: flex-end;
-  padding: 1rem 0 0 2rem;
-  max-width: 100%;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
 `;
 
 const StyledRandomRecommendations = styled.h3`
@@ -486,7 +500,9 @@ function HomePage() {
           <SearchBar />
         </StyledHomeRow>
         <StyledHomeRow id="home-advanced-search">
-          <StyledAdvancedSearchLink to="/advancedSearch">Advanced Search</StyledAdvancedSearchLink>
+          <StyledAdvancedSearchButton to="/advancedSearch">
+            Advanced Search
+          </StyledAdvancedSearchButton>
         </StyledHomeRow>
         <StyledHomeRow id="home-random-recommendations">
           <StyledRandomRecommendations>Random Recommendations</StyledRandomRecommendations>
