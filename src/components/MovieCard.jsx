@@ -19,17 +19,80 @@ const StyledTrendingItem = styled.li`
   }
 `;
 
-// Styled NavLink for movie cards - make entire card clickable
-const StyledMovieCardLink = styled(NavLink)`
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+// Container that clips the glow to rounded corners
+// Extends 16px beyond card on all sides, matches reference implementation
+// z-index: -1 ensures it's behind all cards to prevent overlap
+const StyledGlowClipContainer = styled.div`
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  bottom: -16px;
+  left: -16px;
+  border-radius: 5px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1; // Behind everything to prevent overlap with adjacent cards
+  pointer-events: none;
+`;
 
-  &:hover ${StyledMovieTitle} {
-    color: #e9da57; // Gold color on hover
+// Blurred background glow effect (inspired by movie-ui-browser)
+// Image fills container completely with strong blur for border effect
+const StyledGlowBackground = styled.img`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(64px) brightness(1.2);
+`;
+
+// Container for 3D tilt effect (Apple TV style)
+// Width increased to 150px to show 6 cards instead of 6-7
+const StyledCardContainer = styled.div`
+  position: relative;
+  width: 150px; // Increased from 120px to show 6 cards instead of 6-7
+  perspective: 1000px; // Enable 3D transforms
+  overflow: visible; // Allow glow to extend beyond container
+  contain: none; // Don't contain layout to allow glow extension
+  /* No z-index here - let parent list item handle stacking */
+
+  // Show glow on hover - creates rounded border effect
+  // Matches reference: group-hover:opacity-70 (0.7 opacity)
+  &:hover ${StyledGlowClipContainer} {
+    opacity: 0.7;
+  }
+`;
+
+// Wrapper for entire card (poster + black bar) with 3D tilt effect
+// Moves as one piece, matching movie-ui-browser structure
+const StyledCardWrapper = styled.div.attrs((props) => ({
+  style: {
+    transform: props.$transform || 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)',
+    transformStyle: 'preserve-3d',
+  },
+}))`
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden; // Clips entire card to rounded corners
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  z-index: 1; // Above glow (which is z-index: 0) to ensure card is on top
+  background-color: #000000; // Black background for seamless connection
+  will-change: transform;
+  // Ensure proper rendering
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  isolation: isolate; // Create stacking context for 3D transforms
+
+  ${StyledCardContainer}:hover & {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
   }
 `;
 
@@ -108,52 +171,18 @@ const StyledReleaseDate = styled.p`
   gap: 4px;
 `;
 
-// Container for 3D tilt effect (Apple TV style)
-// Width increased to 150px to show 6 cards instead of 6-7
-const StyledCardContainer = styled.div`
-  position: relative;
-  width: 150px; // Increased from 120px to show 6 cards instead of 6-7
-  perspective: 1000px; // Enable 3D transforms
-  overflow: visible; // Allow glow to extend beyond container
-  contain: none; // Don't contain layout to allow glow extension
-  /* No z-index here - let parent list item handle stacking */
-
-  // Show glow on hover - creates rounded border effect
-  // Matches reference: group-hover:opacity-70 (0.7 opacity)
-  &:hover ${StyledGlowClipContainer} {
-    opacity: 0.7;
-  }
-`;
-
-// Container that clips the glow to rounded corners
-// Extends 16px beyond card on all sides, matches reference implementation
-// z-index: -1 ensures it's behind all cards to prevent overlap
-const StyledGlowClipContainer = styled.div`
-  position: absolute;
-  top: -16px;
-  right: -16px;
-  bottom: -16px;
-  left: -16px;
-  border-radius: 5px;
-  overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1; // Behind everything to prevent overlap with adjacent cards
-  pointer-events: none;
-`;
-
-// Blurred background glow effect (inspired by movie-ui-browser)
-// Image fills container completely with strong blur for border effect
-const StyledGlowBackground = styled.img`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+// Styled NavLink for movie cards - make entire card clickable
+const StyledMovieCardLink = styled(NavLink)`
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(64px) brightness(1.2);
+
+  &:hover ${StyledMovieTitle} {
+    color: #e9da57; // Gold color on hover
+  }
 `;
 
 // Component for movie card with 3D tilt effect
