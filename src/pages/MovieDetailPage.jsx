@@ -10,6 +10,7 @@ import StarRating from '../components/StarRating';
 const StyledContainer = styled.section`
   width: 100rem;
   padding: 1rem 0 2rem 0;
+  color: rgba(255, 255, 255, 0.87);
 `;
 
 // Main flex container: poster column + text column
@@ -58,6 +59,23 @@ const StyledMovieDetails = styled.div`
 
 const StyledTitle = styled.h2`
   margin-bottom: 0.5rem;
+  color: #e9da57;
+`;
+
+const StyledHeading = styled.h3`
+  color: #e9da57;
+`;
+
+const StyledParagraph = styled.p`
+  color: rgba(255, 255, 255, 0.87);
+`;
+
+const StyledList = styled.ul`
+  color: rgba(255, 255, 255, 0.87);
+`;
+
+const StyledListItem = styled.li`
+  color: rgba(255, 255, 255, 0.87);
 `;
 
 const StyledMeta = styled.p`
@@ -235,15 +253,17 @@ function MovieDetailPage() {
                   </StyledAverageRatingValue>
                 </StyledAverageRating>
               )}
-              {movie.overview && <p>{movie.overview}</p>}
+              {movie.overview && <StyledParagraph>{movie.overview}</StyledParagraph>}
             </StyledMovieDetails>
             {reviews.length > 0 && (
               <>
-                <h3>Reviews</h3>
-                <ul>
+                <StyledHeading>Reviews</StyledHeading>
+                <StyledList>
                   {reviews.map((review) => (
-                    <li key={review.id || review._id}>
-                      <p>{review.body || review.content || review.text}</p>
+                    <StyledListItem key={review.id || review._id}>
+                      <StyledParagraph>
+                        {review.body || review.content || review.text}
+                      </StyledParagraph>
                       {review.rating && <StyledMeta>Rating {review.rating}</StyledMeta>}
                       {user?.id &&
                         (review.user_id === user.id ||
@@ -316,13 +336,13 @@ function MovieDetailPage() {
                           </button>
                         </form>
                       )}
-                    </li>
+                    </StyledListItem>
                   ))}
-                </ul>
+                </StyledList>
               </>
             )}
             <div>
-              <h3>Rate & Review</h3>
+              <StyledHeading>Rate & Review</StyledHeading>
               {reviewError && <StyledError>{reviewError}</StyledError>}
               {isAuthenticated ? (
                 <form
@@ -371,7 +391,7 @@ function MovieDetailPage() {
               )}
             </div>
             <div>
-              <h3>Watchlist</h3>
+              <StyledHeading>Watchlist</StyledHeading>
               {!userId && <p>Please log in to manage your watchlist.</p>}
               {watchlistError && <StyledError>{watchlistError}</StyledError>}
               <div>
