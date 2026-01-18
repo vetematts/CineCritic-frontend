@@ -70,11 +70,30 @@ const StyledAuthButton = styled.button`
 `;
 
 const StyledAuthLink = styled(NavLink)`
-  height: 2.4rem;
-  display: flex;
-  align-items: center;
-  color: #e9da57;
+  padding: 0.6rem 1.2rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
   text-decoration: none;
+  display: inline-block;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.1s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 `;
 
 function Header() {
