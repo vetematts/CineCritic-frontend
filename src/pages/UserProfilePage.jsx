@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 // Import image assets
 import profilePic from '../assets/img/user/jackieChan.png';
+import { useEffect, useState } from "react";
 
 // Stack the user's portait to the left of their details
 const StyledDashboard = styled.div`
@@ -48,7 +49,13 @@ const StyledUsersName = styled.h1`
 `;
 
 function UserProfilePage() {
-  const []
+  // Hooks                                          // Description
+  const [favourites, setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
+
+  // Load up this user's favourites, watchlist, and 
+  // all their reviews when this page loads
+  // useEffect(() => {})
+
   return (
     <StyledDashboard id = "dashboard">
       <StyledPortaitColumn id = "user-portait-badge-container">
