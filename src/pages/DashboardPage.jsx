@@ -78,7 +78,7 @@ export default function DashboardPage() {
   if (!isAuthenticated) return <Navigate to="/login" />;
 
   return (
-    <main>
+    <>
       <h1>Dashboard</h1>
       <section>
         <h2>Watchlist</h2>
@@ -107,6 +107,6 @@ export default function DashboardPage() {
       <button type="button" onClick={() => logout()}>
         Log out
       </button>
-    </main>
+    </>
   );
 }

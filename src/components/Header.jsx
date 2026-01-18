@@ -30,6 +30,14 @@ const StyledHeader = styled.header`
 
   // Add space between the header and the main body
   margin: 0 0 3rem 0;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0 1rem;
+    gap: 1rem;
+    margin: 0 0 2rem 0;
+  }
 `;
 
 // These are the flex items within the flex container "Header"
@@ -39,6 +47,23 @@ const StyledHeaderColumns = styled.div`
   &#header-search-bar {
     // Make this item fill up the rest of the container
     flex-basis: 100%;
+  }
+
+  @media (max-width: 768px) {
+    &#site-logo {
+      flex: 0 0 auto;
+    }
+
+    &#header-search-bar {
+      flex-basis: 100%;
+      order: 3;
+      width: 100%;
+    }
+
+    &#user-menu {
+      flex: 0 0 auto;
+      margin-left: auto;
+    }
   }
 `;
 
@@ -67,6 +92,11 @@ const StyledAuthButton = styled.button`
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.25);
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.7rem;
+  }
 `;
 
 const StyledAuthLink = styled(NavLink)`
@@ -91,6 +121,11 @@ const StyledAuthLink = styled(NavLink)`
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.7rem;
   }
 `;
 
@@ -117,12 +152,30 @@ const StyledProfileLink = styled(NavLink)`
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.25);
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.7rem;
+    gap: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    // Hide "Dashboard" text on very small screens, show only icon
+    span {
+      display: none;
+    }
+  }
 `;
 
 const StyledUserMenuContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
+
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
 `;
 
 function Header() {
@@ -152,7 +205,7 @@ function Header() {
           <StyledUserMenuContainer>
             <StyledProfileLink to="/dashboard">
               <ProfileIcon />
-              Dashboard
+              <span>Dashboard</span>
             </StyledProfileLink>
             <StyledAuthButton type="button" onClick={handleLogout}>
               Log out

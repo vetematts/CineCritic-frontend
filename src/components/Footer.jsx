@@ -8,6 +8,12 @@ const StyledFooter = styled.footer`
 
   /* Create distance between the footer and the main body */
   margin: 15rem 0 0 0;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 1rem;
+    margin: 8rem 0 0 0;
+  }
 `;
 
 // Allow the columns to shrink and grow depending on the screen size
@@ -31,12 +37,26 @@ const StyledFooterColumns = styled.div`
   // row in mobile resolution
   min-width: 10rem;
   margin: 1rem;
+
+  @media (max-width: 768px) {
+    min-width: 0;
+    flex: 1 1 calc(50% - 2rem);
+    margin: 0.5rem;
+  }
+
+  @media (max-width: 480px) {
+    flex: 1 1 100%;
+  }
 `;
 
 // Create some distance away from the description and the footer links
 const StyledFooterTextContainer = styled.div`
   flex: 1;
   margin: 5rem 0 0 0;
+
+  @media (max-width: 768px) {
+    margin: 3rem 0 0 0;
+  }
 `;
 
 // Give the column headings a lighter grayish colour compared to the links
