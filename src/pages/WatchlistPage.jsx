@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
 import { get } from '../api/api';
@@ -43,11 +43,24 @@ const StyledEmptyMessage = styled.p`
   margin: 1rem 0;
 `;
 
-// Styled components for watchlist display
-const StyledWatchlistItem = styled.li`
+// Styled link for watchlist items
+const StyledWatchlistLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+`;
+
+// Styled components for watchlist display
+const StyledWatchlistItem = styled.li`
   padding: 1.25rem;
   list-style: none;
   background-color: rgba(255, 255, 255, 0.05);
@@ -64,9 +77,6 @@ const StyledWatchlistItem = styled.li`
   }
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
     padding: 1rem;
   }
 `;
@@ -171,17 +181,21 @@ export default function WatchlistPage() {
         <StyledWatchlistList>
           {watchlist.map((entry) => {
             const posterUrl = getPosterUrl(entry.poster_url || entry.poster_path, 'w200');
+            // Backend now returns tmdb_id from the movies table join
+            const movieId = entry.tmdb_id;
             return (
               <StyledWatchlistItem key={entry.id}>
-                {posterUrl ? (
-                  <StyledWatchlistPoster src={posterUrl} alt={`${entry.title} poster`} />
-                ) : (
-                  <StyledWatchlistPosterPlaceholder>No poster</StyledWatchlistPosterPlaceholder>
-                )}
-                <StyledMovieTitle>
-                  <strong>{entry.title}</strong>
-                  {entry.release_year && ` (${entry.release_year})`}
-                </StyledMovieTitle>
+                <StyledWatchlistLink to={`/movies/${movieId}`}>
+                  {posterUrl ? (
+                    <StyledWatchlistPoster src={posterUrl} alt={`${entry.title} poster`} />
+                  ) : (
+                    <StyledWatchlistPosterPlaceholder>No poster</StyledWatchlistPosterPlaceholder>
+                  )}
+                  <StyledMovieTitle>
+                    <strong>{entry.title}</strong>
+                    {entry.release_year && ` (${entry.release_year})`}
+                  </StyledMovieTitle>
+                </StyledWatchlistLink>
               </StyledWatchlistItem>
             );
           })}
