@@ -45,63 +45,51 @@ const StyledHeaderColumns = styled.div`
 const StyledLogo = styled.img``;
 
 const StyledAuthButton = styled.button`
-  padding: 0.5rem 1rem;
-  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
   color: rgba(255, 255, 255, 0.87);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   white-space: nowrap;
-  height: 2.4rem;
-  display: flex;
+  height: auto;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition:
     background-color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.1s ease;
+    border-color 0.2s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
   }
 `;
 
 const StyledAuthLink = styled(NavLink)`
-  padding: 0.5rem 1rem;
-  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
   color: rgba(255, 255, 255, 0.87);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
-  height: 2.4rem;
-  display: flex;
+  height: auto;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition:
     background-color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.1s ease;
+    border-color 0.2s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
   }
 `;
 
