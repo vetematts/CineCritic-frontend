@@ -76,6 +76,16 @@ const StyledList = styled.ul`
 
 const StyledListItem = styled.li`
   color: rgba(255, 255, 255, 0.87);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+const StyledReviewAuthor = styled.p`
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0.25rem 0;
+  font-style: italic;
 `;
 
 const StyledMeta = styled.p`
@@ -409,14 +419,21 @@ function MovieDetailPage() {
                 <StyledList>
                   {reviews.map((review) => (
                     <StyledListItem key={review.id || review._id}>
-                      <StyledParagraph>
-                        {review.body || review.content || review.text}
-                      </StyledParagraph>
+                      <StyledReviewAuthor>
+                        {review.user?.username ||
+                          review.username ||
+                          review.user?.name ||
+                          review.user_name ||
+                          'Anonymous'}
+                      </StyledReviewAuthor>
                       {review.rating && (
                         <div style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
                           <StarRating value={String(review.rating)} disabled={true} />
                         </div>
                       )}
+                      <StyledParagraph>
+                        {review.body || review.content || review.text}
+                      </StyledParagraph>
                       {user?.id &&
                         (review.user_id === user.id ||
                           review.userId === user.id ||
