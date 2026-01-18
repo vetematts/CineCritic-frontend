@@ -450,14 +450,28 @@ function MovieDetailPage() {
                       {(review.published_at || review.created_at) && (
                         <StyledReviewDate>
                           {(() => {
-                            // Format date to DD/MM/YYYY (Australian format), date only, no time
+                            // Format date to "Watched on 14 Jan 2026" format
                             const dateStr = review.published_at || review.created_at;
                             const date = new Date(dateStr);
                             if (!isNaN(date.getTime())) {
-                              const day = String(date.getDate()).padStart(2, '0');
-                              const month = String(date.getMonth() + 1).padStart(2, '0');
+                              const day = date.getDate();
+                              const monthNames = [
+                                'Jan',
+                                'Feb',
+                                'Mar',
+                                'Apr',
+                                'May',
+                                'Jun',
+                                'Jul',
+                                'Aug',
+                                'Sep',
+                                'Oct',
+                                'Nov',
+                                'Dec',
+                              ];
+                              const month = monthNames[date.getMonth()];
                               const year = date.getFullYear();
-                              return `${day}/${month}/${year}`;
+                              return `Watched on ${day} ${month} ${year}`;
                             }
                             return dateStr;
                           })()}
