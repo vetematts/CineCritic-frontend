@@ -7,6 +7,7 @@ import { logoutRequest } from '../api/auth';
 
 // Import image assets
 import logo from '../assets/cine_critic_logo_small.png';
+import ProfileIcon from '../assets/ProfileIcon';
 import styled from 'styled-components';
 import { NavLink } from 'react-router';
 
@@ -93,6 +94,37 @@ const StyledAuthLink = styled(NavLink)`
   }
 `;
 
+const StyledProfileLink = styled(NavLink)`
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+`;
+
+const StyledUserMenuContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+`;
+
 function Header() {
   const { isAuthenticated, logout } = useAuth();
 
@@ -117,9 +149,14 @@ function Header() {
       </StyledHeaderColumns>
       <StyledHeaderColumns id="user-menu">
         {isAuthenticated ? (
-          <StyledAuthButton type="button" onClick={handleLogout}>
-            Log out
-          </StyledAuthButton>
+          <StyledUserMenuContainer>
+            <StyledProfileLink to="/dashboard">
+              <ProfileIcon />
+            </StyledProfileLink>
+            <StyledAuthButton type="button" onClick={handleLogout}>
+              Log out
+            </StyledAuthButton>
+          </StyledUserMenuContainer>
         ) : (
           <StyledAuthLink to="/login">Log in</StyledAuthLink>
         )}
