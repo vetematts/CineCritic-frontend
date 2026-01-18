@@ -27,12 +27,13 @@ const StyledHomeRow = styled.div`
 
   &#home-search-bar {
     align-items: center;
+    gap: 0.75rem;
   }
 
   &#home-advanced-search {
-    // Align the contents of the container under and
-    // at the end of the search bar
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 0.75rem;
   }
 
   &#home-random-recommendations {
@@ -498,8 +499,6 @@ function HomePage() {
         </StyledFigure>
         <StyledHomeRow id="home-search-bar">
           <SearchBar />
-        </StyledHomeRow>
-        <StyledHomeRow id="home-advanced-search">
           <StyledAdvancedSearchButton to="/advancedSearch">
             Advanced Search
           </StyledAdvancedSearchButton>

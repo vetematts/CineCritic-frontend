@@ -10,6 +10,8 @@ import getSearchURL from '../utilities/query-endpoints';
 const StyledForm = styled.form`
   display: flex;
   flex: 1;
+  gap: 0.75rem;
+  align-items: center;
 `;
 
 // Give the search bar a flat transparent rounded look
@@ -24,8 +26,32 @@ const StyledSearchBar = styled.input`
   padding: 5px; /* Optional: Add padding so text doesn't touch the edges */
 
   min-width: 5rem;
-  flex-basis: 80rem;
+  flex: 1;
+  max-width: 30rem;
   color: #ffffff;
+`;
+
+const StyledSearchButton = styled.button`
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  color: #cec8c8ff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
 `;
 
 // Search bar handles the processing of any queries submitted anywhere the component exists
@@ -54,6 +80,7 @@ function SearchBar() {
         onChange={handleSearchTerm}
         placeholder="Search"
       />
+      <StyledSearchButton type="submit">Search</StyledSearchButton>
     </StyledForm>
   );
 }
