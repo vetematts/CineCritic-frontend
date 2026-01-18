@@ -58,11 +58,15 @@ const StyledPosterPlaceholder = styled.div`
 // Container for movie details (title, meta, overview)
 const StyledMovieDetails = styled.div`
   margin-bottom: 2rem;
+  margin-top: 0;
 `;
 
 const StyledTitle = styled.h2`
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem 0;
   color: rgba(255, 255, 255, 0.95);
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.2;
 `;
 
 const StyledHeading = styled.h3`
