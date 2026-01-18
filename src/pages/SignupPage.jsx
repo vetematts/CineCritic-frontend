@@ -11,6 +11,12 @@ const StyledFlexContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+  }
 `;
 
 // Align the home logo container to centre the image

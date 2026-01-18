@@ -12,6 +12,12 @@ const StyledForm = styled.form`
   gap: 0.75rem;
   align-items: center;
   min-width: 0;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    gap: 0.5rem;
+  }
 `;
 
 // Give the search bar a flat transparent rounded look
@@ -27,7 +33,14 @@ const StyledSearchBar = styled.input`
 
   min-width: 5rem;
   width: 30rem;
+  max-width: 100%;
+  flex: 1;
   color: #ffffff;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    min-width: 0;
+  }
 `;
 
 const StyledSearchButton = styled.button`
@@ -50,6 +63,12 @@ const StyledSearchButton = styled.button`
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.7rem;
+    width: 100%;
   }
 `;
 

@@ -29,6 +29,11 @@ const StyledSearchRows = styled.div`
   /* Space the columns so they are now 1 column per row in mobile resolution */
   width: 80%;
   margin: 1rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
 `;
 
 // Give all the labels uniform color
@@ -138,6 +143,10 @@ const StyledRatingInput = styled.div`
 
   /* This container is 80% of the main's width */
   width: 80%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 // Comparator dropdown styling
@@ -181,6 +190,11 @@ const StyledResultsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 0.5rem;
+  }
 `;
 
 const StyledLoading = styled.p`

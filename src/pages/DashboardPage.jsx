@@ -5,6 +5,18 @@ import { useAuth } from '../contexts/AuthContext';
 import { get } from '../api/api';
 import getPosterUrl from '../utilities/image-pathing';
 
+// Container for dashboard content
+const StyledDashboardContainer = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+  }
+`;
+
 // Styled components for watchlist display
 const StyledWatchlistItem = styled.li`
   display: flex;
@@ -12,6 +24,12 @@ const StyledWatchlistItem = styled.li`
   gap: 1rem;
   padding: 0.5rem 0;
   list-style: none;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
 `;
 
 const StyledWatchlistPoster = styled.img`
@@ -19,6 +37,12 @@ const StyledWatchlistPoster = styled.img`
   height: 150px;
   object-fit: cover;
   border-radius: 5px;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 120px;
+  }
 `;
 
 const StyledWatchlistPosterPlaceholder = styled.div`
@@ -31,6 +55,12 @@ const StyledWatchlistPosterPlaceholder = styled.div`
   justify-content: center;
   color: #bdbdbd;
   font-size: 0.8em;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 120px;
+  }
 `;
 
 const StyledWatchlistList = styled.ul`
@@ -78,7 +108,7 @@ export default function DashboardPage() {
   if (!isAuthenticated) return <Navigate to="/login" />;
 
   return (
-    <>
+    <StyledDashboardContainer>
       <h1>Dashboard</h1>
       <section>
         <h2>Watchlist</h2>
@@ -107,6 +137,6 @@ export default function DashboardPage() {
       <button type="button" onClick={() => logout()}>
         Log out
       </button>
-    </>
+    </StyledDashboardContainer>
   );
 }

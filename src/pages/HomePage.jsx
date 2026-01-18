@@ -20,6 +20,11 @@ const StyledHomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 76%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 1rem;
+  }
 `;
 
 const StyledHomeRow = styled.div`
@@ -31,6 +36,11 @@ const StyledHomeRow = styled.div`
     gap: 0.75rem;
     flex-wrap: nowrap;
     justify-content: center;
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
   }
 
   &#home-advanced-search {
@@ -369,6 +379,13 @@ const StyledHomeHeader = styled.div`
   width: 100%;
   margin-bottom: 2rem;
   gap: 0.75rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    gap: 0.5rem;
+  }
 `;
 
 const StyledLoginLink = styled(NavLink)`
@@ -395,6 +412,12 @@ const StyledLoginLink = styled(NavLink)`
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.25);
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.7rem;
+    gap: 0.4rem;
+  }
 `;
 
 const StyledAuthButton = styled.button`
@@ -418,6 +441,11 @@ const StyledAuthButton = styled.button`
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.7rem;
   }
 `;
 
@@ -444,6 +472,18 @@ const StyledDashboardLink = styled(NavLink)`
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.7rem;
+    gap: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    span {
+      display: none;
+    }
   }
 `;
 

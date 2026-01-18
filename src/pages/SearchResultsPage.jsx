@@ -15,6 +15,11 @@ const StyledSearchResultsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    gap: 1rem;
+  }
 `;
 
 const StyledLoading = styled.p`
