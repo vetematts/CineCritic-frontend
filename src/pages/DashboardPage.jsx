@@ -79,11 +79,7 @@ export default function DashboardPage() {
 
   return (
     <main>
-      <h1>Dashboard (Placeholder)</h1>
-      <div id="dev-information">
-        <p>Authenticated: {JSON.stringify(isAuthenticated)}</p>
-        <p>User: {JSON.stringify(user)}</p>
-      </div>
+      <h1>Dashboard</h1>
       <section>
         <h2>Watchlist</h2>
         {watchlistError && <p>{watchlistError}</p>}
