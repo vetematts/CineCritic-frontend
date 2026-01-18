@@ -68,7 +68,6 @@ const StyledLoginButton = styled.button`
 export default function LoginForm() {
   const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -82,7 +81,7 @@ export default function LoginForm() {
     setMessage('');
 
     try {
-      const data = await loginRequest({ email, username, password });
+      const data = await loginRequest({ email, password });
 
       if (!data?.token) {
         throw new Error('Invalid login response');
@@ -104,14 +103,7 @@ export default function LoginForm() {
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         placeholder="Enter your email"
-      />
-      <StyledLoginLabels htmlFor="enter-login-username">Username</StyledLoginLabels>
-      <StyledInput
-        id="enter-login-username"
-        type="text"
-        value={username}
-        onChange={(event) => setUsername(event.target.value)}
-        placeholder="Enter your username"
+        required
       />
       <StyledLoginLabels htmlFor="enter-login-password">Password</StyledLoginLabels>
       <StyledInput
