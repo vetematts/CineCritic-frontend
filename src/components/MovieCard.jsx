@@ -186,7 +186,7 @@ const StyledMovieCardLink = styled(NavLink)`
 `;
 
 // Component for movie card with 3D tilt effect
-function MovieCardWithTilt({ posterUrl, children }) {
+function MovieCardWithTilt({ posterURL, children }) {
   const cardRef = useRef(null);
   const [transform, setTransform] = useState('');
 
@@ -222,9 +222,9 @@ function MovieCardWithTilt({ posterUrl, children }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {posterUrl && (
+      {posterURL && (
         <StyledGlowClipContainer>
-          <StyledGlowBackground src={posterUrl} alt="" />
+          <StyledGlowBackground src={posterURL} alt="" />
         </StyledGlowClipContainer>
       )}
       <StyledCardWrapper $transform={transform}>{children}</StyledCardWrapper>
@@ -234,7 +234,7 @@ function MovieCardWithTilt({ posterUrl, children }) {
 
 function MovieCard(prop) {
     // Properties of the Movie Card Object      // -----DESCRIPTION-----//
-    const posterUrl = prop.posertURL;           // URL to the movie poster
+    const posterURL = prop.posterURL;           // URL to the movie poster
     const movieId = prop.id || 
                     prop.tmdbId;                // ID number of the movie
     const movieTitle = prop.title || 
@@ -251,10 +251,10 @@ function MovieCard(prop) {
     return (
         <StyledTrendingItem key={movieId}>
             <StyledMovieCardLink to={`/movies/${movieId}`}>
-                {posterUrl ? (
-                <MovieCardWithTilt posterUrl={posterUrl}>
+                {posterURL ? (
+                <MovieCardWithTilt posterURL={posterURL}>
                     <StyledPosterWrapper>
-                    <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                    <StyledPoster src={posterURL} alt={`${movieTitle} poster`} />
                     </StyledPosterWrapper>
                     <StyledCardContent>
                     <StyledMovieTitle>{movieTitle}</StyledMovieTitle>
