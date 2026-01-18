@@ -257,7 +257,6 @@ function MovieDetailPage() {
   const [reviewBody, setReviewBody] = useState('');
   const [reviewRating, setReviewRating] = useState('');
   const [reviewError, setReviewError] = useState(null);
-  const [watchlistStatus, setWatchlistStatus] = useState('planned');
   const [watchlistEntry, setWatchlistEntry] = useState(null);
   const [watchlistError, setWatchlistError] = useState(null);
   const [editingReviewId, setEditingReviewId] = useState(null);
@@ -318,7 +317,6 @@ function MovieDetailPage() {
         if (isMounted) {
           const entry = (data || []).find((item) => item.movie_id === Number(id));
           setWatchlistEntry(entry || null);
-          setWatchlistStatus(entry?.status || 'planned');
         }
       } catch (err) {
         if (isMounted) {
@@ -423,22 +421,25 @@ function MovieDetailPage() {
                     onClick={async () => {
                       setWatchlistError(null);
                       try {
-                        const entry = watchlistEntry?.id
-                          ? await put(`/api/watchlist/${watchlistEntry.id}`, {
-                              status: watchlistStatus,
-                            })
-                          : await post('/api/watchlist', {
-                              tmdbId: Number(id),
-                              userId,
-                              status: watchlistStatus,
-                            });
-                        setWatchlistEntry(entry);
+                        if (watchlistEntry?.id) {
+                          // Remove from watchlist
+                          await del(`/api/watchlist/${watchlistEntry.id}`);
+                          setWatchlistEntry(null);
+                        } else {
+                          // Add to watchlist
+                          const entry = await post('/api/watchlist', {
+                            tmdbId: Number(id),
+                            userId,
+                            status: 'planned',
+                          });
+                          setWatchlistEntry(entry);
+                        }
                       } catch (err) {
                         setWatchlistError(err?.message || 'Unable to update watchlist.');
                       }
                     }}
                   >
-                    {watchlistEntry?.id ? 'Update Watchlist' : 'Add to Watchlist'}
+                    {watchlistEntry?.id ? 'Remove from Watchlist' : 'Add to Watchlist'}
                   </StyledWatchlistButton>
                   {watchlistError && <StyledError>{watchlistError}</StyledError>}
                 </div>

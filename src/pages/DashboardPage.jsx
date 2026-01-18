@@ -96,7 +96,7 @@ export default function DashboardPage() {
                     <StyledWatchlistPosterPlaceholder>No poster</StyledWatchlistPosterPlaceholder>
                   )}
                   <div>
-                    <strong>{entry.title}</strong> ({entry.release_year}) - {entry.status}
+                    <strong>{entry.title}</strong> {entry.release_year && `(${entry.release_year})`}
                   </div>
                 </StyledWatchlistItem>
               );
