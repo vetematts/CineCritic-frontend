@@ -255,6 +255,55 @@ function MovieDetailPage() {
               )}
               {movie.overview && <StyledParagraph>{movie.overview}</StyledParagraph>}
             </StyledMovieDetails>
+            <div>
+              <StyledHeading>Rate & Review</StyledHeading>
+              {reviewError && <StyledError>{reviewError}</StyledError>}
+              {isAuthenticated ? (
+                <form
+                  onSubmit={async (event) => {
+                    event.preventDefault();
+                    setReviewError(null);
+                    try {
+                      await post('/api/reviews', {
+                        tmdbId: Number(id),
+                        userId,
+                        rating: Number(reviewRating),
+                        body: reviewBody,
+                        status: 'published',
+                      });
+
+                      const updated = await get(`/api/reviews/${id}`);
+                      setReviews(updated || []);
+                      setReviewBody('');
+                      setReviewRating('5');
+                    } catch (err) {
+                      setReviewError(err?.message || 'Unable to submit review.');
+                    }
+                  }}
+                >
+                  <label>
+                    Rating
+                    <div style={{ marginTop: '0.5rem' }}>
+                      <StarRating value={reviewRating} onChange={setReviewRating} />
+                    </div>
+                  </label>
+                  <label>
+                    Review
+                    <textarea
+                      value={reviewBody}
+                      onChange={(event) => setReviewBody(event.target.value)}
+                    />
+                  </label>
+                  <button type="submit">Submit review</button>
+                </form>
+              ) : (
+                <StyledSignInPrompt>
+                  <StyledSignInText>
+                    <StyledSignInLink to="/login">Sign in</StyledSignInLink> to write a review
+                  </StyledSignInText>
+                </StyledSignInPrompt>
+              )}
+            </div>
             {reviews.length > 0 && (
               <>
                 <StyledHeading>Reviews</StyledHeading>
@@ -341,55 +390,6 @@ function MovieDetailPage() {
                 </StyledList>
               </>
             )}
-            <div>
-              <StyledHeading>Rate & Review</StyledHeading>
-              {reviewError && <StyledError>{reviewError}</StyledError>}
-              {isAuthenticated ? (
-                <form
-                  onSubmit={async (event) => {
-                    event.preventDefault();
-                    setReviewError(null);
-                    try {
-                      await post('/api/reviews', {
-                        tmdbId: Number(id),
-                        userId,
-                        rating: Number(reviewRating),
-                        body: reviewBody,
-                        status: 'published',
-                      });
-
-                      const updated = await get(`/api/reviews/${id}`);
-                      setReviews(updated || []);
-                      setReviewBody('');
-                      setReviewRating('5');
-                    } catch (err) {
-                      setReviewError(err?.message || 'Unable to submit review.');
-                    }
-                  }}
-                >
-                  <label>
-                    Rating
-                    <div style={{ marginTop: '0.5rem' }}>
-                      <StarRating value={reviewRating} onChange={setReviewRating} />
-                    </div>
-                  </label>
-                  <label>
-                    Review
-                    <textarea
-                      value={reviewBody}
-                      onChange={(event) => setReviewBody(event.target.value)}
-                    />
-                  </label>
-                  <button type="submit">Submit review</button>
-                </form>
-              ) : (
-                <StyledSignInPrompt>
-                  <StyledSignInText>
-                    <StyledSignInLink to="/login">Sign in</StyledSignInLink> to write a review
-                  </StyledSignInText>
-                </StyledSignInPrompt>
-              )}
-            </div>
             <div>
               <StyledHeading>Watchlist</StyledHeading>
               {!userId && <p>Please log in to manage your watchlist.</p>}
