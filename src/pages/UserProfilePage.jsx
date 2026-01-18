@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+// Import image assets
+import profilePic from '../assets/img/user/jackieChan.png';
+
 // Stack the user's portait to the left of their details
 const StyledDashboard = styled.div`
   display: flex;
@@ -13,10 +16,25 @@ const StyledPortaitColumn = styled.div`
   flex-basis: 20%
 `;
 
+// Set a restriction to the maximum size limit on the profile picture
+// 160px x 160px
+const StyledProfilePicture = styled.img`
+  flex: 1;  
+  max-width: 10rem;
+  max-height: 10rem;
+  border: 1px;
+  border-radius: 10rem;
+`;
+
 // Give all the subheadings a similar grayish white as the 
 // rest of the text but a bolder tone
 const StyledSubheading = styled.h2`
   margin-bottom: 0.5rem;
+`;
+
+const StyledStrongText = styled.p`
+  color: #bdbdbd;
+  font-weight: bold;
 `;
 
 // Give all the regular text a grayish white
@@ -30,13 +48,14 @@ const StyledUsersName = styled.h1`
 `;
 
 function UserProfilePage() {
+  const []
   return (
     <StyledDashboard id = "dashboard">
       <StyledPortaitColumn id = "user-portait-badge-container">
         <div id="user-profile-portait">
-          {/* <img src = {userProfile} /> */}
+          <StyledProfilePicture src={profilePic} className="profile-picture" alt="Profile Picture" />
           <div id = "badges">
-            <p>Badges</p>
+            <StyledStrongText>Badges</StyledStrongText>
             <StyledText>Put in a badge component and fill up this space with images of badges...</StyledText>
           </div>
           <button type="button" id = "log-out">
@@ -54,19 +73,19 @@ function UserProfilePage() {
         </div>
         <div id = "watchlist">
           <StyledSubheading>Watchlist</StyledSubheading>
-          <p>User's Watchlist Component here...</p>
-          <p>Statuses: Watching, Completed, On Hold, Dropped, Want to Watch</p>
-          <p>Movie/Show Poster, subtitle with the movie name and release year</p>
-          <p>Episodes watched</p>
-          <p>Score (Rating)</p>
+          <StyledText>User's Watchlist Component here...</StyledText>
+          <StyledText>Statuses: Watching, Completed, On Hold, Dropped, Want to Watch</StyledText>
+          <StyledText>Movie/Show Poster, subtitle with the movie name and release year</StyledText>
+          <StyledText>Episodes watched</StyledText>
+          <StyledText>Score (Rating)</StyledText>
         </div>
         <div id = "reviews">
           <StyledSubheading>Reviews</StyledSubheading>
-          <p>Review Component here...</p>
-          <p>Movie poster</p>
-          <p>Movie name, release year</p>
-          <p>Your rating:</p>
-          <p>Your review:</p>
+          <StyledText>Review Component here...</StyledText>
+          <StyledText>Movie poster</StyledText>
+          <StyledText>Movie name, release year</StyledText>
+          <StyledText>Your rating:</StyledText>
+          <StyledText>Your review:</StyledText>
         </div>
       </div>
     </StyledDashboard>
