@@ -11,9 +11,14 @@ import ClockIcon from '../assets/ClockIcon';
 import BackArrowIcon from '../assets/BackArrowIcon';
 
 const StyledContainer = styled.section`
-  width: 100rem;
+  width: 100%;
+  max-width: 100rem;
   padding: 1rem 0 2rem 0;
   color: rgba(255, 255, 255, 0.87);
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 // Main flex container: poster column + text column
@@ -21,18 +26,34 @@ const StyledMainContent = styled.div`
   display: flex;
   gap: 2rem;
   flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 `;
 
 // Poster column (fixed width on left)
 const StyledPosterColumn = styled.div`
   flex-shrink: 0;
   width: 300px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
 `;
 
 // Text column (flex: 1, contains all text content)
 const StyledTextColumn = styled.div`
   flex: 1;
   min-width: 300px;
+
+  @media (max-width: 768px) {
+    min-width: 0;
+    width: 100%;
+  }
 `;
 
 // Large poster for movie detail page
@@ -67,6 +88,10 @@ const StyledTitle = styled.h2`
   font-size: 2.5rem;
   font-weight: 600;
   line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
 `;
 
 const StyledHeading = styled.h3`
@@ -204,6 +229,11 @@ const StyledBackButton = styled(Link)`
     background-color: rgba(255, 255, 255, 0.15);
     border-color: rgba(255, 255, 255, 0.3);
     color: rgba(255, 255, 255, 0.95);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.7rem;
   }
 `;
 
