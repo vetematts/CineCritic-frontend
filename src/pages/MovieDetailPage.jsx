@@ -412,7 +412,11 @@ function MovieDetailPage() {
                       <StyledParagraph>
                         {review.body || review.content || review.text}
                       </StyledParagraph>
-                      {review.rating && <StyledMeta>Rating {review.rating}</StyledMeta>}
+                      {review.rating && (
+                        <div style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                          <StarRating value={String(review.rating)} disabled={true} />
+                        </div>
+                      )}
                       {user?.id &&
                         (review.user_id === user.id ||
                           review.userId === user.id ||
