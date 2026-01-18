@@ -77,6 +77,13 @@ function UserProfilePage() {
         </div>
         <div id = "favourites">
           <StyledSubheading>Favourites</StyledSubheading>
+          {favourites.map((movie) => {
+            const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
+            const movieId = movie.id || movie.tmdbId;
+            const movieTitle = movie.title || movie.name;
+            const releaseDate = movie.release_date || movie.first_air_date || '';
+            const formattedDate = releaseDate ? new Date(releaseDate).getFullYear().toString() : '';
+          })}
         </div>
         <div id = "watchlist">
           <StyledSubheading>Watchlist</StyledSubheading>
