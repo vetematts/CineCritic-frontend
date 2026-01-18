@@ -1,29 +1,59 @@
+import styled from "styled-components";
+
+// Stack the user's portait to the left of their details
+const StyledDashboard = styled.div`
+  display: flex;
+  gap: 2rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
+// Portait should take no more than 20% of the space
+const StyledPortaitColumn = styled.div`
+  flex-basis: 20%
+`;
+
+// Give all the subheadings a similar grayish white as the 
+// rest of the text but a bolder tone
+const StyledSubheading = styled.h2`
+  margin-bottom: 0.5rem;
+`;
+
+// Give all the regular text a grayish white
+const StyledText = styled.p`
+  margin: 0.25rem 0;
+  color: #bdbdbd;
+`;
+
+const StyledUsersName = styled.h1`
+  color: #bdbdbd;
+`;
+
 function UserProfilePage() {
   return (
-    <>
-    <div id = "flex-container">
-      <div id = "user-portait-badge-container">
+    <StyledDashboard id = "dashboard">
+      <StyledPortaitColumn id = "user-portait-badge-container">
         <div id="user-profile-portait">
-          <img src = {userProfile} />
+          {/* <img src = {userProfile} /> */}
           <div id = "badges">
             <p>Badges</p>
-            <p>Put in a badge component and fill up this space with images of badges...</p>
+            <StyledText>Put in a badge component and fill up this space with images of badges...</StyledText>
           </div>
           <button type="button" id = "log-out">
             Log out
           </button>  
         </div>
-    </div>
+    </StyledPortaitColumn>
     <div id = "user-profile-container">
         <div id = "user-information">
-          <p>User: </p>
-          <p>Account Created:</p>
+          <StyledUsersName>Jackie Chan</StyledUsersName>
+          <StyledText>Account Created: January 18, 2026</StyledText>
         </div>
         <div id = "favourites">
-          <h2>Favourites</h2>
+          <StyledSubheading>Favourites</StyledSubheading>
         </div>
         <div id = "watchlist">
-          <h2>Watchlist</h2>
+          <StyledSubheading>Watchlist</StyledSubheading>
           <p>User's Watchlist Component here...</p>
           <p>Statuses: Watching, Completed, On Hold, Dropped, Want to Watch</p>
           <p>Movie/Show Poster, subtitle with the movie name and release year</p>
@@ -31,6 +61,7 @@ function UserProfilePage() {
           <p>Score (Rating)</p>
         </div>
         <div id = "reviews">
+          <StyledSubheading>Reviews</StyledSubheading>
           <p>Review Component here...</p>
           <p>Movie poster</p>
           <p>Movie name, release year</p>
@@ -38,8 +69,7 @@ function UserProfilePage() {
           <p>Your review:</p>
         </div>
       </div>
-    </div>
-    </>
+    </StyledDashboard>
   );
 }
 
