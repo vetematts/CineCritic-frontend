@@ -152,6 +152,7 @@ function Header() {
           <StyledUserMenuContainer>
             <StyledProfileLink to="/dashboard">
               <ProfileIcon />
+              Dashboard
             </StyledProfileLink>
             <StyledAuthButton type="button" onClick={handleLogout}>
               Log out
