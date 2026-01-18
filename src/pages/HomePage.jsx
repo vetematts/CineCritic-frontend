@@ -8,6 +8,7 @@ import SearchBar from '../components/SearchBar';
 import { get } from '../api/api';
 import getPosterUrl from '../utilities/image-pathing';
 import { useAuth } from '../contexts/AuthContext';
+import { logoutRequest } from '../api/auth';
 
 // Import image assets
 import banner from '../assets/cine_critic_logo.png';
@@ -362,9 +363,60 @@ const StyledHomeHeader = styled.div`
   justify-content: flex-end;
   width: 100%;
   margin-bottom: 2rem;
+  gap: 0.75rem;
 `;
 
 const StyledLoginLink = styled(NavLink)`
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+`;
+
+const StyledAuthButton = styled.button`
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+`;
+
+const StyledDashboardLink = styled(NavLink)`
   padding: 0.4rem 0.8rem;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.87);
@@ -439,7 +491,7 @@ function MovieCardWithTilt({ posterUrl, children }) {
 
 // The default page that is loaded
 function HomePage() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const [trending, setTrending] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [randomRecs, setRandomRecs] = useState([]);
@@ -486,14 +538,35 @@ function HomePage() {
   return (
     <>
       <StyledHomeContainer className="flex-container">
-        {!isAuthenticated && (
-          <StyledHomeHeader>
+        <StyledHomeHeader>
+          {isAuthenticated ? (
+            <>
+              <StyledDashboardLink to="/dashboard">
+                <ProfileIcon />
+                Dashboard
+              </StyledDashboardLink>
+              <StyledAuthButton
+                type="button"
+                onClick={async () => {
+                  try {
+                    await logoutRequest();
+                    logout();
+                  } catch (error) {
+                    console.error('Logout error:', error);
+                    logout(); // Still log out locally even if API call fails
+                  }
+                }}
+              >
+                Log out
+              </StyledAuthButton>
+            </>
+          ) : (
             <StyledLoginLink to="/login">
               <ProfileIcon />
               Login / Signup
             </StyledLoginLink>
-          </StyledHomeHeader>
-        )}
+          )}
+        </StyledHomeHeader>
         <StyledFigure id="banner-container">
           <StyledHomeLogo src={banner} className="home_logo" alt="CineCritic Banner" />
         </StyledFigure>
