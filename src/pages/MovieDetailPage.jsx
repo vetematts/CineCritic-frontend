@@ -667,6 +667,7 @@ function MovieDetailPage() {
                     type="button"
                     onClick={() => {
                       // Always start fresh for new review
+                      setEditingReviewId(null);
                       setReviewRating('');
                       setReviewBody('');
                       setIsReviewModalOpen(true);
@@ -728,13 +729,23 @@ function MovieDetailPage() {
                 onClick={(e) => {
                   if (e.target === e.currentTarget) {
                     setIsReviewModalOpen(false);
+                    setEditingReviewId(null);
                   }
                 }}
               >
                 <StyledModal onClick={(e) => e.stopPropagation()}>
                   <StyledModalHeader>
-                    <StyledModalTitle>Rate & Review</StyledModalTitle>
-                    <StyledCloseButton type="button" onClick={() => setIsReviewModalOpen(false)}>
+                    <StyledModalTitle>
+                      {editingReviewId ? 'Edit Review' : 'Rate & Review'}
+                    </StyledModalTitle>
+                    <StyledCloseButton
+                      type="button"
+                      onClick={() => {
+                        setIsReviewModalOpen(false);
+                        setEditingReviewId(null);
+                        setReviewError(null);
+                      }}
+                    >
                       ×
                     </StyledCloseButton>
                   </StyledModalHeader>
@@ -745,18 +756,30 @@ function MovieDetailPage() {
                         event.preventDefault();
                         setReviewError(null);
                         try {
-                          await post('/api/reviews', {
-                            tmdbId: Number(id),
-                            userId,
-                            rating: Number(reviewRating),
-                            body: reviewBody,
-                            status: 'published',
-                          });
+                          if (editingReviewId) {
+                            // Update existing review
+                            await put(`/api/reviews/${editingReviewId}`, {
+                              rating: Number(editingRating),
+                              body: editingBody,
+                            });
+                          } else {
+                            // Create new review
+                            await post('/api/reviews', {
+                              tmdbId: Number(id),
+                              userId,
+                              rating: Number(reviewRating),
+                              body: reviewBody,
+                              status: 'published',
+                            });
+                          }
 
                           const updated = await get(`/api/reviews/${id}`);
                           setReviews(updated || []);
                           setReviewBody('');
                           setReviewRating('');
+                          setEditingBody('');
+                          setEditingRating('');
+                          setEditingReviewId(null);
                           setIsReviewModalOpen(false);
                         } catch (err) {
                           setReviewError(err?.message || 'Unable to submit review.');
@@ -766,14 +789,23 @@ function MovieDetailPage() {
                       <StyledModalLabel>
                         Rating
                         <div style={{ marginTop: '0.5rem' }}>
-                          <StarRating value={reviewRating} onChange={setReviewRating} />
+                          <StarRating
+                            value={editingReviewId ? editingRating : reviewRating}
+                            onChange={editingReviewId ? setEditingRating : setReviewRating}
+                          />
                         </div>
                       </StyledModalLabel>
                       <StyledModalLabel>
                         Review
                         <StyledModalTextarea
-                          value={reviewBody}
-                          onChange={(event) => setReviewBody(event.target.value)}
+                          value={editingReviewId ? editingBody : reviewBody}
+                          onChange={(event) => {
+                            if (editingReviewId) {
+                              setEditingBody(event.target.value);
+                            } else {
+                              setReviewBody(event.target.value);
+                            }
+                          }}
                           placeholder="Add a review..."
                         />
                       </StyledModalLabel>
@@ -782,6 +814,7 @@ function MovieDetailPage() {
                           type="button"
                           onClick={() => {
                             setIsReviewModalOpen(false);
+                            setEditingReviewId(null);
                             setReviewError(null);
                           }}
                         >
@@ -849,15 +882,16 @@ function MovieDetailPage() {
                       {user?.id &&
                         (review.user_id === user.id ||
                           review.userId === user.id ||
-                          review.user?.id === user.id) &&
-                        editingReviewId !== (review.id || review._id) && (
+                          review.user?.id === user.id) && (
                           <StyledReviewActions>
                             <StyledEditButton
                               type="button"
                               onClick={() => {
-                                setEditingReviewId(review.id || review._id);
-                                setEditingBody(review.content || review.text || '');
+                                const reviewId = review.id || review._id;
+                                setEditingReviewId(reviewId);
+                                setEditingBody(review.body || review.content || review.text || '');
                                 setEditingRating(String(review.rating || '5'));
+                                setIsReviewModalOpen(true);
                               }}
                             >
                               Edit
@@ -879,44 +913,6 @@ function MovieDetailPage() {
                             </StyledDeleteButton>
                           </StyledReviewActions>
                         )}
-                      {editingReviewId === (review.id || review._id) && (
-                        <form
-                          onSubmit={async (event) => {
-                            event.preventDefault();
-                            setReviewError(null);
-                            try {
-                              await put(`/api/reviews/${editingReviewId}`, {
-                                rating: Number(editingRating),
-                                body: editingBody,
-                              });
-
-                              const updated = await get(`/api/reviews/${id}`);
-                              setReviews(updated || []);
-                              setEditingReviewId(null);
-                            } catch (err) {
-                              setReviewError(err?.message || 'Unable to update review.');
-                            }
-                          }}
-                        >
-                          <label>
-                            Rating
-                            <div style={{ marginTop: '0.5rem' }}>
-                              <StarRating value={editingRating} onChange={setEditingRating} />
-                            </div>
-                          </label>
-                          <label>
-                            Review
-                            <textarea
-                              value={editingBody}
-                              onChange={(event) => setEditingBody(event.target.value)}
-                            />
-                          </label>
-                          <button type="submit">Save</button>
-                          <button type="button" onClick={() => setEditingReviewId(null)}>
-                            Cancel
-                          </button>
-                        </form>
-                      )}
                     </StyledListItem>
                   ))}
                 </StyledList>
