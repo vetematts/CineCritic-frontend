@@ -6,6 +6,9 @@ import { get, post, put, del } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
 import getPosterUrl from '../utilities/image-pathing';
 import StarRating from '../components/StarRating';
+import CalendarIcon from '../assets/CalendarIcon';
+import ClockIcon from '../assets/ClockIcon';
+import BackArrowIcon from '../assets/BackArrowIcon';
 
 const StyledContainer = styled.section`
   width: 100rem;
@@ -173,6 +176,66 @@ const StyledSignInLink = styled(Link)`
   }
 `;
 
+// Back to Home button
+const StyledBackButton = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.87);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #e9da57;
+  }
+`;
+
+// Meta info with icons
+const StyledMetaContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0;
+`;
+
+const StyledMetaItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+`;
+
+// Watchlist button
+const StyledWatchlistButton = styled.button`
+  padding: 0.75rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
 function MovieDetailPage() {
   const { id } = useParams();
   const { user, isAuthenticated } = useAuth();
@@ -286,6 +349,10 @@ function MovieDetailPage() {
 
   return (
     <StyledContainer>
+      <StyledBackButton to="/">
+        <BackArrowIcon />
+        Back to Home
+      </StyledBackButton>
       {loading && <p>Loading...</p>}
       {error && <StyledError>{error}</StyledError>}
       {!loading && movie && (
@@ -303,20 +370,33 @@ function MovieDetailPage() {
           <StyledTextColumn>
             <StyledMovieDetails>
               <StyledTitle>{movie.title || movie.name}</StyledTitle>
-              {movie.release_date && (
-                <StyledMeta>
-                  Released{' '}
-                  {(() => {
-                    // Format date from YYYY-MM-DD to DD/MM/YYYY (Australian format)
-                    const dateParts = movie.release_date.split('-');
-                    if (dateParts.length === 3) {
-                      return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
-                    }
-                    return movie.release_date;
-                  })()}
-                </StyledMeta>
-              )}
-              {movie.runtime && <StyledMeta>Runtime {movie.runtime} minutes</StyledMeta>}
+              <StyledMetaContainer>
+                {movie.release_date && (
+                  <StyledMetaItem>
+                    <CalendarIcon />
+                    <span>
+                      {(() => {
+                        // Format date to "February 28, 2025" format
+                        const date = new Date(movie.release_date);
+                        if (!isNaN(date.getTime())) {
+                          return date.toLocaleDateString('en-US', {
+                            month: 'long',
+                            day: 'numeric',
+                            year: 'numeric',
+                          });
+                        }
+                        return movie.release_date;
+                      })()}
+                    </span>
+                  </StyledMetaItem>
+                )}
+                {movie.runtime && (
+                  <StyledMetaItem>
+                    <ClockIcon />
+                    <span>{movie.runtime} min</span>
+                  </StyledMetaItem>
+                )}
+              </StyledMetaContainer>
               {movie.vote_average && (
                 <StyledAverageRating>
                   <StyledAverageRatingLabel>Average Rating</StyledAverageRatingLabel>
@@ -326,6 +406,33 @@ function MovieDetailPage() {
                 </StyledAverageRating>
               )}
               {movie.overview && <StyledParagraph>{movie.overview}</StyledParagraph>}
+              {userId && (
+                <div style={{ marginTop: '1.5rem' }}>
+                  <StyledWatchlistButton
+                    type="button"
+                    onClick={async () => {
+                      setWatchlistError(null);
+                      try {
+                        const entry = watchlistEntry?.id
+                          ? await put(`/api/watchlist/${watchlistEntry.id}`, {
+                              status: watchlistStatus,
+                            })
+                          : await post('/api/watchlist', {
+                              tmdbId: Number(id),
+                              userId,
+                              status: watchlistStatus,
+                            });
+                        setWatchlistEntry(entry);
+                      } catch (err) {
+                        setWatchlistError(err?.message || 'Unable to update watchlist.');
+                      }
+                    }}
+                  >
+                    {watchlistEntry?.id ? 'Update Watchlist' : 'Add to Watchlist'}
+                  </StyledWatchlistButton>
+                  {watchlistError && <StyledError>{watchlistError}</StyledError>}
+                </div>
+              )}
             </StyledMovieDetails>
             <div>
               <StyledHeading>Rate & Review</StyledHeading>
@@ -375,70 +482,6 @@ function MovieDetailPage() {
                   </StyledSignInText>
                 </StyledSignInPrompt>
               )}
-            </div>
-            <div>
-              <StyledHeading>Watchlist</StyledHeading>
-              {!userId && <p>Please log in to manage your watchlist.</p>}
-              {watchlistError && <StyledError>{watchlistError}</StyledError>}
-              <div>
-                <label>
-                  Status
-                  <select
-                    value={watchlistStatus}
-                    onChange={(event) => setWatchlistStatus(event.target.value)}
-                    disabled={!userId}
-                  >
-                    <option value="planned">Planned</option>
-                    <option value="watching">Watching</option>
-                    <option value="completed">Completed</option>
-                  </select>
-                </label>
-                {watchlistEntry?.id && <p>Current status: {watchlistEntry.status}</p>}
-                <button
-                  type="button"
-                  disabled={!userId}
-                  onClick={async () => {
-                    setWatchlistError(null);
-                    if (!userId) {
-                      setWatchlistError('You must be logged in.');
-                      return;
-                    }
-
-                    try {
-                      const entry = watchlistEntry?.id
-                        ? await put(`/api/watchlist/${watchlistEntry.id}`, {
-                            status: watchlistStatus,
-                          })
-                        : await post('/api/watchlist', {
-                            tmdbId: Number(id),
-                            userId,
-                            status: watchlistStatus,
-                          });
-                      setWatchlistEntry(entry);
-                    } catch (err) {
-                      setWatchlistError(err?.message || 'Unable to update watchlist.');
-                    }
-                  }}
-                >
-                  {watchlistEntry?.id ? 'Update watchlist' : 'Add to watchlist'}
-                </button>
-                {watchlistEntry?.id && (
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      setWatchlistError(null);
-                      try {
-                        await del(`/api/watchlist/${watchlistEntry.id}`);
-                        setWatchlistEntry(null);
-                      } catch (err) {
-                        setWatchlistError(err?.message || 'Unable to remove from watchlist.');
-                      }
-                    }}
-                  >
-                    Remove
-                  </button>
-                )}
-              </div>
             </div>
             {reviews.length > 0 && (
               <>
