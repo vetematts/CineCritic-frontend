@@ -38,11 +38,31 @@ const StyledError = styled.p`
 
 // Add space above the signup button and the bottom of the signup form
 const StyledSignupButton = styled.button`
-  // Give the button a bit more meat
-  height: 2rem;
+  padding: 0.75rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.1s ease;
 
   // Space the signup button from the password input
   margin: 2rem 0 0 0;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 `;
 
 export default function SignupForm() {
