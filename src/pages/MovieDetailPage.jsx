@@ -237,9 +237,9 @@ function MovieDetailPage() {
     );
 
     if (userReview) {
-      // Pre-populate form with existing review data
+      // Pre-populate rating with existing review rating, but keep review body empty
       setReviewRating(String(userReview.rating || '5'));
-      setReviewBody(userReview.body || userReview.content || userReview.text || '');
+      setReviewBody('');
     } else {
       // Reset to defaults if no existing review
       setReviewRating('5');
