@@ -200,7 +200,7 @@ const StyledProfileLink = styled(NavLink)`
   }
 
   @media (max-width: 480px) {
-    // Hide "Dashboard" text on very small screens, show only icon
+    // Hide "Profile" text on very small screens, show only icon
     span {
       display: none;
     }
@@ -249,9 +249,9 @@ function Header() {
       <StyledHeaderColumns id="user-menu">
         {isAuthenticated ? (
           <StyledUserMenuContainer>
-            <StyledProfileLink to="/dashboard">
+            <StyledProfileLink to="/user">
               <ProfileIcon />
-              <span>Dashboard</span>
+              <span>Profile</span>
             </StyledProfileLink>
             <StyledAuthButton type="button" onClick={handleLogout}>
               Log out

@@ -586,9 +586,9 @@ function HomePage() {
         <StyledHomeHeader>
           {isAuthenticated ? (
             <>
-              <StyledDashboardLink to="/dashboard">
+              <StyledDashboardLink to="/user">
                 <ProfileIcon />
-                Dashboard
+                Profile
               </StyledDashboardLink>
               <StyledAuthButton
                 type="button"

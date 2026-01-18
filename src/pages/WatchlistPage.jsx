@@ -5,8 +5,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { get } from '../api/api';
 import getPosterUrl from '../utilities/image-pathing';
 
-// Container for dashboard content
-const StyledDashboardContainer = styled.div`
+// Container for watchlist content
+const StyledWatchlistContainer = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -69,8 +69,8 @@ const StyledWatchlistList = styled.ul`
   margin: 0;
 `;
 
-export default function DashboardPage() {
-  const { user, isAuthenticated, logout } = useAuth();
+export default function WatchlistPage() {
+  const { user, isAuthenticated } = useAuth();
   const userId = user?.id ?? user?.sub ?? null;
   const [watchlist, setWatchlist] = useState([]);
   const [watchlistError, setWatchlistError] = useState(null);
@@ -108,35 +108,29 @@ export default function DashboardPage() {
   if (!isAuthenticated) return <Navigate to="/login" />;
 
   return (
-    <StyledDashboardContainer>
-      <h1>Dashboard</h1>
-      <section>
-        <h2>Watchlist</h2>
-        {watchlistError && <p>{watchlistError}</p>}
-        {watchlist.length === 0 && <p>No items in your watchlist yet.</p>}
-        {watchlist.length > 0 && (
-          <StyledWatchlistList>
-            {watchlist.map((entry) => {
-              const posterUrl = getPosterUrl(entry.poster_url || entry.poster_path, 'w200');
-              return (
-                <StyledWatchlistItem key={entry.id}>
-                  {posterUrl ? (
-                    <StyledWatchlistPoster src={posterUrl} alt={`${entry.title} poster`} />
-                  ) : (
-                    <StyledWatchlistPosterPlaceholder>No poster</StyledWatchlistPosterPlaceholder>
-                  )}
-                  <div>
-                    <strong>{entry.title}</strong> {entry.release_year && `(${entry.release_year})`}
-                  </div>
-                </StyledWatchlistItem>
-              );
-            })}
-          </StyledWatchlistList>
-        )}
-      </section>
-      <button type="button" onClick={() => logout()}>
-        Log out
-      </button>
-    </StyledDashboardContainer>
+    <StyledWatchlistContainer>
+      <h1>Watchlist</h1>
+      {watchlistError && <p>{watchlistError}</p>}
+      {watchlist.length === 0 && <p>No items in your watchlist yet.</p>}
+      {watchlist.length > 0 && (
+        <StyledWatchlistList>
+          {watchlist.map((entry) => {
+            const posterUrl = getPosterUrl(entry.poster_url || entry.poster_path, 'w200');
+            return (
+              <StyledWatchlistItem key={entry.id}>
+                {posterUrl ? (
+                  <StyledWatchlistPoster src={posterUrl} alt={`${entry.title} poster`} />
+                ) : (
+                  <StyledWatchlistPosterPlaceholder>No poster</StyledWatchlistPosterPlaceholder>
+                )}
+                <div>
+                  <strong>{entry.title}</strong> {entry.release_year && `(${entry.release_year})`}
+                </div>
+              </StyledWatchlistItem>
+            );
+          })}
+        </StyledWatchlistList>
+      )}
+    </StyledWatchlistContainer>
   );
 }
