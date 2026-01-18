@@ -1,4 +1,4 @@
-// Utilities
+// Utilities                                            // -----DESCRPTION-----//
 import getPosterUrl from "../utilities/image-pathing";  // Creates URL to grab movie poster link
 
 // Child Component                      // -----DESCRPTION-----//

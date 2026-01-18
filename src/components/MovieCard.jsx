@@ -1,4 +1,4 @@
-// Import Packages                          // Description
+// Import Packages                          // -----DESCRPTION-----//
 import { useRef, useState } from "react";   // Holds state variables
 import { NavLink } from "react-router";     // Handles the redirection to other pages
 import styled from "styled-components";     // Handles the CSS styling to React elements

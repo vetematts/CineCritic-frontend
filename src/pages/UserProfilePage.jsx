@@ -1,9 +1,17 @@
+// Import Packages
 import styled from "styled-components";
+import { useState } from "react";
+
+// Utilies
+import { get } from '../api/api';
+
+// Components
+import MovieCarousel from "../components/MovieCarousel";  // Favourite movies carousel
 
 // Import image assets
 import profilePic from '../assets/img/user/jackieChan.png';
-import { useEffect, useState } from "react";
-import MovieCarousel from "../components/MovieCarousel";
+
+
 
 // Stack the user's portait to the left of their details
 const StyledDashboard = styled.div`
