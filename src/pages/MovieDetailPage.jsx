@@ -431,9 +431,10 @@ const StyledSignInReviewButton = styled(Link)`
 
 const StyledActionButtons = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 1rem;
-  flex-wrap: wrap;
   margin-top: 1.5rem;
+  width: 100%;
 `;
 
 function MovieDetailPage() {
@@ -542,6 +543,53 @@ function MovieDetailPage() {
                 <StyledPosterPlaceholder>No poster available</StyledPosterPlaceholder>
               );
             })()}
+            <StyledActionButtons>
+              {userId ? (
+                <>
+                  <StyledWatchlistButton
+                    type="button"
+                    onClick={async () => {
+                      setWatchlistError(null);
+                      try {
+                        if (watchlistEntry?.id) {
+                          // Remove from watchlist
+                          await del(`/api/watchlist/${watchlistEntry.id}`);
+                          setWatchlistEntry(null);
+                        } else {
+                          // Add to watchlist
+                          const entry = await post('/api/watchlist', {
+                            tmdbId: Number(id),
+                            userId,
+                            status: 'planned',
+                          });
+                          setWatchlistEntry(entry);
+                        }
+                      } catch (err) {
+                        setWatchlistError(err?.message || 'Unable to update watchlist.');
+                      }
+                    }}
+                  >
+                    {watchlistEntry?.id ? 'Remove from Watchlist' : 'Add to Watchlist'}
+                  </StyledWatchlistButton>
+                  <StyledOpenReviewButton
+                    type="button"
+                    onClick={() => {
+                      // Always start fresh for new review
+                      setReviewRating('');
+                      setReviewBody('');
+                      setIsReviewModalOpen(true);
+                    }}
+                  >
+                    Rate & Review
+                  </StyledOpenReviewButton>
+                </>
+              ) : (
+                <StyledSignInReviewButton to="/login">
+                  Sign in to Rate & Review
+                </StyledSignInReviewButton>
+              )}
+            </StyledActionButtons>
+            {watchlistError && <StyledError>{watchlistError}</StyledError>}
           </StyledPosterColumn>
           <StyledTextColumn>
             <StyledMovieDetails>
@@ -582,53 +630,6 @@ function MovieDetailPage() {
                 </StyledAverageRating>
               )}
               {movie.overview && <StyledParagraph>{movie.overview}</StyledParagraph>}
-              <StyledActionButtons>
-                {userId ? (
-                  <>
-                    <StyledWatchlistButton
-                      type="button"
-                      onClick={async () => {
-                        setWatchlistError(null);
-                        try {
-                          if (watchlistEntry?.id) {
-                            // Remove from watchlist
-                            await del(`/api/watchlist/${watchlistEntry.id}`);
-                            setWatchlistEntry(null);
-                          } else {
-                            // Add to watchlist
-                            const entry = await post('/api/watchlist', {
-                              tmdbId: Number(id),
-                              userId,
-                              status: 'planned',
-                            });
-                            setWatchlistEntry(entry);
-                          }
-                        } catch (err) {
-                          setWatchlistError(err?.message || 'Unable to update watchlist.');
-                        }
-                      }}
-                    >
-                      {watchlistEntry?.id ? 'Remove from Watchlist' : 'Add to Watchlist'}
-                    </StyledWatchlistButton>
-                    <StyledOpenReviewButton
-                      type="button"
-                      onClick={() => {
-                        // Always start fresh for new review
-                        setReviewRating('');
-                        setReviewBody('');
-                        setIsReviewModalOpen(true);
-                      }}
-                    >
-                      Rate & Review
-                    </StyledOpenReviewButton>
-                  </>
-                ) : (
-                  <StyledSignInReviewButton to="/login">
-                    Sign in to Rate & Review
-                  </StyledSignInReviewButton>
-                )}
-              </StyledActionButtons>
-              {watchlistError && <StyledError>{watchlistError}</StyledError>}
             </StyledMovieDetails>
             {isReviewModalOpen && (
               <StyledModalOverlay
