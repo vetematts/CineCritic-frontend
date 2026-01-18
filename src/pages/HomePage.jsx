@@ -561,7 +561,6 @@ function HomePage() {
             );
           })} */}
         </StyledTrendingList>
-        {/* Insert Recommendations Carousel */}
       </StyledHomeContainer>
     </>
   );
