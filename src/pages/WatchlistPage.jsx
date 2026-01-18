@@ -11,24 +11,63 @@ const StyledWatchlistContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+  color: rgba(255, 255, 255, 0.87);
 
   @media (max-width: 768px) {
     padding: 0.75rem;
   }
 `;
 
+// Page title styling
+const StyledPageTitle = styled.h1`
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0 0 2rem 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+`;
+
+// Error message styling
+const StyledError = styled.p`
+  color: #ffb4a2;
+  margin: 0.5rem 0;
+`;
+
+// Empty state message styling
+const StyledEmptyMessage = styled.p`
+  color: rgba(255, 255, 255, 0.6);
+  margin: 1rem 0;
+`;
+
 // Styled components for watchlist display
 const StyledWatchlistItem = styled.li`
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 0;
+  gap: 1.5rem;
+  padding: 1.25rem;
   list-style: none;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
+    padding: 1rem;
   }
 `;
 
@@ -67,6 +106,20 @@ const StyledWatchlistList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+`;
+
+// Movie title styling
+const StyledMovieTitle = styled.div`
+  color: rgba(255, 255, 255, 0.87);
+
+  strong {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  // Year styling
+  color: rgba(255, 255, 255, 0.7);
 `;
 
 export default function WatchlistPage() {
@@ -109,9 +162,11 @@ export default function WatchlistPage() {
 
   return (
     <StyledWatchlistContainer>
-      <h1>Watchlist</h1>
-      {watchlistError && <p>{watchlistError}</p>}
-      {watchlist.length === 0 && <p>No items in your watchlist yet.</p>}
+      <StyledPageTitle>Watchlist</StyledPageTitle>
+      {watchlistError && <StyledError>{watchlistError}</StyledError>}
+      {watchlist.length === 0 && (
+        <StyledEmptyMessage>No items in your watchlist yet.</StyledEmptyMessage>
+      )}
       {watchlist.length > 0 && (
         <StyledWatchlistList>
           {watchlist.map((entry) => {
@@ -123,9 +178,10 @@ export default function WatchlistPage() {
                 ) : (
                   <StyledWatchlistPosterPlaceholder>No poster</StyledWatchlistPosterPlaceholder>
                 )}
-                <div>
-                  <strong>{entry.title}</strong> {entry.release_year && `(${entry.release_year})`}
-                </div>
+                <StyledMovieTitle>
+                  <strong>{entry.title}</strong>
+                  {entry.release_year && ` (${entry.release_year})`}
+                </StyledMovieTitle>
               </StyledWatchlistItem>
             );
           })}
