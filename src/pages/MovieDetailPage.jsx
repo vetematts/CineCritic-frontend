@@ -475,6 +475,60 @@ const StyledActionButtons = styled.div`
   width: 100%;
 `;
 
+const StyledReviewActions = styled.div`
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+`;
+
+const StyledEditButton = styled.button`
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+`;
+
+const StyledDeleteButton = styled.button`
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+`;
+
 function MovieDetailPage() {
   const { id } = useParams();
   const { user } = useAuth();
@@ -797,8 +851,8 @@ function MovieDetailPage() {
                           review.userId === user.id ||
                           review.user?.id === user.id) &&
                         editingReviewId !== (review.id || review._id) && (
-                          <>
-                            <button
+                          <StyledReviewActions>
+                            <StyledEditButton
                               type="button"
                               onClick={() => {
                                 setEditingReviewId(review.id || review._id);
@@ -807,8 +861,8 @@ function MovieDetailPage() {
                               }}
                             >
                               Edit
-                            </button>
-                            <button
+                            </StyledEditButton>
+                            <StyledDeleteButton
                               type="button"
                               onClick={async () => {
                                 setReviewError(null);
@@ -822,8 +876,8 @@ function MovieDetailPage() {
                               }}
                             >
                               Delete
-                            </button>
-                          </>
+                            </StyledDeleteButton>
+                          </StyledReviewActions>
                         )}
                       {editingReviewId === (review.id || review._id) && (
                         <form
