@@ -112,7 +112,7 @@ function Footer() {
           <StyledFooterHeadings>Account</StyledFooterHeadings>
           <StyledList>
             <StyledFooterLinkList>
-              <StyledFooterLinks>Your Account</StyledFooterLinks>
+              <StyledFooterLinks to="/user">Your Account</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
               <StyledFooterLinks to="/signup">Register</StyledFooterLinks>
