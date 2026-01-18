@@ -423,7 +423,11 @@ const StyledSignInReviewButton = styled(Link)`
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease;
