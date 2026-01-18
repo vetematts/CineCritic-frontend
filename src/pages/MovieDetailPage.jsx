@@ -266,7 +266,19 @@ function MovieDetailPage() {
           <StyledTextColumn>
             <StyledMovieDetails>
               <StyledTitle>{movie.title || movie.name}</StyledTitle>
-              {movie.release_date && <StyledMeta>Released {movie.release_date}</StyledMeta>}
+              {movie.release_date && (
+                <StyledMeta>
+                  Released{' '}
+                  {(() => {
+                    // Format date from YYYY-MM-DD to DD/MM/YYYY (Australian format)
+                    const dateParts = movie.release_date.split('-');
+                    if (dateParts.length === 3) {
+                      return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+                    }
+                    return movie.release_date;
+                  })()}
+                </StyledMeta>
+              )}
               {movie.runtime && <StyledMeta>Runtime {movie.runtime} minutes</StyledMeta>}
               {movie.vote_average && (
                 <StyledAverageRating>
