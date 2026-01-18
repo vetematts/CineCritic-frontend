@@ -102,6 +102,13 @@ const StyledReviewAuthor = styled.p`
   font-style: italic;
 `;
 
+const StyledReviewAuthorLine = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.5rem 0 0.25rem 0;
+`;
+
 const StyledReviewDate = styled.p`
   color: rgba(255, 255, 255, 0.4);
   font-size: 0.85rem;
@@ -439,14 +446,19 @@ function MovieDetailPage() {
                 <StyledList>
                   {reviews.map((review) => (
                     <StyledListItem key={review.id || review._id}>
-                      <StyledReviewAuthor>
-                        {review.user?.username ||
-                          review.username ||
-                          review.user?.name ||
-                          review.user_name ||
-                          review.user?.email?.split('@')[0] ||
-                          'Anonymous'}
-                      </StyledReviewAuthor>
+                      <StyledReviewAuthorLine>
+                        <StyledReviewAuthor>
+                          {review.user?.username ||
+                            review.username ||
+                            review.user?.name ||
+                            review.user_name ||
+                            review.user?.email?.split('@')[0] ||
+                            'Anonymous'}
+                        </StyledReviewAuthor>
+                        {review.rating && (
+                          <StarRating value={String(review.rating)} disabled={true} />
+                        )}
+                      </StyledReviewAuthorLine>
                       {(review.published_at || review.created_at) && (
                         <StyledReviewDate>
                           {(() => {
@@ -476,11 +488,6 @@ function MovieDetailPage() {
                             return dateStr;
                           })()}
                         </StyledReviewDate>
-                      )}
-                      {review.rating && (
-                        <div style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
-                          <StarRating value={String(review.rating)} disabled={true} />
-                        </div>
                       )}
                       <StyledParagraph>
                         {review.body || review.content || review.text}
