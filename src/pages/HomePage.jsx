@@ -314,7 +314,7 @@ const StyledMovieCardLink = styled(NavLink)`
   width: 100%;
 
   &:hover ${StyledMovieTitle} {
-    color: #e9da57; // Gold color on hover
+    color: #cec8c8ff; // Off-white color on hover
   }
 `;
 
