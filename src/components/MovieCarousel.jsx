@@ -2,11 +2,11 @@
 import MovieCard from "./MovieCard";    // Create the clickable movie card posters
 
 // Movie carousel will be sent an array of movies
-function MovieCarousel(prop) {
+function MovieCarousel({moviesArray}) {
     return (
         <>
             {
-                prop.map((movie) => {
+                moviesArray.map((movie) => {
                     const posterURL = getPosterUrl(
                                         movie.poster_path || 
                                         movie.posterUrl, 

@@ -3,6 +3,7 @@ import styled from "styled-components";
 // Import image assets
 import profilePic from '../assets/img/user/jackieChan.png';
 import { useEffect, useState } from "react";
+import MovieCarousel from "../components/MovieCarousel";
 
 // Stack the user's portait to the left of their details
 const StyledDashboard = styled.div`
@@ -77,13 +78,7 @@ function UserProfilePage() {
         </div>
         <div id = "favourites">
           <StyledSubheading>Favourites</StyledSubheading>
-          {favourites.map((movie) => {
-            const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
-            const movieId = movie.id || movie.tmdbId;
-            const movieTitle = movie.title || movie.name;
-            const releaseDate = movie.release_date || movie.first_air_date || '';
-            const formattedDate = releaseDate ? new Date(releaseDate).getFullYear().toString() : '';
-          })}
+            <MovieCarousel moviesArray = {favourites} />
         </div>
         <div id = "watchlist">
           <StyledSubheading>Watchlist</StyledSubheading>
