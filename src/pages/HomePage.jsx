@@ -11,6 +11,7 @@ import getPosterUrl from '../utilities/image-pathing';
 // Import image assets
 import banner from '../assets/cine_critic_logo.png';
 import CalendarIcon from '../assets/CalendarIcon';
+import MovieCarousel from '../components/MovieCarousel';
 
 // Styled components
 const StyledHomeContainer = styled.div`
@@ -448,7 +449,8 @@ function HomePage() {
           <StyledRandomRecommendations>Random Recommendations</StyledRandomRecommendations>
         </StyledHomeRow>
         <StyledRandomList>
-          {randomRecs.map((movie) => {
+          <MovieCarousel moviesArray = {randomRecs} />
+          {/* {randomRecs.map((movie) => {
             const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
             const movieId = movie.id || movie.tmdbId;
             const movieTitle = movie.title || movie.name;
@@ -478,7 +480,7 @@ function HomePage() {
                 </StyledMovieCardLink>
               </StyledTrendingItem>
             );
-          })}
+          })} */}
         </StyledRandomList>
         {error && <StyledError>{error}</StyledError>}
 
@@ -487,7 +489,8 @@ function HomePage() {
           <StyledRandomRecommendations>Trending</StyledRandomRecommendations>
         </StyledHomeRow>
         <StyledTrendingList>
-          {trending.map((movie) => {
+          <MovieCarousel moviesArray = {trending} />
+          {/* {trending.map((movie) => {
             const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
             const movieId = movie.id || movie.tmdbId;
             const movieTitle = movie.title || movie.name;
@@ -517,7 +520,7 @@ function HomePage() {
                 </StyledMovieCardLink>
               </StyledTrendingItem>
             );
-          })}
+          })} */}
         </StyledTrendingList>
 
         {/* Top Rated Section */}
@@ -525,7 +528,8 @@ function HomePage() {
           <StyledRandomRecommendations>Top Rated</StyledRandomRecommendations>
         </StyledHomeRow>
         <StyledTrendingList>
-          {topRated.map((movie) => {
+          <MovieCarousel moviesArray = {topRated} />
+          {/* {topRated.map((movie) => {
             const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
             const movieId = movie.id || movie.tmdbId;
             const movieTitle = movie.title || movie.name;
@@ -555,7 +559,7 @@ function HomePage() {
                 </StyledMovieCardLink>
               </StyledTrendingItem>
             );
-          })}
+          })} */}
         </StyledTrendingList>
         {/* Insert Recommendations Carousel */}
       </StyledHomeContainer>
