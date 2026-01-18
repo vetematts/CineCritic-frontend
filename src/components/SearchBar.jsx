@@ -9,9 +9,9 @@ import getSearchURL from '../utilities/query-endpoints';
 // Styled components
 const StyledForm = styled.form`
   display: flex;
-  flex: 1;
   gap: 0.75rem;
   align-items: center;
+  min-width: 0;
 `;
 
 // Give the search bar a flat transparent rounded look
@@ -26,8 +26,7 @@ const StyledSearchBar = styled.input`
   padding: 5px; /* Optional: Add padding so text doesn't touch the edges */
 
   min-width: 5rem;
-  flex: 1;
-  max-width: 30rem;
+  width: 30rem;
   color: #ffffff;
 `;
 

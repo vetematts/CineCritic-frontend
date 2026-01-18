@@ -29,6 +29,8 @@ const StyledHomeRow = styled.div`
   &#home-search-bar {
     align-items: center;
     gap: 0.75rem;
+    flex-wrap: nowrap;
+    justify-content: center;
   }
 
   &#home-advanced-search {
