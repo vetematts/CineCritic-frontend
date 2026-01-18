@@ -1,7 +1,7 @@
 // Import Packages
 import styled from "styled-components";
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 
 // Utilies
 import { get } from '../api/api';
@@ -53,6 +53,26 @@ const StyledProfilePicture = styled.img`
 const StyledSubheading = styled.h2`
   margin-bottom: 0.5rem;
   color: #cec8c8ff;
+  font-size: 1.5rem;
+  font-weight: 600;
+`;
+
+// Styled link for subheadings that should be clickable
+const StyledSubheadingLink = styled(NavLink)`
+  margin-bottom: 0.5rem;
+  color: #cec8c8ff;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.5);
+  }
 `;
 
 const StyledStrongText = styled.p`
@@ -111,7 +131,7 @@ function UserProfilePage() {
           <MovieCarousel moviesArray={favourites} />
         </div>
         <div id="watchlist">
-          <StyledSubheading>Watchlist</StyledSubheading>
+          <StyledSubheadingLink to="/watchlist">Watchlist</StyledSubheadingLink>
           <StyledText>User's Watchlist Component here...</StyledText>
           <StyledText>Statuses: Watching, Completed, On Hold, Dropped, Want to Watch</StyledText>
           <StyledText>Movie/Show Poster, subtitle with the movie name and release year</StyledText>
