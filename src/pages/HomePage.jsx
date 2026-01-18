@@ -7,10 +7,12 @@ import styled from 'styled-components';
 import SearchBar from '../components/SearchBar';
 import { get } from '../api/api';
 import getPosterUrl from '../utilities/image-pathing';
+import { useAuth } from '../contexts/AuthContext';
 
 // Import image assets
 import banner from '../assets/cine_critic_logo.png';
 import CalendarIcon from '../assets/CalendarIcon';
+import ProfileIcon from '../assets/ProfileIcon';
 
 // Styled components
 const StyledHomeContainer = styled.div`
@@ -340,6 +342,39 @@ const StyledError = styled.p`
   color: #ffb4a2;
 `;
 
+const StyledHomeHeader = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 2rem;
+`;
+
+const StyledLoginLink = styled(NavLink)`
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+`;
+
 // Component for movie card with 3D tilt effect
 function MovieCardWithTilt({ posterUrl, children }) {
   const cardRef = useRef(null);
@@ -389,6 +424,7 @@ function MovieCardWithTilt({ posterUrl, children }) {
 
 // The default page that is loaded
 function HomePage() {
+  const { isAuthenticated } = useAuth();
   const [trending, setTrending] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [randomRecs, setRandomRecs] = useState([]);
@@ -435,6 +471,14 @@ function HomePage() {
   return (
     <>
       <StyledHomeContainer className="flex-container">
+        {!isAuthenticated && (
+          <StyledHomeHeader>
+            <StyledLoginLink to="/login">
+              <ProfileIcon />
+              Login / Signup
+            </StyledLoginLink>
+          </StyledHomeHeader>
+        )}
         <StyledFigure id="banner-container">
           <StyledHomeLogo src={banner} className="home_logo" alt="CineCritic Banner" />
         </StyledFigure>
