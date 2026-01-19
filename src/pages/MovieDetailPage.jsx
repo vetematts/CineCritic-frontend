@@ -645,10 +645,16 @@ function MovieDetailPage() {
   const topGenres = useMemo(() => {
     if (!movie) return [];
     if (Array.isArray(movie.genres) && movie.genres.length > 0) {
-      return movie.genres.map((genre) => genre?.name).filter(Boolean).slice(0, 3);
+      return movie.genres
+        .map((genre) => genre?.name)
+        .filter(Boolean)
+        .slice(0, 3);
     }
     if (Array.isArray(movie.genre_ids) && genreMap) {
-      return movie.genre_ids.map((idValue) => genreMap[idValue]).filter(Boolean).slice(0, 3);
+      return movie.genre_ids
+        .map((idValue) => genreMap[idValue])
+        .filter(Boolean)
+        .slice(0, 3);
     }
     return [];
   }, [genreMap, movie]);
