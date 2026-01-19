@@ -33,7 +33,7 @@ const StyledTitleGroup = styled.div`
 
 const StyledTitle = styled.h2`
   margin: 0;
-  color: #e9da57;
+  color: #cec8c8ff;
   font-size: 1.6rem;
   letter-spacing: 0.02em;
 `;
