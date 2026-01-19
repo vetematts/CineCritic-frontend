@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Navigate, NavLink } from 'react-router-dom';
 
 // Utilies
-import { get } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
 
 // Components
@@ -97,7 +96,7 @@ function UserProfilePage() {
   const { user, isAuthenticated } = useAuth();
 
   // Hooks                                          // Description
-  const [favourites, setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
+  const [favourites, _setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
 
   // Return user to login page if they're not authenticated.
   if (!isAuthenticated) return <Navigate to="/login" />;
