@@ -21,7 +21,12 @@ const StyledSectionRow = styled.div`
 // Wrapper for entire section (heading + carousel)
 const StyledSectionWrapper = styled.div`
   width: 100%;
+  margin-top: 2rem;
   margin-bottom: 2rem;
+
+  &:first-of-type {
+    margin-top: 3rem; // Extra spacing for first section after search bar
+  }
 `;
 
 // Reusable movie section component with heading and carousel
