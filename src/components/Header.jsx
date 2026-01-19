@@ -111,9 +111,22 @@ const StyledHeaderColumns = styled.div`
 const StyledLogo = styled.img`
   height: 48px;
   width: auto;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
 
   @media (max-width: 768px) {
     height: 40px;
+  }
+`;
+
+const StyledLogoLink = styled(NavLink)`
+  display: inline-flex;
+  align-items: center;
+
+  &:hover ${StyledLogo} {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
   }
 `;
 
@@ -246,9 +259,9 @@ function Header() {
   return (
     <StyledHeader>
       <StyledHeaderColumns id="site-logo">
-        <NavLink to="/">
+        <StyledLogoLink to="/">
           <StyledLogo src={logo} alt="CineCritic Logo" />
-        </NavLink>
+        </StyledLogoLink>
       </StyledHeaderColumns>
       <StyledHeaderColumns id="header-search-bar">
         <SearchBar />
