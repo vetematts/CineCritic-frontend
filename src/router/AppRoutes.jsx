@@ -7,6 +7,7 @@ import HomePage from '../pages/HomePage';
 import AdvancedSearchPage from '../pages/AdvancedSearchPage';
 import SearchResultsPage from '../pages/SearchResultsPage';
 import MovieDetailPage from '../pages/MovieDetailPage';
+import DiscoverPage from '../pages/DiscoverPage';
 import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
 import WatchlistPage from '../pages/WatchlistPage';
@@ -26,6 +27,7 @@ function AppRoutes() {
         <Route index element={<HomePage />} /> {/* Rendered in the <Outlet /> */}
         <Route path="/advancedSearch" element={<AdvancedSearchPage />} />
         <Route path="/search" element={<SearchResultsPage />} />
+        <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/movies/:id" element={<MovieDetailPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

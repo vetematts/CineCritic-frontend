@@ -90,6 +90,29 @@ const StyledAdvancedSearchButton = styled(NavLink)`
   }
 `;
 
+const StyledDiscoverButton = styled(NavLink)`
+  color: #cec8c8ff;
+  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+`;
 
 const StyledError = styled.p`
   color: #ffb4a2;
@@ -296,6 +319,7 @@ function HomePage() {
           <StyledAdvancedSearchButton to="/advancedSearch">
             Advanced Search
           </StyledAdvancedSearchButton>
+          <StyledDiscoverButton to="/discover">Discover</StyledDiscoverButton>
         </StyledHomeRow>
         {error && <StyledError>{error}</StyledError>}
 
