@@ -725,7 +725,12 @@ function MovieDetailPage() {
                   </StyledAverageRatingValue>
                 </StyledAverageRating>
               )}
-              {movie.overview && <StyledParagraph>{movie.overview}</StyledParagraph>}
+              {movie.overview && (
+                <>
+                  <StyledHeading>Overview</StyledHeading>
+                  <StyledParagraph>{movie.overview}</StyledParagraph>
+                </>
+              )}
             </StyledMovieDetails>
             {isReviewModalOpen && (
               <StyledModalOverlay
