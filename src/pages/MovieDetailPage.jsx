@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -181,6 +181,23 @@ const StyledAverageRatingValue = styled.p`
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.95rem;
   font-weight: 600;
+`;
+
+const StyledGenrePills = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0 1rem 0;
+`;
+
+const StyledGenrePill = styled.span`
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
 `;
 
 // Sign in prompt for rating
@@ -549,6 +566,7 @@ function MovieDetailPage() {
   const [editingBody, setEditingBody] = useState('');
   const [editingRating, setEditingRating] = useState('5');
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [genreMap, setGenreMap] = useState(null);
 
   useEffect(() => {
     if (!id) {
@@ -590,6 +608,50 @@ function MovieDetailPage() {
       isMounted = false;
     };
   }, [id]);
+
+  useEffect(() => {
+    if (!movie?.genre_ids?.length) {
+      return;
+    }
+
+    let isMounted = true;
+
+    const loadGenres = async () => {
+      try {
+        const data = await get('/api/movies/genres');
+        if (isMounted && Array.isArray(data)) {
+          const map = data.reduce((acc, genre) => {
+            if (genre?.id && genre?.name) {
+              acc[genre.id] = genre.name;
+            }
+            return acc;
+          }, {});
+          setGenreMap(map);
+        }
+      } catch {
+        if (isMounted) {
+          setGenreMap(null);
+        }
+      }
+    };
+
+    loadGenres();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [movie?.genre_ids]);
+
+  const topGenres = useMemo(() => {
+    if (!movie) return [];
+    if (Array.isArray(movie.genres) && movie.genres.length > 0) {
+      return movie.genres.map((genre) => genre?.name).filter(Boolean).slice(0, 3);
+    }
+    if (Array.isArray(movie.genre_ids) && genreMap) {
+      return movie.genre_ids.map((idValue) => genreMap[idValue]).filter(Boolean).slice(0, 3);
+    }
+    return [];
+  }, [genreMap, movie]);
 
   useEffect(() => {
     if (!userId) {
@@ -724,6 +786,13 @@ function MovieDetailPage() {
                     {movie.vote_average.toFixed(1)} / 10
                   </StyledAverageRatingValue>
                 </StyledAverageRating>
+              )}
+              {topGenres.length > 0 && (
+                <StyledGenrePills>
+                  {topGenres.map((genre) => (
+                    <StyledGenrePill key={genre}>{genre}</StyledGenrePill>
+                  ))}
+                </StyledGenrePills>
               )}
               {movie.overview && (
                 <>
