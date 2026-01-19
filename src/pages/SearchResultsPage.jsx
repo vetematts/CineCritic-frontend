@@ -9,7 +9,7 @@ import SearchResultCard from '../components/SearchResultCard';
 // Container for search results with proper constraints
 const StyledSearchResultsContainer = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 1rem;
   display: flex;
