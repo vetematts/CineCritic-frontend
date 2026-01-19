@@ -402,7 +402,11 @@ function DiscoverPage() {
           Page {page}
           {totalPages ? ` of ${totalPages}` : ''}
         </StyledPageMeta>
-        <StyledPageButton type="button" disabled={!canGoNext} onClick={() => setPage((prev) => prev + 1)}>
+        <StyledPageButton
+          type="button"
+          disabled={!canGoNext}
+          onClick={() => setPage((prev) => prev + 1)}
+        >
           Next
         </StyledPageButton>
       </StyledPagination>

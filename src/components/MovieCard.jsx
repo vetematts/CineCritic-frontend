@@ -1,8 +1,8 @@
 // Import Packages                          // -----DESCRPTION-----//
-import { useRef, useState } from "react";   // Holds state variables
-import { NavLink } from "react-router";     // Handles the redirection to other pages
-import styled from "styled-components";     // Handles the CSS styling to React elements
-import CalendarIcon from "../assets/CalendarIcon";
+import { useRef, useState } from 'react'; // Holds state variables
+import { NavLink } from 'react-router'; // Handles the redirection to other pages
+import styled from 'styled-components'; // Handles the CSS styling to React elements
+import CalendarIcon from '../assets/CalendarIcon';
 
 // Styled Components
 const StyledTrendingItem = styled.li`
@@ -237,48 +237,37 @@ function MovieCardWithTilt({ posterUrl, children }) {
 }
 
 function MovieCard(prop) {
-    // Properties of the Movie Card Object      // -----DESCRIPTION-----//
-    const posterUrl = prop.posterURL || prop.posterUrl;           // URL to the movie poster (fixed typo)
-    const movieId = prop.id ||
-                    prop.movieId ||
-                    prop.tmdbId;                // ID number of the movie
-    const movieTitle = prop.title ||
-                        prop.movieTitle ||
-                        prop.name;              // Name of the movie
-    const releaseDate = prop.release_date ||
-                        prop.releaseDate ||
-                        prop.first_air_date ||
-                        '';                     // Release date of the movie
-    const formattedDate = releaseDate ?
-                        new Date(releaseDate)
-                        .getFullYear()
-                        .toString()
-                        : '';                   // Format the release date to something legible
+  // Properties of the Movie Card Object      // -----DESCRIPTION-----//
+  const posterUrl = prop.posterURL || prop.posterUrl; // URL to the movie poster (fixed typo)
+  const movieId = prop.id || prop.movieId || prop.tmdbId; // ID number of the movie
+  const movieTitle = prop.title || prop.movieTitle || prop.name; // Name of the movie
+  const releaseDate = prop.release_date || prop.releaseDate || prop.first_air_date || ''; // Release date of the movie
+  const formattedDate = releaseDate ? new Date(releaseDate).getFullYear().toString() : ''; // Format the release date to something legible
 
-    return (
-        <StyledTrendingItem key={movieId}>
-            <StyledMovieCardLink to={`/movies/${movieId}`}>
-                {posterUrl ? (
-                <MovieCardWithTilt posterUrl={posterUrl}>
-                    <StyledPosterWrapper>
-                    <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
-                    </StyledPosterWrapper>
-                    <StyledCardContent>
-                    <StyledMovieTitle>{movieTitle}</StyledMovieTitle>
-                    {formattedDate && (
-                        <StyledReleaseDate>
-                        <CalendarIcon />
-                        {formattedDate}
-                        </StyledReleaseDate>
-                    )}
-                    </StyledCardContent>
-                </MovieCardWithTilt>
-                ) : (
-                <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
-                )}
-            </StyledMovieCardLink>
-        </StyledTrendingItem>
-    );
+  return (
+    <StyledTrendingItem key={movieId}>
+      <StyledMovieCardLink to={`/movies/${movieId}`}>
+        {posterUrl ? (
+          <MovieCardWithTilt posterUrl={posterUrl}>
+            <StyledPosterWrapper>
+              <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+            </StyledPosterWrapper>
+            <StyledCardContent>
+              <StyledMovieTitle>{movieTitle}</StyledMovieTitle>
+              {formattedDate && (
+                <StyledReleaseDate>
+                  <CalendarIcon />
+                  {formattedDate}
+                </StyledReleaseDate>
+              )}
+            </StyledCardContent>
+          </MovieCardWithTilt>
+        ) : (
+          <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+        )}
+      </StyledMovieCardLink>
+    </StyledTrendingItem>
+  );
 }
 
 export default MovieCard;

@@ -1,9 +1,9 @@
 // Utilities                                            // -----DESCRPTION-----//
-import getPosterUrl from "../utilities/image-pathing";  // Creates URL to grab movie poster link
-import styled from "styled-components";
+import getPosterUrl from '../utilities/image-pathing'; // Creates URL to grab movie poster link
+import styled from 'styled-components';
 
 // Child Component                      // -----DESCRPTION-----//
-import MovieCard from "./MovieCard";    // Create the clickable movie card posters
+import MovieCard from './MovieCard'; // Create the clickable movie card posters
 
 // Horizontal scrolling container for movie cards
 const StyledCarouselList = styled.ul`
@@ -46,39 +46,31 @@ const StyledCarouselList = styled.ul`
 `;
 
 // Movie carousel will be sent an array of movies
-function MovieCarousel({moviesArray}) {
-    if (!moviesArray || moviesArray.length === 0) {
-        return null;
-    }
+function MovieCarousel({ moviesArray }) {
+  if (!moviesArray || moviesArray.length === 0) {
+    return null;
+  }
 
-    return (
-        <StyledCarouselList>
-            {moviesArray.map((movie) => {
-                const posterURL = getPosterUrl(
-                                    movie.poster_path ||
-                                    movie.posterUrl,
-                                    'w200');
-                const movieId = movie.id ||
-                                movie.tmdbId;
-                const movieTitle = movie.title ||
-                                    movie.name;
-                const releaseDate = movie.release_date ||
-                                    movie.releaseDate ||
-                                    movie.first_air_date ||
-                                    '';
+  return (
+    <StyledCarouselList>
+      {moviesArray.map((movie) => {
+        const posterURL = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
+        const movieId = movie.id || movie.tmdbId;
+        const movieTitle = movie.title || movie.name;
+        const releaseDate = movie.release_date || movie.releaseDate || movie.first_air_date || '';
 
-                return(
-                    <MovieCard
-                        key={movieId}
-                        posterURL={posterURL}
-                        id={movieId}
-                        title={movieTitle}
-                        release_date={releaseDate}
-                    />
-                );
-            })}
-        </StyledCarouselList>
-    );
+        return (
+          <MovieCard
+            key={movieId}
+            posterURL={posterURL}
+            id={movieId}
+            title={movieTitle}
+            release_date={releaseDate}
+          />
+        );
+      })}
+    </StyledCarouselList>
+  );
 }
 
 export default MovieCarousel;

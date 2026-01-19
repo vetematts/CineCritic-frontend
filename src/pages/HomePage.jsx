@@ -232,7 +232,6 @@ const StyledDashboardLink = styled(NavLink)`
   }
 `;
 
-
 // The default page that is loaded
 function HomePage() {
   const { isAuthenticated, logout } = useAuth();

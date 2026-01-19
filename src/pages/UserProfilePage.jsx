@@ -1,14 +1,14 @@
 // Import Packages
-import styled from "styled-components";
-import { useState } from "react";
-import { Navigate, NavLink } from "react-router-dom";
+import styled from 'styled-components';
+import { useState } from 'react';
+import { Navigate, NavLink } from 'react-router-dom';
 
 // Utilies
 import { get } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
 
 // Components
-import MovieCarousel from "../components/MovieCarousel";  // Favourite movies carousel
+import MovieCarousel from '../components/MovieCarousel'; // Favourite movies carousel
 
 // Stack the user's portait to the left of their details
 const StyledDashboard = styled.div`
@@ -65,7 +65,9 @@ const StyledSubheadingLink = styled(NavLink)`
   display: inline-block;
   font-size: 1.5rem;
   font-weight: 600;
-  transition: color 0.2s ease, text-decoration 0.2s ease;
+  transition:
+    color 0.2s ease,
+    text-decoration 0.2s ease;
   cursor: pointer;
   border-bottom: 2px solid transparent;
 
@@ -117,7 +119,9 @@ function UserProfilePage() {
           />
           <div id="badges">
             <StyledStrongText>Badges</StyledStrongText>
-            <StyledText>Put in a badge component and fill up this space with images of badges...</StyledText>
+            <StyledText>
+              Put in a badge component and fill up this space with images of badges...
+            </StyledText>
           </div>
         </div>
       </StyledPortaitColumn>
