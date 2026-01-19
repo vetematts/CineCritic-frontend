@@ -3,6 +3,9 @@ import { useRef, useState } from "react";   // Holds state variables
 import { NavLink } from "react-router";     // Handles the redirection to other pages
 import styled from "styled-components";     // Handles the CSS styling to React elements
 
+// Import Image Assets
+import CalendarIcon from '../assets/CalendarIcon';
+
 // Styled Components
 const StyledTrendingItem = styled.li`
   display: flex;
@@ -233,20 +236,11 @@ function MovieCardWithTilt({ posterURL, children }) {
 }
 
 function MovieCard(prop) {
-    // Properties of the Movie Card Object      // -----DESCRIPTION-----//
-    const posterURL = prop.posterURL;           // URL to the movie poster
-    const movieId = prop.id || 
-                    prop.tmdbId;                // ID number of the movie
-    const movieTitle = prop.title || 
-                        prop.name;              // Name of the movie
-    const releaseDate = prop.release_date || 
-                        prop.first_air_date || 
-                        '';                     // Release date of the movie
-    const formattedDate = releaseDate ? 
-                        new Date(releaseDate)
-                        .getFullYear()
-                        .toString() 
-                        : '';                   // Format the release date to something legible
+    // Properties of the Movie Card Object    // -----DESCRIPTION-----//
+    const posterURL = prop.posterURL;         // URL to the movie poster
+    const movieId = prop.movieId;             // ID number of the movie
+    const movieTitle = prop.movieTitle;       // Name of the movie
+    const formattedDate = prop.formattedDate; // Format the release date to something legible
 
     return (
         <StyledTrendingItem key={movieId}>

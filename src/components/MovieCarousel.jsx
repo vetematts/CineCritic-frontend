@@ -12,7 +12,6 @@ function MovieCarousel({moviesArray}) {
                                 movie.poster_path || 
                                 movie.posterUrl, 
                                 'w200');
-            console.log(posterURL);
             const movieId = movie.id || 
                             movie.tmdbId;
             const movieTitle = movie.title || 
@@ -20,13 +19,20 @@ function MovieCarousel({moviesArray}) {
             const releaseDate = movie.release_date || 
                                 movie.first_air_date || 
                                 '';
-            
+            const formattedDate = releaseDate ? 
+                                new Date(releaseDate)
+                                .getFullYear()
+                                .toString() 
+                                : ''; 
+
             return(
                 <MovieCard
+                    key = {movieId}
                     posterURL = {posterURL}
                     movieId = {movieId}
                     movieTitle = {movieTitle}
                     releaseDate = {releaseDate}
+                    formattedDate = {formattedDate}
                 />
             );
         })
