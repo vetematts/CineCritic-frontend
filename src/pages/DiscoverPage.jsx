@@ -345,6 +345,12 @@ function DiscoverPage() {
     return movies;
   }, [movies, sort]);
 
+  const displayMovies = useMemo(() => {
+    if (!sortedMovies.length) return [];
+    const count = sortedMovies.length - (sortedMovies.length % 6);
+    return sortedMovies.slice(0, count || sortedMovies.length);
+  }, [sortedMovies]);
+
   return (
     <StyledDiscoverContainer>
       <StyledHeader>
@@ -375,9 +381,9 @@ function DiscoverPage() {
         <StyledStatus>No movies found.</StyledStatus>
       )}
 
-      {!loading && !error && sortedMovies.length > 0 && (
+      {!loading && !error && displayMovies.length > 0 && (
         <StyledGrid>
-          {sortedMovies.map((movie) => {
+          {displayMovies.map((movie) => {
             const movieId = movie.id || movie.tmdbId;
             const posterUrl = getPosterUrl(movie.poster_path || movie.posterUrl, 'w300');
             const title = movie.title || movie.name || 'Untitled';
