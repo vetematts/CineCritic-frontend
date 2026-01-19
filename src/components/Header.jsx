@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { logoutRequest } from '../api/auth';
 
 // Import image assets
-import logo from '../assets/cine_critic_logo_small.png';
+import logo from '../assets/cine_critic_logo.png';
 import ProfileIcon from '../assets/ProfileIcon';
 import styled from 'styled-components';
 import { NavLink } from 'react-router';
@@ -108,7 +108,14 @@ const StyledHeaderColumns = styled.div`
 `;
 
 // Small icon that will grow and shrink with the rest of the header
-const StyledLogo = styled.img``;
+const StyledLogo = styled.img`
+  height: 48px;
+  width: auto;
+
+  @media (max-width: 768px) {
+    height: 40px;
+  }
+`;
 
 const StyledAuthButton = styled.button`
   padding: 0.4rem 0.8rem;
