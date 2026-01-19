@@ -158,25 +158,28 @@ const StyledError = styled.p`
 
 // Prominent average rating display
 const StyledAverageRating = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   margin: 1rem 0;
-  padding: 1rem;
-  background-color: rgba(233, 218, 87, 0.1);
-  border-radius: 8px;
-  border-left: 4px solid #e9da57;
+  padding: 0.4rem 0.85rem;
+  background-color: rgba(233, 218, 87, 0.12);
+  border-radius: 999px;
+  border: 1px solid rgba(233, 218, 87, 0.35);
 `;
 
 const StyledAverageRatingLabel = styled.p`
-  margin: 0 0 0.25rem 0;
-  color: #cec8c8ff;
-  font-size: 0.9rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.08em;
 `;
 
 const StyledAverageRatingValue = styled.p`
   margin: 0;
   color: #e9da57;
-  font-size: 1.5rem;
+  font-size: 0.95rem;
   font-weight: 600;
 `;
 
