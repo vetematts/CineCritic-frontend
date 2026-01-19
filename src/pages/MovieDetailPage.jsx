@@ -163,14 +163,14 @@ const StyledAverageRating = styled.div`
   gap: 0.5rem;
   margin: 1rem 0;
   padding: 0.4rem 0.85rem;
-  background-color: rgba(233, 218, 87, 0.12);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 999px;
-  border: 1px solid rgba(233, 218, 87, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 `;
 
 const StyledAverageRatingLabel = styled.p`
   margin: 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -178,7 +178,7 @@ const StyledAverageRatingLabel = styled.p`
 
 const StyledAverageRatingValue = styled.p`
   margin: 0;
-  color: #e9da57;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.95rem;
   font-weight: 600;
 `;
