@@ -277,6 +277,7 @@ function DiscoverPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [columns, setColumns] = useState(6);
 
   useEffect(() => {
     let isMounted = true;
@@ -323,6 +324,26 @@ function DiscoverPage() {
     };
   }, [page]);
 
+  useEffect(() => {
+    const getColumnsForWidth = (width) => {
+      if (width < 520) return 2;
+      if (width < 720) return 3;
+      if (width < 980) return 4;
+      if (width < 1200) return 5;
+      return 6;
+    };
+
+    const updateColumns = () => {
+      if (typeof window === 'undefined') return;
+      setColumns(getColumnsForWidth(window.innerWidth));
+    };
+
+    updateColumns();
+    window.addEventListener('resize', updateColumns);
+
+    return () => window.removeEventListener('resize', updateColumns);
+  }, []);
+
   const canGoPrev = page > 1 && !loading;
   const canGoNext = useMemo(() => {
     if (loading) return false;
@@ -347,9 +368,12 @@ function DiscoverPage() {
 
   const displayMovies = useMemo(() => {
     if (!sortedMovies.length) return [];
-    const count = sortedMovies.length - (sortedMovies.length % 6);
-    return sortedMovies.slice(0, count || sortedMovies.length);
-  }, [sortedMovies]);
+    if (!columns || columns <= 1) return sortedMovies;
+    const remainder = sortedMovies.length % columns;
+    if (remainder === 0) return sortedMovies;
+    const count = sortedMovies.length - remainder;
+    return count > 0 ? sortedMovies.slice(0, count) : sortedMovies;
+  }, [columns, sortedMovies]);
 
   return (
     <StyledDiscoverContainer>
