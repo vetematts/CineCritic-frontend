@@ -756,11 +756,14 @@ function MovieDetailPage() {
                           setFavouritesEntry(null);
                         } else {
                           // Add to favourites
-                          const entry = await post('/api/favourites', {
+                          await post('/api/favourites', {
                             userId,
                             tmdbId: Number(id),
                           });
-                          setFavouritesEntry(entry);
+                          // Reload favourites to get updated state
+                          const data = await get(`/api/favourites/${userId}`);
+                          const entry = (data || []).find((item) => item.tmdb_id === Number(id));
+                          setFavouritesEntry(entry || { tmdb_id: Number(id) });
                         }
                       } catch (err) {
                         setFavouritesError(err?.message || 'Unable to update favourites.');
