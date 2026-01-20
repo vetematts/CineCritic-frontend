@@ -18,8 +18,8 @@ const StyledNavLink = styled(NavLink)`
 const StyledFilmCard = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 1.5rem;
-  padding: 1rem;
+  gap: 1rem;
+  padding: 0.75rem;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -46,8 +46,8 @@ const StyledFilmCardContents = styled.div`
   flex-shrink: 0;
 
   &#mini-movie-poster {
-    width: 200px;
-    height: 300px;
+    width: 150px;
+    height: 225px;
 
     img {
       width: 100%;
@@ -57,8 +57,8 @@ const StyledFilmCardContents = styled.div`
     }
 
     @media (max-width: 768px) {
-      width: 150px;
-      height: 225px;
+      width: 120px;
+      height: 180px;
     }
   }
 
@@ -71,7 +71,7 @@ const StyledFilmCardContents = styled.div`
 
     h2 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       color: rgba(255, 255, 255, 0.87);
       word-wrap: break-word;
       overflow-wrap: break-word;
@@ -79,7 +79,7 @@ const StyledFilmCardContents = styled.div`
 
     h3 {
       margin: 0;
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: rgba(255, 255, 255, 0.6);
       font-weight: normal;
     }
@@ -87,10 +87,10 @@ const StyledFilmCardContents = styled.div`
     p {
       margin: 0;
       color: rgba(255, 255, 255, 0.7);
-      line-height: 1.5;
-      // Limit description to 4-5 lines with ellipsis
+      line-height: 1.4;
+      // Limit description to 3-4 lines with ellipsis
       display: -webkit-box;
-      -webkit-line-clamp: 4;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;

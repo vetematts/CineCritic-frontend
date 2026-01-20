@@ -7,9 +7,12 @@ import HomePage from '../pages/HomePage';
 import AdvancedSearchPage from '../pages/AdvancedSearchPage';
 import SearchResultsPage from '../pages/SearchResultsPage';
 import MovieDetailPage from '../pages/MovieDetailPage';
+import DiscoverPage from '../pages/DiscoverPage';
 import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
-import DashboardPage from '../pages/DashboardPage';
+import WatchlistPage from '../pages/WatchlistPage';
+import FavouritesPage from '../pages/FavouritesPage';
+import UserProfilePage from '../pages/UserProfilePage';
 
 // This component handles all the routing to the different pages
 function AppRoutes() {
@@ -25,10 +28,13 @@ function AppRoutes() {
         <Route index element={<HomePage />} /> {/* Rendered in the <Outlet /> */}
         <Route path="/advancedSearch" element={<AdvancedSearchPage />} />
         <Route path="/search" element={<SearchResultsPage />} />
+        <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/movies/:id" element={<MovieDetailPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/watchlist" element={<WatchlistPage />} />
+        <Route path="/favourites" element={<FavouritesPage />} />
+        <Route path="/user" element={<UserProfilePage />} />
       </Route>
     </Routes>
   );
