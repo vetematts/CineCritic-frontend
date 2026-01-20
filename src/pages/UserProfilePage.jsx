@@ -130,7 +130,7 @@ function UserProfilePage() {
           <StyledText>Account Created: Loading...</StyledText>
         </div>
         <div id="favourites">
-          <StyledSubheading>Favourites</StyledSubheading>
+          <StyledSubheadingLink to="/favourites">Favourites</StyledSubheadingLink>
           <MovieCarousel moviesArray={favourites} />
         </div>
         <div id="watchlist">
