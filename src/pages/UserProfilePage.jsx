@@ -66,11 +66,14 @@ function UserProfilePage() {
       </div>
       <div id = "reviews">
         <StyledSubheading>Reviews</StyledSubheading>
-        <StyledText>Review Component here...</StyledText>
-        <StyledText>Movie poster</StyledText>
-        <StyledText>Movie name, release year</StyledText>
-        <StyledText>Your rating:</StyledText>
-        <StyledText>Your review:</StyledText>
+        <div id = "review-row">
+          <div id = "movie-poster">
+            Movie Poster
+          </div>
+          <div id = "users-review">
+            <StyledText>Review Component</StyledText>
+          </div>
+        </div>
       </div>
     </StyledDashboard>
   );
