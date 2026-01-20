@@ -300,6 +300,8 @@ const StyledWatchlistButton = styled.button`
   }
 `;
 
+const StyledFavouriteButton = styled(StyledWatchlistButton)``;
+
 // Review Modal
 const StyledModalOverlay = styled.div`
   position: fixed;
@@ -709,6 +711,7 @@ function MovieDetailPage() {
             <StyledActionButtons>
               {userId ? (
                 <>
+                  <StyledFavouriteButton type="button">Add to Favourites</StyledFavouriteButton>
                   <StyledWatchlistButton
                     type="button"
                     onClick={async () => {
