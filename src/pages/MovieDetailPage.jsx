@@ -745,7 +745,30 @@ function MovieDetailPage() {
             <StyledActionButtons>
               {userId ? (
                 <>
-                  <StyledFavouriteButton type="button">Add to Favourites</StyledFavouriteButton>
+                  <StyledFavouriteButton
+                    type="button"
+                    onClick={async () => {
+                      setFavouritesError(null);
+                      try {
+                        if (favouritesEntry) {
+                          // Remove from favourites
+                          await del(`/api/favourites/${userId}/${id}`);
+                          setFavouritesEntry(null);
+                        } else {
+                          // Add to favourites
+                          const entry = await post('/api/favourites', {
+                            userId,
+                            tmdbId: Number(id),
+                          });
+                          setFavouritesEntry(entry);
+                        }
+                      } catch (err) {
+                        setFavouritesError(err?.message || 'Unable to update favourites.');
+                      }
+                    }}
+                  >
+                    {favouritesEntry ? 'Remove from Favourites' : 'Add to Favourites'}
+                  </StyledFavouriteButton>
                   <StyledWatchlistButton
                     type="button"
                     onClick={async () => {
@@ -791,6 +814,7 @@ function MovieDetailPage() {
               )}
             </StyledActionButtons>
             {watchlistError && <StyledError>{watchlistError}</StyledError>}
+            {favouritesError && <StyledError>{favouritesError}</StyledError>}
           </StyledPosterColumn>
           <StyledTextColumn>
             <StyledMovieDetails>
