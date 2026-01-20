@@ -564,6 +564,8 @@ function MovieDetailPage() {
   const [reviewError, setReviewError] = useState(null);
   const [watchlistEntry, setWatchlistEntry] = useState(null);
   const [watchlistError, setWatchlistError] = useState(null);
+  const [favouritesEntry, setFavouritesEntry] = useState(null);
+  const [favouritesError, setFavouritesError] = useState(null);
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [editingBody, setEditingBody] = useState('');
   const [editingRating, setEditingRating] = useState('5');
@@ -689,7 +691,7 @@ function MovieDetailPage() {
       try {
         const data = await get(`/api/watchlist/${userId}`);
         if (isMounted) {
-          const entry = (data || []).find((item) => item.movie_id === Number(id));
+          const entry = (data || []).find((item) => item.tmdb_id === Number(id));
           setWatchlistEntry(entry || null);
         }
       } catch (err) {
@@ -699,7 +701,22 @@ function MovieDetailPage() {
       }
     };
 
+    const loadFavouritesEntry = async () => {
+      try {
+        const data = await get(`/api/favourites/${userId}`);
+        if (isMounted) {
+          const entry = (data || []).find((item) => item.tmdb_id === Number(id));
+          setFavouritesEntry(entry || null);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setFavouritesError(err?.message || 'Unable to load favourites.');
+        }
+      }
+    };
+
     loadWatchlistEntry();
+    loadFavouritesEntry();
 
     return () => {
       isMounted = false;
