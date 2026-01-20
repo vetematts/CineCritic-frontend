@@ -45,6 +45,7 @@ function SearchResults() {
   // Check the URL for the query
   const [searchParams] = useSearchParams();
   const searchTerm = searchParams.get('q'); // Checks after "search?q="
+  const trimmedSearch = searchTerm?.trim() ?? '';
 
   // Hooks
   const [results, setResults] = useState([]);
@@ -54,8 +55,7 @@ function SearchResults() {
   // When this page loads look at the search parameter and check the database
   useEffect(() => {
     const fetchData = async () => {
-      const trimmed = searchTerm?.trim();
-      if (!trimmed) {
+      if (!trimmedSearch) {
         return;
       }
 
@@ -65,7 +65,7 @@ function SearchResults() {
 
       try {
         const data = await get('/api/movies/search', {
-          params: { q: trimmed },
+          params: { q: trimmedSearch },
         });
         setResults(data || []);
       } catch (err) {
@@ -76,14 +76,18 @@ function SearchResults() {
     };
 
     fetchData();
-  }, [searchTerm]);
+  }, [trimmedSearch]);
 
   return (
     <StyledSearchResultsContainer>
       {loading && <StyledLoading>Loading...</StyledLoading>}
       {error && <StyledError>{error}</StyledError>}
 
-      {!loading && !error && results.length === 0 && searchTerm?.trim() && (
+      {!loading && !error && searchTerm !== null && trimmedSearch === '' && (
+        <StyledNoResults>There are no movies that matched your search.</StyledNoResults>
+      )}
+
+      {!loading && !error && results.length === 0 && trimmedSearch && (
         <StyledNoResults>No results found for "{searchTerm}".</StyledNoResults>
       )}
 
