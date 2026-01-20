@@ -612,6 +612,23 @@ function MovieDetailPage() {
   }, [id]);
 
   useEffect(() => {
+    if (!isReviewModalOpen) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsReviewModalOpen(false);
+        setEditingReviewId(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isReviewModalOpen]);
+
+  useEffect(() => {
     if (!movie?.genre_ids?.length) {
       return;
     }
