@@ -396,7 +396,7 @@ const StyledModalTextarea = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: #e9da57;
+    border-color: rgba(255, 255, 255, 0.3);
     background-color: rgba(255, 255, 255, 0.08);
   }
 `;
