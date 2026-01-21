@@ -13,6 +13,7 @@ import SignupPage from '../pages/SignupPage';
 import WatchlistPage from '../pages/WatchlistPage';
 import FavouritesPage from '../pages/FavouritesPage';
 import UserProfilePage from '../pages/UserProfilePage';
+import UserReviewsPage from '../pages/UserReviewsPage';
 
 // This component handles all the routing to the different pages
 function AppRoutes() {
@@ -35,6 +36,7 @@ function AppRoutes() {
         <Route path="/watchlist" element={<WatchlistPage />} />
         <Route path="/favourites" element={<FavouritesPage />} />
         <Route path="/user" element={<UserProfilePage />} />
+        <Route path="/reviews" element={<UserReviewsPage />} />
       </Route>
     </Routes>
   );

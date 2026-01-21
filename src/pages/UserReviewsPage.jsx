@@ -1,0 +1,41 @@
+import { Navigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { useAuth } from '../contexts/AuthContext';
+import UserReviews from '../components/UserReviews';
+
+const StyledContainer = styled.section`
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.87);
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+  }
+`;
+
+const StyledPageTitle = styled.h1`
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
+`;
+
+export default function UserReviewsPage() {
+  const { user, isAuthenticated } = useAuth();
+  const userId = user?.id ?? user?.sub ?? null;
+
+  if (!isAuthenticated) return <Navigate to="/login" />;
+
+  return (
+    <StyledContainer>
+      <StyledPageTitle>Reviews</StyledPageTitle>
+      <UserReviews userId={userId} />
+    </StyledContainer>
+  );
+}
