@@ -8,6 +8,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 // Components
 import MovieCarousel from '../components/MovieCarousel'; // Favourite movies carousel
+import UserReviews from '../components/UserReviews'; // User reviews component
 
 // Stack the user's portait to the left of their details
 const StyledDashboard = styled.div`
@@ -106,6 +107,7 @@ function UserProfilePage() {
   // useEffect(() => {})
 
   const username = user?.username || user?.name || user?.email?.split('@')[0] || 'User';
+  const userId = user?.id ?? user?.sub ?? null;
 
   return (
     <StyledDashboard id="dashboard">
@@ -143,11 +145,7 @@ function UserProfilePage() {
         </div>
         <div id="reviews">
           <StyledSubheading>Reviews</StyledSubheading>
-          <StyledText>Review Component here...</StyledText>
-          <StyledText>Movie poster</StyledText>
-          <StyledText>Movie name, release year</StyledText>
-          <StyledText>Your rating:</StyledText>
-          <StyledText>Your review:</StyledText>
+          <UserReviews userId={userId} />
         </div>
       </div>
     </StyledDashboard>
