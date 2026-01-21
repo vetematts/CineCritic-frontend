@@ -183,7 +183,7 @@ function UserReviews({ userId, limit = null, showViewAll = false }) {
         let reviewsData;
         try {
           reviewsData = await get(`/api/reviews/user/${userId}`);
-        } catch (err) {
+        } catch {
           // If that endpoint doesn't exist, we might need to fetch differently
           // For now, set empty array and we'll handle it
           console.warn('User reviews endpoint not found, using empty array');
@@ -211,6 +211,12 @@ function UserReviews({ userId, limit = null, showViewAll = false }) {
     };
   }, [userId]);
 
+  // Calculate visible reviews - must be before early returns (React hooks rule)
+  const visibleReviews = useMemo(() => {
+    if (!limit || typeof limit !== 'number') return reviews;
+    return reviews.slice(0, limit);
+  }, [reviews, limit]);
+
   if (loading) {
     return <StyledLoadingText>Loading reviews...</StyledLoadingText>;
   }
@@ -226,11 +232,6 @@ function UserReviews({ userId, limit = null, showViewAll = false }) {
       </StyledEmptyMessage>
     );
   }
-
-  const visibleReviews = useMemo(() => {
-    if (!limit || typeof limit !== 'number') return reviews;
-    return reviews.slice(0, limit);
-  }, [reviews, limit]);
 
   return (
     <>
