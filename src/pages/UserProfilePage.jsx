@@ -144,8 +144,8 @@ function UserProfilePage() {
           <StyledText>Score (Rating)</StyledText>
         </div>
         <div id="reviews">
-          <StyledSubheading>Reviews</StyledSubheading>
-          <UserReviews userId={userId} />
+          <StyledSubheadingLink to="/reviews">Reviews</StyledSubheadingLink>
+          <UserReviews userId={userId} limit={5} showViewAll={true} />
         </div>
       </div>
     </StyledDashboard>

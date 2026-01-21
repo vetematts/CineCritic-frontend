@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { get } from '../api/api';
@@ -142,7 +142,26 @@ const StyledLoadingText = styled.p`
   margin: 1rem 0;
 `;
 
-function UserReviews({ userId }) {
+const StyledViewAllRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+`;
+
+const StyledViewAllLink = styled(Link)`
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 2px;
+  font-size: 0.95rem;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.6);
+  }
+`;
+
+function UserReviews({ userId, limit = null, showViewAll = false }) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -201,82 +220,118 @@ function UserReviews({ userId }) {
   }
 
   if (reviews.length === 0) {
-    return <StyledEmptyMessage>No reviews yet. Start reviewing movies to see them here!</StyledEmptyMessage>;
+    return (
+      <StyledEmptyMessage>
+        No reviews yet. Start reviewing movies to see them here!
+      </StyledEmptyMessage>
+    );
   }
 
-  return (
-    <StyledReviewsContainer>
-      {reviews.map((review) => {
-        // Extract movie info from review
-        const tmdbId = review.tmdb_id || review.tmdbId || review.movie?.tmdb_id;
-        const movieTitle = review.movie?.title || review.movie_title || review.title || 'Unknown Movie';
-        const releaseYear = review.movie?.release_year || review.movie?.release_date?.split('-')[0] || review.release_year;
-        const posterPath = review.movie?.poster_url || review.movie?.poster_path || review.poster_url || review.poster_path;
-        const posterUrl = getPosterUrl(posterPath, 'w200');
-        const reviewContent = review.body || review.content || review.text || '';
-        const reviewRating = review.rating ? String(review.rating) : null;
-        const reviewDate = review.published_at || review.created_at || review.date;
+  const visibleReviews = useMemo(() => {
+    if (!limit || typeof limit !== 'number') return reviews;
+    return reviews.slice(0, limit);
+  }, [reviews, limit]);
 
-        return (
-          <StyledReviewCard key={review.id || review._id}>
-            <StyledPosterColumn>
-              {tmdbId && (
-                <Link to={`/movies/${tmdbId}`}>
-                  {posterUrl ? (
+  return (
+    <>
+      <StyledReviewsContainer>
+        {visibleReviews.map((review) => {
+          // Extract movie info from review
+          const tmdbId = review.tmdb_id || review.tmdbId || review.movie?.tmdb_id;
+          const movieTitle =
+            review.movie?.title || review.movie_title || review.title || 'Unknown Movie';
+          const releaseYear =
+            review.movie?.release_year ||
+            review.movie?.release_date?.split('-')[0] ||
+            review.release_year;
+          const posterPath =
+            review.movie?.poster_url ||
+            review.movie?.poster_path ||
+            review.poster_url ||
+            review.poster_path;
+          const posterUrl = getPosterUrl(posterPath, 'w200');
+          const reviewContent = review.body || review.content || review.text || '';
+          const reviewRating = review.rating ? String(review.rating) : null;
+          const reviewDate = review.published_at || review.created_at || review.date;
+
+          return (
+            <StyledReviewCard key={review.id || review._id}>
+              <StyledPosterColumn>
+                {tmdbId && (
+                  <Link to={`/movies/${tmdbId}`}>
+                    {posterUrl ? (
+                      <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                    ) : (
+                      <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                    )}
+                  </Link>
+                )}
+                {!tmdbId &&
+                  (posterUrl ? (
                     <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
                   ) : (
                     <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
-                  )}
-                </Link>
-              )}
-              {!tmdbId && (
-                posterUrl ? (
-                  <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                  ))}
+              </StyledPosterColumn>
+              <StyledReviewContent>
+                {tmdbId ? (
+                  <StyledMovieLink to={`/movies/${tmdbId}`}>
+                    <StyledMovieTitle>
+                      {movieTitle}
+                      {releaseYear && <StyledMovieYear> ({releaseYear})</StyledMovieYear>}
+                    </StyledMovieTitle>
+                  </StyledMovieLink>
                 ) : (
-                  <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
-                )
-              )}
-            </StyledPosterColumn>
-            <StyledReviewContent>
-              {tmdbId ? (
-                <StyledMovieLink to={`/movies/${tmdbId}`}>
                   <StyledMovieTitle>
                     {movieTitle}
                     {releaseYear && <StyledMovieYear> ({releaseYear})</StyledMovieYear>}
                   </StyledMovieTitle>
-                </StyledMovieLink>
-              ) : (
-                <StyledMovieTitle>
-                  {movieTitle}
-                  {releaseYear && <StyledMovieYear> ({releaseYear})</StyledMovieYear>}
-                </StyledMovieTitle>
-              )}
-              {reviewRating && (
-                <StyledRatingContainer>
-                  <StarRating value={reviewRating} disabled={true} />
-                </StyledRatingContainer>
-              )}
-              {reviewContent && <StyledReviewText>{reviewContent}</StyledReviewText>}
-              {reviewDate && (
-                <StyledReviewDate>
-                  {(() => {
-                    const date = new Date(reviewDate);
-                    if (!isNaN(date.getTime())) {
-                      const day = date.getDate();
-                      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                      const month = monthNames[date.getMonth()];
-                      const year = date.getFullYear();
-                      return `Reviewed on ${day} ${month} ${year}`;
-                    }
-                    return reviewDate;
-                  })()}
-                </StyledReviewDate>
-              )}
-            </StyledReviewContent>
-          </StyledReviewCard>
-        );
-      })}
-    </StyledReviewsContainer>
+                )}
+                {reviewRating && (
+                  <StyledRatingContainer>
+                    <StarRating value={reviewRating} disabled={true} />
+                  </StyledRatingContainer>
+                )}
+                {reviewContent && <StyledReviewText>{reviewContent}</StyledReviewText>}
+                {reviewDate && (
+                  <StyledReviewDate>
+                    {(() => {
+                      const date = new Date(reviewDate);
+                      if (!isNaN(date.getTime())) {
+                        const day = date.getDate();
+                        const monthNames = [
+                          'Jan',
+                          'Feb',
+                          'Mar',
+                          'Apr',
+                          'May',
+                          'Jun',
+                          'Jul',
+                          'Aug',
+                          'Sep',
+                          'Oct',
+                          'Nov',
+                          'Dec',
+                        ];
+                        const month = monthNames[date.getMonth()];
+                        const year = date.getFullYear();
+                        return `Reviewed on ${day} ${month} ${year}`;
+                      }
+                      return reviewDate;
+                    })()}
+                  </StyledReviewDate>
+                )}
+              </StyledReviewContent>
+            </StyledReviewCard>
+          );
+        })}
+      </StyledReviewsContainer>
+      {showViewAll && limit && reviews.length > limit && (
+        <StyledViewAllRow>
+          <StyledViewAllLink to="/reviews">View all reviews</StyledViewAllLink>
+        </StyledViewAllRow>
+      )}
+    </>
   );
 }
 
