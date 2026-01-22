@@ -99,7 +99,8 @@ function UserProfilePage() {
   const { user, isAuthenticated } = useAuth();
 
   // Hooks                                          // Description
-  const [favourites, _setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
+  const [favourites, setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
+  const [favouritesError, setFavouritesError] = useState(null);
   const [accountCreatedDate, setAccountCreatedDate] = useState(null);
   const [accountCreatedLoading, setAccountCreatedLoading] = useState(true);
   const [accountCreatedError, setAccountCreatedError] = useState(null);
@@ -135,6 +136,45 @@ function UserProfilePage() {
       return null;
     }
   };
+
+  // Load favourites
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+
+    let isMounted = true;
+
+    const loadFavourites = async () => {
+      setFavouritesError(null);
+      try {
+        const data = await get(`/api/favourites/${userId}`);
+        if (isMounted) {
+          // Map backend data to MovieCarousel format
+          const mappedFavourites = (data || []).map((entry) => ({
+            id: entry.tmdb_id,
+            tmdbId: entry.tmdb_id,
+            title: entry.title,
+            poster_path: entry.poster_url,
+            posterUrl: entry.poster_url,
+            release_date: entry.release_year ? `${entry.release_year}-01-01` : null,
+            releaseYear: entry.release_year,
+          }));
+          setFavourites(mappedFavourites);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setFavouritesError(err?.message || 'Unable to load favourites.');
+        }
+      }
+    };
+
+    loadFavourites();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userId]);
 
   // Load account creation date
   useEffect(() => {
@@ -206,7 +246,11 @@ function UserProfilePage() {
         </div>
         <div id="favourites">
           <StyledSubheadingLink to="/favourites">Favourites</StyledSubheadingLink>
-          <MovieCarousel moviesArray={favourites} />
+          {favouritesError && <StyledText style={{ color: '#ffb4a2' }}>{favouritesError}</StyledText>}
+          {!favouritesError && favourites.length === 0 && (
+            <StyledText>No favourites yet. Add movies to your favourites to see them here.</StyledText>
+          )}
+          {favourites.length > 0 && <MovieCarousel moviesArray={favourites} />}
         </div>
         <div id="watchlist">
           <StyledSubheadingLink to="/watchlist">Watchlist</StyledSubheadingLink>
