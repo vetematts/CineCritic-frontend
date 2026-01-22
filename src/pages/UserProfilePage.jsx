@@ -126,6 +126,8 @@ function UserProfilePage() {
   // Hooks                                          // Description
   const [favourites, setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
   const [favouritesError, setFavouritesError] = useState(null);
+  const [watchlist, setWatchlist] = useState([]); // Use this to load up this user's watchlist movies and fetch the posters
+  const [watchlistError, setWatchlistError] = useState(null);
   const [accountCreatedDate, setAccountCreatedDate] = useState(null);
   const [accountCreatedLoading, setAccountCreatedLoading] = useState(true);
   const [accountCreatedError, setAccountCreatedError] = useState(null);
@@ -195,6 +197,45 @@ function UserProfilePage() {
     };
 
     loadFavourites();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userId]);
+
+  // Load watchlist
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+
+    let isMounted = true;
+
+    const loadWatchlist = async () => {
+      setWatchlistError(null);
+      try {
+        const data = await get(`/api/watchlist/${userId}`);
+        if (isMounted) {
+          // Map backend data to MovieCarousel format
+          const mappedWatchlist = (data || []).map((entry) => ({
+            id: entry.tmdb_id,
+            tmdbId: entry.tmdb_id,
+            title: entry.title,
+            poster_path: entry.poster_url || entry.poster_path,
+            posterUrl: entry.poster_url || entry.poster_path,
+            release_date: entry.release_year ? `${entry.release_year}-01-01` : null,
+            releaseYear: entry.release_year,
+          }));
+          setWatchlist(mappedWatchlist);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setWatchlistError(err?.message || 'Unable to load watchlist.');
+        }
+      }
+    };
+
+    loadWatchlist();
 
     return () => {
       isMounted = false;
@@ -283,11 +324,15 @@ function UserProfilePage() {
         </div>
         <div id="watchlist">
           <StyledSubheadingLink to="/watchlist">Watchlist</StyledSubheadingLink>
-          <StyledText>User's Watchlist Component here...</StyledText>
-          <StyledText>Statuses: Watching, Completed, On Hold, Dropped, Want to Watch</StyledText>
-          <StyledText>Movie/Show Poster, subtitle with the movie name and release year</StyledText>
-          <StyledText>Episodes watched</StyledText>
-          <StyledText>Score (Rating)</StyledText>
+          {watchlistError && <StyledText style={{ color: '#ffb4a2' }}>{watchlistError}</StyledText>}
+          {!watchlistError && watchlist.length === 0 && (
+            <StyledText>No items in your watchlist yet. Add movies to your watchlist to see them here.</StyledText>
+          )}
+          {watchlist.length > 0 && (
+            <StyledCarouselContainer>
+              <MovieCarousel moviesArray={watchlist.slice(0, 10)} />
+            </StyledCarouselContainer>
+          )}
         </div>
         <div id="reviews">
           <StyledSubheadingLink to="/reviews">Reviews</StyledSubheadingLink>
