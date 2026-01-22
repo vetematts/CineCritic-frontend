@@ -18,8 +18,9 @@ const StyledCarouselList = styled.ul`
   scrollbar-width: thin;
   scrollbar-color: #5a5b5f #242424;
   width: 100%;
-  max-width: 100%;
+  min-width: 0; // Critical: allows flex children to shrink and enable scrolling
   -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+  scroll-behavior: smooth;
 
   // Hide scrollbar for webkit browsers but keep functionality
   &::-webkit-scrollbar {

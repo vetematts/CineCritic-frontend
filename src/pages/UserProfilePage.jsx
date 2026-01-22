@@ -95,6 +95,17 @@ const StyledUsersName = styled.h1`
   margin-bottom: 0.5rem;
 `;
 
+// Container for user profile content
+const StyledUserProfileContainer = styled.div`
+  flex: 1;
+  min-width: 0; // Important: allows flex children to shrink below content size
+  width: 100%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
 // Container for carousel to ensure proper scrolling
 const StyledCarouselContainer = styled.div`
   width: 100%;
@@ -102,6 +113,7 @@ const StyledCarouselContainer = styled.div`
   overflow: hidden;
   margin-top: 0.5rem;
   position: relative;
+  min-width: 0; // Important: allows overflow to work in flex containers
 
   @media (max-width: 768px) {
     margin-top: 0.75rem;
@@ -245,7 +257,7 @@ function UserProfilePage() {
           </div>
         </div>
       </StyledPortaitColumn> */}
-      <div id="user-profile-container">
+      <StyledUserProfileContainer id="user-profile-container">
         <div id="user-information">
           <StyledUsersName>{username}</StyledUsersName>
           <StyledText>
@@ -281,7 +293,7 @@ function UserProfilePage() {
           <StyledSubheadingLink to="/reviews">Reviews</StyledSubheadingLink>
           <UserReviews userId={userId} limit={5} showViewAll={true} />
         </div>
-      </div>
+      </StyledUserProfileContainer>
     </StyledDashboard>
   );
 }
