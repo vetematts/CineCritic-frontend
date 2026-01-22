@@ -353,9 +353,12 @@ function UserProfilePage() {
             <StyledText>No items in your watchlist yet. Add movies to your watchlist to see them here.</StyledText>
           )}
           {watchlist.length > 0 && (
-            <StyledCarouselContainer>
-              <MovieCarousel moviesArray={watchlist.slice(0, 10)} />
-            </StyledCarouselContainer>
+            <>
+              <StyledCarouselContainer>
+                <MovieCarousel moviesArray={watchlist.slice(0, 10)} />
+              </StyledCarouselContainer>
+              <StyledSeeMoreLink to="/watchlist">See more...</StyledSeeMoreLink>
+            </>
           )}
         </div>
         <div id="reviews">
