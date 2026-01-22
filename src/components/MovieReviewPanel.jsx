@@ -1,4 +1,6 @@
 // This is all the reviews for this movie, shown on the movie's page
+// Skeleton component - commented out for future implementation
+/*
 function MovieReviewPanel({reviewsArray}) {
     return (
         // {reviews.map((review) => (
@@ -14,3 +16,9 @@ function MovieReviewPanel({reviewsArray}) {
 }
 
 export default MovieReviewPanel;
+*/
+
+// Placeholder export to prevent import errors
+export default function MovieReviewPanel() {
+  return null;
+}

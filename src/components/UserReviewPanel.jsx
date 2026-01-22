@@ -1,4 +1,6 @@
 // This is all the user's reviews shown on their profile page
+// Skeleton component - commented out for future implementation
+/*
 function UserReviewPanel({reviewsArray}) {
     return (
         // {reviews.map((review) => (
@@ -14,3 +16,9 @@ function UserReviewPanel({reviewsArray}) {
 }
 
 export default UserReviewPanel;
+*/
+
+// Placeholder export to prevent import errors
+export default function UserReviewPanel() {
+  return null;
+}

@@ -104,9 +104,6 @@ function UserProfilePage() {
   const [accountCreatedLoading, setAccountCreatedLoading] = useState(true);
   const [accountCreatedError, setAccountCreatedError] = useState(null);
 
-  // Return user to login page if they're not authenticated.
-  if (!isAuthenticated) return <Navigate to="/login" />;
-
   const username = user?.username || user?.name || user?.email?.split('@')[0] || 'User';
   const userId = user?.id ?? user?.sub ?? null;
 
@@ -175,6 +172,9 @@ function UserProfilePage() {
       loadAccountCreatedDate();
     }
   }, [user, userId]);
+
+  // Return user to login page if they're not authenticated.
+  if (!isAuthenticated) return <Navigate to="/login" />;
 
   return (
     <StyledDashboard id="dashboard">
