@@ -2,10 +2,6 @@
 // Shown in the Movies Page and the User's Profile
 // Skeleton component - commented out for future implementation
 /*
-// This is the card with a user's review on it
-// Shown in the Movies Page and the User's Profile
-// Skeleton component - commented out for future implementation
-/*
 import styled from 'styled-components';
 
 const StyledModalLabel = styled.label`
@@ -68,12 +64,6 @@ function ReviewCard(prop) {
 }
 
 export default ReviewCard;
-*/
-
-// Placeholder export to prevent import errors
-export default function ReviewCard() {
-  return null;
-}
 */
 
 // Placeholder export to prevent import errors
