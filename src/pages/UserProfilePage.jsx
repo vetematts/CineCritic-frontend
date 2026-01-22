@@ -21,11 +21,11 @@ const StyledDashboard = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 2rem 1rem 1rem 1rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    padding: 0.75rem;
+    padding: 1.5rem 0.75rem 0.75rem 0.75rem;
   }
 `;
 
@@ -114,6 +114,16 @@ const StyledSeeMoreLink = styled(NavLink)`
 const StyledUsersName = styled.h1`
   color: rgba(255, 255, 255, 0.95);
   margin-bottom: 0.5rem;
+  margin-top: 0;
+`;
+
+// Container for user information section
+const StyledUserInformation = styled.div`
+  margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+  }
 `;
 
 // Container for user profile content
@@ -320,7 +330,7 @@ function UserProfilePage() {
         </div>
       </StyledPortaitColumn> */}
       <StyledUserProfileContainer id="user-profile-container">
-        <div id="user-information">
+        <StyledUserInformation id="user-information">
           <StyledUsersName>{username}</StyledUsersName>
           <StyledText>
             Account Created:{' '}
@@ -330,7 +340,7 @@ function UserProfilePage() {
                 ? accountCreatedError
                 : accountCreatedDate || 'Date not available'}
           </StyledText>
-        </div>
+        </StyledUserInformation>
         <div id="favourites">
           <StyledSubheadingLink to="/favourites">Favourites</StyledSubheadingLink>
           {favouritesError && <StyledText style={{ color: '#ffb4a2' }}>{favouritesError}</StyledText>}
