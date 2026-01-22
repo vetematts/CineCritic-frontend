@@ -363,7 +363,7 @@ function UserProfilePage() {
         </div>
         <div id="reviews">
           <StyledSubheadingLink to="/reviews">Reviews</StyledSubheadingLink>
-          <UserReviews userId={userId} limit={5} showViewAll={true} />
+          <UserReviews userId={userId} limit={3} showViewAll={true} />
         </div>
       </StyledUserProfileContainer>
     </StyledDashboard>
