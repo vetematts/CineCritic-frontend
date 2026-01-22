@@ -1,10 +1,11 @@
 // Import Packages
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigate, NavLink } from 'react-router-dom';
 
 // Utilies
 import { useAuth } from '../contexts/AuthContext';
+import { get } from '../api/api';
 
 // Components
 import MovieCarousel from '../components/MovieCarousel'; // Favourite movies carousel
@@ -99,16 +100,68 @@ function UserProfilePage() {
 
   // Hooks                                          // Description
   const [favourites, _setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
+  const [accountCreatedDate, setAccountCreatedDate] = useState(null);
+  const [accountCreatedLoading, setAccountCreatedLoading] = useState(true);
+  const [accountCreatedError, setAccountCreatedError] = useState(null);
 
   // Return user to login page if they're not authenticated.
   if (!isAuthenticated) return <Navigate to="/login" />;
 
-  // Load up this user's favourites, watchlist, and
-  // all their reviews when this page loads
-  // useEffect(() => {})
-
   const username = user?.username || user?.name || user?.email?.split('@')[0] || 'User';
   const userId = user?.id ?? user?.sub ?? null;
+
+  // Format date to readable format (e.g., "January 15, 2024")
+  const formatDate = (dateString) => {
+    if (!dateString) return null;
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return null;
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    } catch {
+      return null;
+    }
+  };
+
+  // Load account creation date
+  useEffect(() => {
+    const loadAccountCreatedDate = async () => {
+      setAccountCreatedLoading(true);
+      setAccountCreatedError(null);
+
+      try {
+        // Check if user object already has created_at
+        if (user?.created_at || user?.createdAt || user?.created) {
+          const dateStr = user.created_at || user.createdAt || user.created;
+          const formatted = formatDate(dateStr);
+          setAccountCreatedDate(formatted);
+          setAccountCreatedLoading(false);
+          return;
+        }
+
+        // If not in user object, try fetching from /api/users/me
+        const userData = await get('/api/users/me');
+        const dateStr = userData?.created_at || userData?.createdAt || userData?.created;
+        if (dateStr) {
+          const formatted = formatDate(dateStr);
+          setAccountCreatedDate(formatted);
+        } else {
+          setAccountCreatedError('Date not available');
+        }
+      } catch (err) {
+        setAccountCreatedError(err?.message || 'Unable to load account date');
+      } finally {
+        setAccountCreatedLoading(false);
+      }
+    };
+
+    if (userId) {
+      loadAccountCreatedDate();
+    }
+  }, [user, userId]);
 
   return (
     <StyledDashboard id="dashboard">
@@ -129,7 +182,14 @@ function UserProfilePage() {
       <div id="user-profile-container">
         <div id="user-information">
           <StyledUsersName>{username}</StyledUsersName>
-          <StyledText>Account Created: Loading...</StyledText>
+          <StyledText>
+            Account Created:{' '}
+            {accountCreatedLoading
+              ? 'Loading...'
+              : accountCreatedError
+                ? accountCreatedError
+                : accountCreatedDate || 'Date not available'}
+          </StyledText>
         </div>
         <div id="favourites">
           <StyledSubheadingLink to="/favourites">Favourites</StyledSubheadingLink>
