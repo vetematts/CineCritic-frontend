@@ -90,24 +90,28 @@ const StyledText = styled.p`
   color: #bdbdbd;
 `;
 
+// Container for "See more..." link, aligned to the right
+const StyledSeeMoreRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+`;
+
 // Styled "See more..." link
 const StyledSeeMoreLink = styled(NavLink)`
-  display: inline-block;
-  margin-top: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 2px;
+  font-size: 0.95rem;
+  transition:
+    color 0.2s ease,
+    border-bottom-color 0.2s ease;
   cursor: pointer;
 
   &:hover {
     color: rgba(255, 255, 255, 0.95);
-    text-decoration: underline;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
+    border-bottom-color: rgba(255, 255, 255, 0.6);
   }
 `;
 
@@ -352,7 +356,9 @@ function UserProfilePage() {
               <StyledCarouselContainer>
                 <MovieCarousel moviesArray={favourites.slice(0, 10)} />
               </StyledCarouselContainer>
-              <StyledSeeMoreLink to="/favourites">See more...</StyledSeeMoreLink>
+              <StyledSeeMoreRow>
+                <StyledSeeMoreLink to="/favourites">See more...</StyledSeeMoreLink>
+              </StyledSeeMoreRow>
             </>
           )}
         </div>
@@ -367,7 +373,9 @@ function UserProfilePage() {
               <StyledCarouselContainer>
                 <MovieCarousel moviesArray={watchlist.slice(0, 10)} />
               </StyledCarouselContainer>
-              <StyledSeeMoreLink to="/watchlist">See more...</StyledSeeMoreLink>
+              <StyledSeeMoreRow>
+                <StyledSeeMoreLink to="/watchlist">See more...</StyledSeeMoreLink>
+              </StyledSeeMoreRow>
             </>
           )}
         </div>
