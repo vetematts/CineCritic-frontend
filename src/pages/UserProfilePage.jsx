@@ -9,6 +9,7 @@ import { useAuth } from '../contexts/AuthContext';
 // Components
 import MovieCarousel from '../components/MovieCarousel'; // Favourite movies carousel
 import UserReviews from '../components/UserReviews'; // User reviews component
+// import { BadgeList } from '../components/Badge'; // Badge component - commented out for future implementation
 
 // Stack the user's portait to the left of their details
 const StyledDashboard = styled.div`
@@ -111,7 +112,8 @@ function UserProfilePage() {
 
   return (
     <StyledDashboard id="dashboard">
-      <StyledPortaitColumn id="user-portait-badge-container">
+      {/* Profile Picture and Badges section - commented out for future implementation */}
+      {/* <StyledPortaitColumn id="user-portait-badge-container">
         <div id="user-profile-portait">
           <StyledProfilePicture
             src="https://via.placeholder.com/160"
@@ -120,12 +122,10 @@ function UserProfilePage() {
           />
           <div id="badges">
             <StyledStrongText>Badges</StyledStrongText>
-            <StyledText>
-              Put in a badge component and fill up this space with images of badges...
-            </StyledText>
+            <BadgeList badges={[]} />
           </div>
         </div>
-      </StyledPortaitColumn>
+      </StyledPortaitColumn> */}
       <div id="user-profile-container">
         <div id="user-information">
           <StyledUsersName>{username}</StyledUsersName>
