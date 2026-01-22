@@ -90,6 +90,27 @@ const StyledText = styled.p`
   color: #bdbdbd;
 `;
 
+// Styled "See more..." link
+const StyledSeeMoreLink = styled(NavLink)`
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.95);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+`;
+
 const StyledUsersName = styled.h1`
   color: rgba(255, 255, 255, 0.95);
   margin-bottom: 0.5rem;
@@ -317,9 +338,12 @@ function UserProfilePage() {
             <StyledText>No favourites yet. Add movies to your favourites to see them here.</StyledText>
           )}
           {favourites.length > 0 && (
-            <StyledCarouselContainer>
-              <MovieCarousel moviesArray={favourites.slice(0, 10)} />
-            </StyledCarouselContainer>
+            <>
+              <StyledCarouselContainer>
+                <MovieCarousel moviesArray={favourites.slice(0, 10)} />
+              </StyledCarouselContainer>
+              <StyledSeeMoreLink to="/favourites">See more...</StyledSeeMoreLink>
+            </>
           )}
         </div>
         <div id="watchlist">
