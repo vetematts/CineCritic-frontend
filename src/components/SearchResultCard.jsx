@@ -104,14 +104,14 @@ const StyledFilmCardContents = styled.div`
 // and details when they match a search query
 function SearchResultCard(prop) {
   // ---PROP NAME--- //                                       // ---DESCRPTION--- //
-  const title = prop.title;                                   // Used for the title of the film
-  const movieId = prop.id || prop.movieId || prop.tmdbId;     // Movie ID for routing
-  const releaseYear = prop.releaseYear;                       // Used to display year film is
+  const title = prop.title; // Used for the title of the film
+  const movieId = prop.id || prop.movieId || prop.tmdbId; // Movie ID for routing
+  const releaseYear = prop.releaseYear; // Used to display year film is
   // released in the card
-  const releaseDate = prop.release_date || prop.releaseDate;  // Alternative date field
-  const description = prop.description;                       // Fills the rest of the card with
+  const releaseDate = prop.release_date || prop.releaseDate; // Alternative date field
+  const description = prop.description; // Fills the rest of the card with
   // the film's description
-  const posterPath = prop.poster_path || prop.posterUrl;      // TMDB poster path or full URL
+  const posterPath = prop.poster_path || prop.posterUrl; // TMDB poster path or full URL
 
   // Extract year from releaseYear or releaseDate
   // If releaseYear is valid, use it; otherwise try to extract from releaseDate

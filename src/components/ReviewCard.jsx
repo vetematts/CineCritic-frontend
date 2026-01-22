@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const StyledModalLabel = styled.label`
   display: flex;
@@ -30,33 +30,33 @@ const StyledModalTextArea = styled.textarea`
 // This is the card with a user's review on it
 // Shown in the Movies Page and the User's Profile
 function ReviewCard(prop) {
-    return (
-        <>
-            <StyledModalLabel>
-                Rating
-                <div style={{ marginTop: '0.5rem' }}>
-                    <StarRating
-                        value={editingReviewId ? editingRating : reviewRating}
-                        onChange={editingReviewId ? setEditingRating : setReviewRating}
-                    />
-                </div>
-                </StyledModalLabel>
-                <StyledModalLabel>
-                    Review
-                <StyledModalTextArea
-                    value={editingReviewId ? editingBody : reviewBody}
-                    onChange={(event) => {
-                        if (editingReviewId) {
-                            setEditingBody(event.target.value);
-                        } else {
-                            setReviewBody(event.target.value);
-                        }
-                    }}
-                    placeholder="Add a review..."
-                />
-            </StyledModalLabel> 
-        </>
-    );
+  return (
+    <>
+      <StyledModalLabel>
+        Rating
+        <div style={{ marginTop: '0.5rem' }}>
+          <StarRating
+            value={editingReviewId ? editingRating : reviewRating}
+            onChange={editingReviewId ? setEditingRating : setReviewRating}
+          />
+        </div>
+      </StyledModalLabel>
+      <StyledModalLabel>
+        Review
+        <StyledModalTextArea
+          value={editingReviewId ? editingBody : reviewBody}
+          onChange={(event) => {
+            if (editingReviewId) {
+              setEditingBody(event.target.value);
+            } else {
+              setReviewBody(event.target.value);
+            }
+          }}
+          placeholder="Add a review..."
+        />
+      </StyledModalLabel>
+    </>
+  );
 }
 
 export default ReviewCard;
