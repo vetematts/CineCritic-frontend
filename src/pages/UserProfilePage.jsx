@@ -95,6 +95,19 @@ const StyledUsersName = styled.h1`
   margin-bottom: 0.5rem;
 `;
 
+// Container for carousel to ensure proper scrolling
+const StyledCarouselContainer = styled.div`
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  position: relative;
+
+  @media (max-width: 768px) {
+    margin-top: 0.75rem;
+  }
+`;
+
 function UserProfilePage() {
   const { user, isAuthenticated } = useAuth();
 
@@ -250,7 +263,11 @@ function UserProfilePage() {
           {!favouritesError && favourites.length === 0 && (
             <StyledText>No favourites yet. Add movies to your favourites to see them here.</StyledText>
           )}
-          {favourites.length > 0 && <MovieCarousel moviesArray={favourites} />}
+          {favourites.length > 0 && (
+            <StyledCarouselContainer>
+              <MovieCarousel moviesArray={favourites.slice(0, 10)} />
+            </StyledCarouselContainer>
+          )}
         </div>
         <div id="watchlist">
           <StyledSubheadingLink to="/watchlist">Watchlist</StyledSubheadingLink>
