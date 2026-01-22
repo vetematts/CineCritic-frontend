@@ -327,7 +327,7 @@ function UserReviews({ userId, limit = null, showViewAll = false }) {
           );
         })}
       </StyledReviewsContainer>
-      {showViewAll && limit && reviews.length > limit && (
+      {showViewAll && reviews.length > 0 && (
         <StyledViewAllRow>
           <StyledViewAllLink to="/reviews">View all reviews</StyledViewAllLink>
         </StyledViewAllRow>
