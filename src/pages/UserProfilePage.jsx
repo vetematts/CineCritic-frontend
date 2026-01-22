@@ -110,17 +110,30 @@ function UserProfilePage() {
   const username = user?.username || user?.name || user?.email?.split('@')[0] || 'User';
   const userId = user?.id ?? user?.sub ?? null;
 
-  // Format date to readable format (e.g., "January 15, 2024")
+  // Format date to match UI style (e.g., "15 Jan 2024")
   const formatDate = (dateString) => {
     if (!dateString) return null;
     try {
       const date = new Date(dateString);
       if (isNaN(date.getTime())) return null;
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
+      const day = date.getDate();
+      const monthNames = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
+      const month = monthNames[date.getMonth()];
+      const year = date.getFullYear();
+      return `${day} ${month} ${year}`;
     } catch {
       return null;
     }
