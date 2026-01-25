@@ -21,14 +21,14 @@ const StyledReviewRow = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas:
-    "poster title"
+    "title title"
     "poster card";
   column-gap: 1.5rem;
-  row-gap: 0.5rem;
+  row-gap: 0.75rem;
 
   @media (max-width: 768px) {
-    column-gap: 1rem;
-    row-gap: 0.5rem;
+    column-gap: 0.9rem;
+    row-gap: 0.6rem;
   }
 `;
 
@@ -37,9 +37,10 @@ const StyledPosterColumn = styled.div`
   grid-area: poster;
   flex-shrink: 0;
   width: 96px;
+  align-self: start;
 
   @media (max-width: 768px) {
-    width: 80px;
+    width: 72px;
   }
 `;
 
@@ -49,6 +50,7 @@ const StyledPoster = styled.img`
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 6px;
+  display: block;
 `;
 
 const StyledPosterPlaceholder = styled.div`
