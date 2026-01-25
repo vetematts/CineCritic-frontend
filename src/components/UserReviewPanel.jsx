@@ -41,6 +41,18 @@ const StyledPosterColumn = styled.div`
   grid-area: poster;
   flex-shrink: 0;
   align-self: start;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:hover img,
+  &:hover div {
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  }
 
   @media (max-width: 768px) {
     align-self: center;
@@ -54,6 +66,7 @@ const StyledPoster = styled.img`
   object-fit: cover;
   border-radius: 6px;
   display: block;
+  transition: box-shadow 0.2s ease;
 `;
 
 const StyledPosterPlaceholder = styled.div`
@@ -68,6 +81,7 @@ const StyledPosterPlaceholder = styled.div`
   font-size: 0.75rem;
   text-align: center;
   padding: 0.5rem;
+  transition: box-shadow 0.2s ease;
 `;
 
 // Review content column (wraps ReviewCard + movie title)
