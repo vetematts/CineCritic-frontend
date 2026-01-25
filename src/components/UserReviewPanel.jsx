@@ -83,27 +83,32 @@ const StyledPosterWrapper = styled.div`
   }
 `;
 
+const StyledPosterFrame = styled.div`
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.5));
+`;
+
 const StyledPoster = styled.img`
   width: 100%;
-  height: auto;
-  aspect-ratio: 2 / 3;
+  height: 100%;
   object-fit: cover;
-  border-radius: 6px;
   display: block;
 `;
 
 const StyledPosterPlaceholder = styled.div`
   width: 100%;
-  aspect-ratio: 2 / 3;
-  background-color: #5a5b5f;
-  border-radius: 6px;
+  height: 100%;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #bdbdbd;
+  color: rgba(255, 255, 255, 0.6);
   font-size: 0.75rem;
   text-align: center;
-  padding: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 `;
 
 // Review content column (wraps ReviewCard + movie title)
@@ -522,19 +527,25 @@ function UserReviewPanel({ userId, limit = null, showViewAll = false }) {
               <StyledPosterColumn>
                 {tmdbId ? (
                   <StyledPosterLink to={`/movies/${tmdbId}`}>
-                    {posterUrl ? (
-                      <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
-                    ) : (
-                      <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
-                    )}
+                    <StyledPosterFrame>
+                      {posterUrl ? (
+                        <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                      ) : (
+                        <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                      )}
+                    </StyledPosterFrame>
                   </StyledPosterLink>
                 ) : posterUrl ? (
                   <StyledPosterWrapper>
-                    <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                    <StyledPosterFrame>
+                      <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                    </StyledPosterFrame>
                   </StyledPosterWrapper>
                 ) : (
                   <StyledPosterWrapper>
-                    <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                    <StyledPosterFrame>
+                      <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                    </StyledPosterFrame>
                   </StyledPosterWrapper>
                 )}
               </StyledPosterColumn>
