@@ -25,12 +25,14 @@ const StyledReviewRow = styled.div`
     "poster card";
   column-gap: 1.5rem;
   row-gap: 0.75rem;
+  width: 100%;
 
   @media (max-width: 768px) {
-    grid-template-columns: 90px minmax(0, 1fr);
-    column-gap: 0.9rem;
+    grid-template-columns: 110px minmax(0, 1fr);
+    column-gap: 1rem;
     row-gap: 0.6rem;
-    justify-content: center;
+    max-width: 520px;
+    margin: 0 auto;
   }
 `;
 
