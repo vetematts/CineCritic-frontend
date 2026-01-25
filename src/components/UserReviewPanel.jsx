@@ -19,7 +19,7 @@ const StyledReviewsContainer = styled.div`
 // Individual review row (poster + review card)
 const StyledReviewRow = styled.div`
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 110px minmax(0, 1fr);
   grid-template-areas:
     "title title"
     "poster card";
@@ -27,8 +27,10 @@ const StyledReviewRow = styled.div`
   row-gap: 0.75rem;
 
   @media (max-width: 768px) {
+    grid-template-columns: 90px minmax(0, 1fr);
     column-gap: 0.9rem;
     row-gap: 0.6rem;
+    justify-content: center;
   }
 `;
 
@@ -36,11 +38,10 @@ const StyledReviewRow = styled.div`
 const StyledPosterColumn = styled.div`
   grid-area: poster;
   flex-shrink: 0;
-  width: 96px;
   align-self: start;
 
   @media (max-width: 768px) {
-    width: 72px;
+    align-self: center;
   }
 `;
 
