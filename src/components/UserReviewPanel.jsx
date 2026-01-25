@@ -18,43 +18,42 @@ const StyledReviewsContainer = styled.div`
 
 // Individual review row (poster + review card)
 const StyledReviewRow = styled.div`
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "poster title"
+    "poster card";
+  column-gap: 1.5rem;
+  row-gap: 0.5rem;
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
   }
 `;
 
 // Poster column
 const StyledPosterColumn = styled.div`
+  grid-area: poster;
   flex-shrink: 0;
-  width: 100px;
-  margin-top: 2.25rem;
+  width: 96px;
 
   @media (max-width: 768px) {
     width: 80px;
-    margin-top: 0;
   }
 `;
 
 const StyledPoster = styled.img`
   width: 100%;
-  height: 150px;
+  height: auto;
+  aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 6px;
-
-  @media (max-width: 768px) {
-    height: 120px;
-  }
 `;
 
 const StyledPosterPlaceholder = styled.div`
   width: 100%;
-  height: 150px;
+  aspect-ratio: 2 / 3;
   background-color: #5a5b5f;
   border-radius: 6px;
   display: flex;
@@ -64,16 +63,17 @@ const StyledPosterPlaceholder = styled.div`
   font-size: 0.75rem;
   text-align: center;
   padding: 0.5rem;
-
-  @media (max-width: 768px) {
-    height: 120px;
-  }
 `;
 
 // Review content column (wraps ReviewCard + movie title)
 const StyledReviewColumn = styled.div`
+  grid-area: card;
   flex: 1;
   min-width: 0;
+`;
+
+const StyledTitleRow = styled.div`
+  grid-area: title;
 `;
 
 const StyledMovieLink = styled(Link)`
@@ -494,9 +494,8 @@ function UserReviewPanel({ userId, limit = null, showViewAll = false }) {
                 )}
               </StyledPosterColumn>
 
-              {/* Review Content */}
-              <StyledReviewColumn>
-                {/* Movie Title */}
+              {/* Movie Title */}
+              <StyledTitleRow>
                 {tmdbId ? (
                   <StyledMovieLink to={`/movies/${tmdbId}`}>
                     <StyledMovieTitle>
@@ -510,8 +509,10 @@ function UserReviewPanel({ userId, limit = null, showViewAll = false }) {
                     {releaseYear && <StyledMovieYear> ({releaseYear})</StyledMovieYear>}
                   </StyledMovieTitle>
                 )}
+              </StyledTitleRow>
 
-                {/* Review Card */}
+              {/* Review Card */}
+              <StyledReviewColumn>
                 <ReviewCard
                   review={review}
                   showAuthor={false}
