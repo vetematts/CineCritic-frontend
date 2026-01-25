@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { get } from '../api/api';
+import { get, put, del } from '../api/api';
 import getPosterUrl from '../utilities/image-pathing';
 import StarRating from './StarRating';
 
@@ -161,10 +161,230 @@ const StyledViewAllLink = styled(Link)`
   }
 `;
 
+// Action buttons container
+const StyledReviewActions = styled.div`
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+`;
+
+const StyledEditButton = styled.button`
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+`;
+
+const StyledDeleteButton = styled.button`
+  padding: 0.4rem 0.8rem;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+`;
+
+// Edit Modal Styles
+const StyledModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+`;
+
+const StyledModal = styled.div`
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+`;
+
+const StyledModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+const StyledModalTitle = styled.h3`
+  margin: 0;
+  color: #cec8c8ff;
+  font-size: 1.5rem;
+`;
+
+const StyledCloseButton = styled.button`
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+  }
+`;
+
+const StyledModalContent = styled.div`
+  padding: 1.5rem;
+`;
+
+const StyledModalForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+const StyledModalLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: #cec8c8ff;
+  font-size: 1rem;
+`;
+
+const StyledModalTextarea = styled.textarea`
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 120px;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+`;
+
+const StyledModalButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+`;
+
+const StyledModalButton = styled.button`
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+const StyledSubmitButton = styled(StyledModalButton)`
+  background-color: #cec8c8ff;
+  color: #242424;
+  border: 1px solid #cec8c8ff;
+
+  &:hover:not(:disabled) {
+    background-color: #d6d0d0;
+    border-color: #d6d0d0;
+  }
+`;
+
+const StyledCancelButton = styled(StyledModalButton)`
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+`;
+
+const StyledEditingMovieInfo = styled.div`
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+const StyledEditingMovieTitle = styled.p`
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.1rem;
+  font-weight: 500;
+`;
+
 function UserReviews({ userId, limit = null, showViewAll = false }) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  // Edit modal state
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingReview, setEditingReview] = useState(null);
+  const [editingBody, setEditingBody] = useState('');
+  const [editingRating, setEditingRating] = useState('5');
+  const [editError, setEditError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (!userId) {
@@ -210,6 +430,88 @@ function UserReviews({ userId, limit = null, showViewAll = false }) {
       isMounted = false;
     };
   }, [userId]);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    if (!isEditModalOpen) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsEditModalOpen(false);
+        setEditingReview(null);
+        setEditError(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isEditModalOpen]);
+
+  // Handle opening edit modal
+  const handleEditClick = (review) => {
+    const reviewId = review.id || review._id;
+    setEditingReview({ ...review, id: reviewId });
+    setEditingBody(review.body || review.content || review.text || '');
+    setEditingRating(String(review.rating || '5'));
+    setEditError(null);
+    setIsEditModalOpen(true);
+  };
+
+  // Handle edit form submission
+  const handleEditSubmit = async (event) => {
+    event.preventDefault();
+    if (!editingReview) return;
+
+    setEditError(null);
+    setIsSubmitting(true);
+
+    try {
+      await put(`/api/reviews/${editingReview.id}`, {
+        rating: Number(editingRating),
+        body: editingBody,
+      });
+
+      // Reload reviews
+      const updatedReviews = await get(`/api/reviews/user/${userId}`);
+      setReviews(updatedReviews || []);
+
+      // Close modal
+      setIsEditModalOpen(false);
+      setEditingReview(null);
+      setEditingBody('');
+      setEditingRating('5');
+    } catch (err) {
+      setEditError(err?.message || 'Unable to update review.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Handle delete
+  const handleDeleteClick = async (review) => {
+    const reviewId = review.id || review._id;
+    const movieTitle = review.movie?.title || review.movie_title || review.title || 'this movie';
+
+    // Confirm deletion
+    const confirmed = window.confirm(
+      `Are you sure you want to delete your review for "${movieTitle}"?`
+    );
+    if (!confirmed) return;
+
+    try {
+      await del(`/api/reviews/${reviewId}`);
+
+      // Reload reviews
+      const updatedReviews = await get(`/api/reviews/user/${userId}`);
+      setReviews(updatedReviews || []);
+    } catch (err) {
+      // Show error in alert since we don't have inline error state per review
+      alert(err?.message || 'Unable to delete review.');
+    }
+  };
 
   // Calculate visible reviews - must be before early returns (React hooks rule)
   const visibleReviews = useMemo(() => {
@@ -322,6 +624,14 @@ function UserReviews({ userId, limit = null, showViewAll = false }) {
                     })()}
                   </StyledReviewDate>
                 )}
+                <StyledReviewActions>
+                  <StyledEditButton type="button" onClick={() => handleEditClick(review)}>
+                    Edit
+                  </StyledEditButton>
+                  <StyledDeleteButton type="button" onClick={() => handleDeleteClick(review)}>
+                    Delete
+                  </StyledDeleteButton>
+                </StyledReviewActions>
               </StyledReviewContent>
             </StyledReviewCard>
           );
@@ -331,6 +641,77 @@ function UserReviews({ userId, limit = null, showViewAll = false }) {
         <StyledViewAllRow>
           <StyledViewAllLink to="/reviews">View all reviews</StyledViewAllLink>
         </StyledViewAllRow>
+      )}
+
+      {/* Edit Review Modal */}
+      {isEditModalOpen && editingReview && (
+        <StyledModalOverlay
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setIsEditModalOpen(false);
+              setEditingReview(null);
+              setEditError(null);
+            }
+          }}
+        >
+          <StyledModal onClick={(e) => e.stopPropagation()}>
+            <StyledModalHeader>
+              <StyledModalTitle>Edit Review</StyledModalTitle>
+              <StyledCloseButton
+                type="button"
+                onClick={() => {
+                  setIsEditModalOpen(false);
+                  setEditingReview(null);
+                  setEditError(null);
+                }}
+              >
+                ×
+              </StyledCloseButton>
+            </StyledModalHeader>
+            <StyledModalContent>
+              <StyledEditingMovieInfo>
+                <StyledEditingMovieTitle>
+                  {editingReview.movie?.title ||
+                    editingReview.movie_title ||
+                    editingReview.title ||
+                    'Unknown Movie'}
+                </StyledEditingMovieTitle>
+              </StyledEditingMovieInfo>
+              {editError && <StyledError>{editError}</StyledError>}
+              <StyledModalForm onSubmit={handleEditSubmit}>
+                <StyledModalLabel>
+                  Rating
+                  <div style={{ marginTop: '0.5rem' }}>
+                    <StarRating value={editingRating} onChange={setEditingRating} />
+                  </div>
+                </StyledModalLabel>
+                <StyledModalLabel>
+                  Review
+                  <StyledModalTextarea
+                    value={editingBody}
+                    onChange={(event) => setEditingBody(event.target.value)}
+                    placeholder="Add a review..."
+                  />
+                </StyledModalLabel>
+                <StyledModalButtons>
+                  <StyledCancelButton
+                    type="button"
+                    onClick={() => {
+                      setIsEditModalOpen(false);
+                      setEditingReview(null);
+                      setEditError(null);
+                    }}
+                  >
+                    Cancel
+                  </StyledCancelButton>
+                  <StyledSubmitButton type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? 'Saving...' : 'Save'}
+                  </StyledSubmitButton>
+                </StyledModalButtons>
+              </StyledModalForm>
+            </StyledModalContent>
+          </StyledModal>
+        </StyledModalOverlay>
       )}
     </>
   );
