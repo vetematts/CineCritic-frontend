@@ -9,7 +9,7 @@ import { get } from '../api/api';
 
 // Components
 import MovieCarousel from '../components/MovieCarousel'; // Favourite movies carousel
-import UserReviews from '../components/UserReviews'; // User reviews component
+import UserReviewPanel from '../components/UserReviewPanel'; // User reviews panel
 // import { BadgeList } from '../components/Badge'; // Badge component - commented out for future implementation
 
 // Stack the user's portait to the left of their details
@@ -381,7 +381,7 @@ function UserProfilePage() {
         </div>
         <div id="reviews">
           <StyledSubheadingLink to="/reviews">Reviews</StyledSubheadingLink>
-          <UserReviews userId={userId} limit={3} showViewAll={true} />
+          <UserReviewPanel userId={userId} limit={3} showViewAll={true} />
         </div>
       </StyledUserProfileContainer>
     </StyledDashboard>
