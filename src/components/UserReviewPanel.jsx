@@ -41,21 +41,45 @@ const StyledPosterColumn = styled.div`
   grid-area: poster;
   flex-shrink: 0;
   align-self: start;
+
+  @media (max-width: 768px) {
+    align-self: center;
+  }
+`;
+
+const StyledPosterLink = styled(Link)`
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
   transition:
     transform 0.2s ease,
+    border-color 0.2s ease,
     box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 16px 28px rgba(0, 0, 0, 0.45);
   }
+`;
 
-  &:hover img,
-  &:hover div {
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
-  }
+const StyledPosterWrapper = styled.div`
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
-  @media (max-width: 768px) {
-    align-self: center;
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 16px 28px rgba(0, 0, 0, 0.45);
   }
 `;
 
@@ -66,7 +90,6 @@ const StyledPoster = styled.img`
   object-fit: cover;
   border-radius: 6px;
   display: block;
-  transition: box-shadow 0.2s ease;
 `;
 
 const StyledPosterPlaceholder = styled.div`
@@ -81,7 +104,6 @@ const StyledPosterPlaceholder = styled.div`
   font-size: 0.75rem;
   text-align: center;
   padding: 0.5rem;
-  transition: box-shadow 0.2s ease;
 `;
 
 // Review content column (wraps ReviewCard + movie title)
@@ -499,17 +521,21 @@ function UserReviewPanel({ userId, limit = null, showViewAll = false }) {
               {/* Movie Poster */}
               <StyledPosterColumn>
                 {tmdbId ? (
-                  <Link to={`/movies/${tmdbId}`}>
+                  <StyledPosterLink to={`/movies/${tmdbId}`}>
                     {posterUrl ? (
                       <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
                     ) : (
                       <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
                     )}
-                  </Link>
+                  </StyledPosterLink>
                 ) : posterUrl ? (
-                  <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                  <StyledPosterWrapper>
+                    <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
+                  </StyledPosterWrapper>
                 ) : (
-                  <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                  <StyledPosterWrapper>
+                    <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
+                  </StyledPosterWrapper>
                 )}
               </StyledPosterColumn>
 
