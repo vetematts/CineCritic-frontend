@@ -20,6 +20,7 @@ const StyledReviewsContainer = styled.div`
 const StyledReviewRow = styled.div`
   display: flex;
   gap: 1.5rem;
+  align-items: flex-start;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -31,9 +32,11 @@ const StyledReviewRow = styled.div`
 const StyledPosterColumn = styled.div`
   flex-shrink: 0;
   width: 100px;
+  margin-top: 2.25rem;
 
   @media (max-width: 768px) {
     width: 80px;
+    margin-top: 1.9rem;
   }
 `;
 
