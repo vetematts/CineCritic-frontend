@@ -1,9 +1,3 @@
-import { expect, test, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import UserProfilePage from '../src/pages/UserProfilePage';
-import { get } from '../src/api/api';
-
 vi.mock('react-router-dom', async (importOriginal) => {
   const actual = await importOriginal();
   return {
@@ -15,6 +9,12 @@ vi.mock('react-router-dom', async (importOriginal) => {
     ),
   };
 });
+
+import { expect, test, vi } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import UserProfilePage from '../src/pages/UserProfilePage';
+import { get } from '../src/api/api';
 
 vi.mock('../src/contexts/AuthContext', () => ({
   useAuth: () => ({
