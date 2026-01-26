@@ -1,6 +1,3 @@
-/* Import the Google Sans font */
-@import url('https://fonts.googleapis.com/css2?family=Gayathri:wght@100;400;700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
-
 #root {
   /* Container Dimensions */
   max-width: 1280px;
