@@ -68,7 +68,7 @@ test('loads and displays watchlist entries', async () => {
 
   expect(screen.getByText(/watchlist/i)).toBeInTheDocument();
   expect(screen.getByText('Test Movie')).toBeInTheDocument();
-  expect(screen.getByText(/2020/)).toBeInTheDocument();
+  expect(screen.getAllByText(/2020/).length).toBeGreaterThan(0);
 });
 
 test('shows empty state when watchlist is empty', async () => {
