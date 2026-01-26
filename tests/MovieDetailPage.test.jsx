@@ -30,7 +30,7 @@ test('renders movie detail and reviews', async () => {
   });
 
   expect(screen.getByText('Alien')).toBeInTheDocument();
-  expect(screen.getByText(/released 1979-05-25/i)).toBeInTheDocument();
+  expect(screen.getByText(/May 25, 1979/i)).toBeInTheDocument();
   expect(screen.getByText('Great movie')).toBeInTheDocument();
 });
 
