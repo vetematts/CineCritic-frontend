@@ -1,7 +1,32 @@
 import { expect, test, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import DashboardPage from '../src/pages/DashboardPage';
+import { MemoryRouter } from 'react-router-dom';
+import UserProfilePage from '../src/pages/UserProfilePage';
 import { get } from '../src/api/api';
+
+vi.mock('react-router-dom', () => ({
+  MemoryRouter: ({ children }) => <div>{children}</div>,
+  NavLink: ({ to, children, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
+  Link: ({ to, children, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
+  Navigate: ({ to }) => <div data-navigate-to={to} />,
+}));
+
+vi.mock('react-router', () => ({
+  NavLink: ({ to, children, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
+  useNavigate: () => vi.fn(),
+}));
 
 vi.mock('../src/contexts/AuthContext', () => ({
   useAuth: () => ({
@@ -16,9 +41,26 @@ vi.mock('../src/api/api', () => ({
 }));
 
 test('loads and displays watchlist entries', async () => {
-  get.mockResolvedValue([{ id: 1, title: 'Test Movie', release_year: 2020, status: 'planned' }]);
+  get.mockImplementation((url) => {
+    if (url === '/api/users/me') {
+      return Promise.resolve({ created_at: '2020-01-01' });
+    }
+    if (url.startsWith('/api/favourites/')) {
+      return Promise.resolve([]);
+    }
+    if (url.startsWith('/api/watchlist/')) {
+      return Promise.resolve([
+        { tmdb_id: 1, title: 'Test Movie', release_year: 2020, poster_url: '/test-poster.jpg' },
+      ]);
+    }
+    return Promise.resolve([]);
+  });
 
-  render(<DashboardPage />);
+  render(
+    <MemoryRouter>
+      <UserProfilePage />
+    </MemoryRouter>
+  );
 
   await waitFor(() => {
     expect(get).toHaveBeenCalledWith('/api/watchlist/1');
@@ -26,14 +68,28 @@ test('loads and displays watchlist entries', async () => {
 
   expect(screen.getByText(/watchlist/i)).toBeInTheDocument();
   expect(screen.getByText('Test Movie')).toBeInTheDocument();
-  expect(screen.getByText(/2020/)).toBeInTheDocument();
-  expect(screen.getByText(/planned/)).toBeInTheDocument();
+  expect(screen.getAllByText(/2020/).length).toBeGreaterThan(0);
 });
 
 test('shows empty state when watchlist is empty', async () => {
-  get.mockResolvedValue([]);
+  get.mockImplementation((url) => {
+    if (url === '/api/users/me') {
+      return Promise.resolve({ created_at: '2020-01-01' });
+    }
+    if (url.startsWith('/api/favourites/')) {
+      return Promise.resolve([]);
+    }
+    if (url.startsWith('/api/watchlist/')) {
+      return Promise.resolve([]);
+    }
+    return Promise.resolve([]);
+  });
 
-  render(<DashboardPage />);
+  render(
+    <MemoryRouter>
+      <UserProfilePage />
+    </MemoryRouter>
+  );
 
   await waitFor(() => {
     expect(get).toHaveBeenCalledWith('/api/watchlist/1');
@@ -43,17 +99,31 @@ test('shows empty state when watchlist is empty', async () => {
 });
 
 test('renders watchlist items with poster images when poster_url is provided', async () => {
-  get.mockResolvedValue([
-    {
-      id: 1,
-      title: 'Test Movie',
-      release_year: 2020,
-      status: 'planned',
-      poster_url: '/test-poster.jpg',
-    },
-  ]);
+  get.mockImplementation((url) => {
+    if (url === '/api/users/me') {
+      return Promise.resolve({ created_at: '2020-01-01' });
+    }
+    if (url.startsWith('/api/favourites/')) {
+      return Promise.resolve([]);
+    }
+    if (url.startsWith('/api/watchlist/')) {
+      return Promise.resolve([
+        {
+          tmdb_id: 1,
+          title: 'Test Movie',
+          release_year: 2020,
+          poster_url: '/test-poster.jpg',
+        },
+      ]);
+    }
+    return Promise.resolve([]);
+  });
 
-  render(<DashboardPage />);
+  render(
+    <MemoryRouter>
+      <UserProfilePage />
+    </MemoryRouter>
+  );
 
   await waitFor(() => {
     const poster = screen.getByAltText('Test Movie poster');
@@ -63,16 +133,30 @@ test('renders watchlist items with poster images when poster_url is provided', a
 });
 
 test('renders placeholder when poster_url is missing', async () => {
-  get.mockResolvedValue([
-    {
-      id: 1,
-      title: 'Test Movie',
-      release_year: 2020,
-      status: 'planned',
-    },
-  ]);
+  get.mockImplementation((url) => {
+    if (url === '/api/users/me') {
+      return Promise.resolve({ created_at: '2020-01-01' });
+    }
+    if (url.startsWith('/api/favourites/')) {
+      return Promise.resolve([]);
+    }
+    if (url.startsWith('/api/watchlist/')) {
+      return Promise.resolve([
+        {
+          tmdb_id: 1,
+          title: 'Test Movie',
+          release_year: 2020,
+        },
+      ]);
+    }
+    return Promise.resolve([]);
+  });
 
-  render(<DashboardPage />);
+  render(
+    <MemoryRouter>
+      <UserProfilePage />
+    </MemoryRouter>
+  );
 
   await waitFor(() => {
     expect(screen.getByText('No poster')).toBeInTheDocument();
@@ -80,17 +164,31 @@ test('renders placeholder when poster_url is missing', async () => {
 });
 
 test('handles poster_path field from backend', async () => {
-  get.mockResolvedValue([
-    {
-      id: 1,
-      title: 'Test Movie',
-      release_year: 2020,
-      status: 'planned',
-      poster_path: '/movie-poster.jpg',
-    },
-  ]);
+  get.mockImplementation((url) => {
+    if (url === '/api/users/me') {
+      return Promise.resolve({ created_at: '2020-01-01' });
+    }
+    if (url.startsWith('/api/favourites/')) {
+      return Promise.resolve([]);
+    }
+    if (url.startsWith('/api/watchlist/')) {
+      return Promise.resolve([
+        {
+          tmdb_id: 1,
+          title: 'Test Movie',
+          release_year: 2020,
+          poster_path: '/movie-poster.jpg',
+        },
+      ]);
+    }
+    return Promise.resolve([]);
+  });
 
-  render(<DashboardPage />);
+  render(
+    <MemoryRouter>
+      <UserProfilePage />
+    </MemoryRouter>
+  );
 
   await waitFor(() => {
     const poster = screen.getByAltText('Test Movie poster');

@@ -7,6 +7,11 @@ import userEvent from '@testing-library/user-event';
 const mockNavigate = vi.fn();
 vi.mock('react-router', () => ({
   useNavigate: () => mockNavigate,
+  NavLink: ({ to, children, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
 }));
 
 import SearchBar from '../src/components/SearchBar';

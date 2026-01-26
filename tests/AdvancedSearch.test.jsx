@@ -41,7 +41,7 @@ test('Test Case 2: Check labels are correctly rendered', () => {
 // Test Case 3: Check the placeholder text in the input fields
 test('Test Case 3: Check correct placeholder text in inputs', () => {
   // Arrange
-  render(<AdvancedSearchPage />);
+  const { container } = render(<AdvancedSearchPage />);
 
   // Act: None
   // Assert: Correct placeholder text in the input fields
@@ -53,13 +53,13 @@ test('Test Case 3: Check correct placeholder text in inputs', () => {
     /Any word in the name of any film crew members/i
   );
   const ratingDropDownPlaceholder = screen.getByDisplayValue(/Equal to/i);
-  const ratingPlaceholder = screen.getByPlaceholderText(/Any number between 0 and 5/i);
+  const ratingStars = container.querySelectorAll('svg');
   // Genres is now a dropdown, not an input - check for loading state or dropdown instead
   const genresLoadingText = screen.getByText(/Loading genres/i);
   expect(titlePlaceholder).toBeInTheDocument();
   expect(releaseYearPlaceholder).toBeInTheDocument();
   expect(filmCrewPlaceholder).toBeInTheDocument();
   expect(ratingDropDownPlaceholder).toBeInTheDocument();
-  expect(ratingPlaceholder).toBeInTheDocument();
+  expect(ratingStars.length).toBeGreaterThanOrEqual(5);
   expect(genresLoadingText).toBeInTheDocument();
 });

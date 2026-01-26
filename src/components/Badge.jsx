@@ -22,11 +22,7 @@ const StyledBadgeContainer = styled.div`
 // TODO: Implement actual badge functionality
 function Badge({ src, alt, ...props }) {
   return (
-    <StyledBadge
-      src={src || 'https://via.placeholder.com/48'}
-      alt={alt || 'Badge'}
-      {...props}
-    />
+    <StyledBadge src={src || 'https://via.placeholder.com/48'} alt={alt || 'Badge'} {...props} />
   );
 }
 

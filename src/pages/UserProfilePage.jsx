@@ -1,14 +1,15 @@
 // Import Packages
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigate, NavLink } from 'react-router-dom';
 
 // Utilies
 import { useAuth } from '../contexts/AuthContext';
+import { get } from '../api/api';
 
 // Components
 import MovieCarousel from '../components/MovieCarousel'; // Favourite movies carousel
-import UserReviews from '../components/UserReviews'; // User reviews component
+import UserReviewPanel from '../components/UserReviewPanel'; // User reviews panel
 // import { BadgeList } from '../components/Badge'; // Badge component - commented out for future implementation
 
 // Stack the user's portait to the left of their details
@@ -20,11 +21,11 @@ const StyledDashboard = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 2rem 1rem 1rem 1rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    padding: 0.75rem;
+    padding: 1.5rem 0.75rem 0.75rem 0.75rem;
   }
 `;
 
@@ -89,26 +90,232 @@ const StyledText = styled.p`
   color: #bdbdbd;
 `;
 
+// Container for "See more..." link, aligned to the right
+const StyledSeeMoreRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+`;
+
+// Styled "See more..." link
+const StyledSeeMoreLink = styled(NavLink)`
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 2px;
+  font-size: 0.95rem;
+  transition:
+    color 0.2s ease,
+    border-bottom-color 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.6);
+  }
+`;
+
 const StyledUsersName = styled.h1`
   color: rgba(255, 255, 255, 0.95);
   margin-bottom: 0.5rem;
+  margin-top: 0;
+`;
+
+// Container for user information section
+const StyledUserInformation = styled.div`
+  margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+  }
+`;
+
+// Container for user profile content
+const StyledUserProfileContainer = styled.div`
+  flex: 1;
+  min-width: 0; // Important: allows flex children to shrink below content size
+  width: 100%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+// Container for carousel to ensure proper scrolling
+const StyledCarouselContainer = styled.div`
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  position: relative;
+  min-width: 0; // Important: allows overflow to work in flex containers
+
+  @media (max-width: 768px) {
+    margin-top: 0.75rem;
+  }
 `;
 
 function UserProfilePage() {
   const { user, isAuthenticated } = useAuth();
 
   // Hooks                                          // Description
-  const [favourites, _setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
-
-  // Return user to login page if they're not authenticated.
-  if (!isAuthenticated) return <Navigate to="/login" />;
-
-  // Load up this user's favourites, watchlist, and
-  // all their reviews when this page loads
-  // useEffect(() => {})
+  const [favourites, setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
+  const [favouritesError, setFavouritesError] = useState(null);
+  const [watchlist, setWatchlist] = useState([]); // Use this to load up this user's watchlist movies and fetch the posters
+  const [watchlistError, setWatchlistError] = useState(null);
+  const [accountCreatedDate, setAccountCreatedDate] = useState(null);
+  const [accountCreatedLoading, setAccountCreatedLoading] = useState(true);
+  const [accountCreatedError, setAccountCreatedError] = useState(null);
 
   const username = user?.username || user?.name || user?.email?.split('@')[0] || 'User';
   const userId = user?.id ?? user?.sub ?? null;
+
+  // Format date to match UI style (e.g., "15 Jan 2024")
+  const formatDate = (dateString) => {
+    if (!dateString) return null;
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return null;
+      const day = date.getDate();
+      const monthNames = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
+      const month = monthNames[date.getMonth()];
+      const year = date.getFullYear();
+      return `${day} ${month} ${year}`;
+    } catch {
+      return null;
+    }
+  };
+
+  // Load favourites
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+
+    let isMounted = true;
+
+    const loadFavourites = async () => {
+      setFavouritesError(null);
+      try {
+        const data = await get(`/api/favourites/${userId}`);
+        if (isMounted) {
+          // Map backend data to MovieCarousel format
+          const mappedFavourites = (data || []).map((entry) => ({
+            id: entry.tmdb_id,
+            tmdbId: entry.tmdb_id,
+            title: entry.title,
+            poster_path: entry.poster_url,
+            posterUrl: entry.poster_url,
+            release_date: entry.release_year ? `${entry.release_year}-01-01` : null,
+            releaseYear: entry.release_year,
+          }));
+          setFavourites(mappedFavourites);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setFavouritesError(err?.message || 'Unable to load favourites.');
+        }
+      }
+    };
+
+    loadFavourites();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userId]);
+
+  // Load watchlist
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+
+    let isMounted = true;
+
+    const loadWatchlist = async () => {
+      setWatchlistError(null);
+      try {
+        const data = await get(`/api/watchlist/${userId}`);
+        if (isMounted) {
+          // Map backend data to MovieCarousel format
+          const mappedWatchlist = (data || []).map((entry) => ({
+            id: entry.tmdb_id,
+            tmdbId: entry.tmdb_id,
+            title: entry.title,
+            poster_path: entry.poster_url || entry.poster_path,
+            posterUrl: entry.poster_url || entry.poster_path,
+            release_date: entry.release_year ? `${entry.release_year}-01-01` : null,
+            releaseYear: entry.release_year,
+          }));
+          setWatchlist(mappedWatchlist);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setWatchlistError(err?.message || 'Unable to load watchlist.');
+        }
+      }
+    };
+
+    loadWatchlist();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userId]);
+
+  // Load account creation date
+  useEffect(() => {
+    const loadAccountCreatedDate = async () => {
+      setAccountCreatedLoading(true);
+      setAccountCreatedError(null);
+
+      try {
+        // Check if user object already has created_at
+        if (user?.created_at || user?.createdAt || user?.created) {
+          const dateStr = user.created_at || user.createdAt || user.created;
+          const formatted = formatDate(dateStr);
+          setAccountCreatedDate(formatted);
+          setAccountCreatedLoading(false);
+          return;
+        }
+
+        // If not in user object, try fetching from /api/users/me
+        const userData = await get('/api/users/me');
+        const dateStr = userData?.created_at || userData?.createdAt || userData?.created;
+        if (dateStr) {
+          const formatted = formatDate(dateStr);
+          setAccountCreatedDate(formatted);
+        } else {
+          setAccountCreatedError('Date not available');
+        }
+      } catch (err) {
+        setAccountCreatedError(err?.message || 'Unable to load account date');
+      } finally {
+        setAccountCreatedLoading(false);
+      }
+    };
+
+    if (userId) {
+      loadAccountCreatedDate();
+    }
+  }, [user, userId]);
+
+  // Return user to login page if they're not authenticated.
+  if (!isAuthenticated) return <Navigate to="/login" />;
 
   return (
     <StyledDashboard id="dashboard">
@@ -126,28 +333,63 @@ function UserProfilePage() {
           </div>
         </div>
       </StyledPortaitColumn> */}
-      <div id="user-profile-container">
-        <div id="user-information">
+      <StyledUserProfileContainer id="user-profile-container">
+        <StyledUserInformation id="user-information">
           <StyledUsersName>{username}</StyledUsersName>
-          <StyledText>Account Created: Loading...</StyledText>
-        </div>
+          <StyledText>
+            Account Created:{' '}
+            {accountCreatedLoading
+              ? 'Loading...'
+              : accountCreatedError
+                ? accountCreatedError
+                : accountCreatedDate || 'Date not available'}
+          </StyledText>
+        </StyledUserInformation>
         <div id="favourites">
           <StyledSubheadingLink to="/favourites">Favourites</StyledSubheadingLink>
-          <MovieCarousel moviesArray={favourites} />
+          {favouritesError && (
+            <StyledText style={{ color: '#ffb4a2' }}>{favouritesError}</StyledText>
+          )}
+          {!favouritesError && favourites.length === 0 && (
+            <StyledText>
+              No favourites yet. Add movies to your favourites to see them here.
+            </StyledText>
+          )}
+          {favourites.length > 0 && (
+            <>
+              <StyledCarouselContainer>
+                <MovieCarousel moviesArray={favourites.slice(0, 10)} />
+              </StyledCarouselContainer>
+              <StyledSeeMoreRow>
+                <StyledSeeMoreLink to="/favourites">See more...</StyledSeeMoreLink>
+              </StyledSeeMoreRow>
+            </>
+          )}
         </div>
         <div id="watchlist">
           <StyledSubheadingLink to="/watchlist">Watchlist</StyledSubheadingLink>
-          <StyledText>User's Watchlist Component here...</StyledText>
-          <StyledText>Statuses: Watching, Completed, On Hold, Dropped, Want to Watch</StyledText>
-          <StyledText>Movie/Show Poster, subtitle with the movie name and release year</StyledText>
-          <StyledText>Episodes watched</StyledText>
-          <StyledText>Score (Rating)</StyledText>
+          {watchlistError && <StyledText style={{ color: '#ffb4a2' }}>{watchlistError}</StyledText>}
+          {!watchlistError && watchlist.length === 0 && (
+            <StyledText>
+              No items in your watchlist yet. Add movies to your watchlist to see them here.
+            </StyledText>
+          )}
+          {watchlist.length > 0 && (
+            <>
+              <StyledCarouselContainer>
+                <MovieCarousel moviesArray={watchlist.slice(0, 10)} />
+              </StyledCarouselContainer>
+              <StyledSeeMoreRow>
+                <StyledSeeMoreLink to="/watchlist">See more...</StyledSeeMoreLink>
+              </StyledSeeMoreRow>
+            </>
+          )}
         </div>
         <div id="reviews">
           <StyledSubheadingLink to="/reviews">Reviews</StyledSubheadingLink>
-          <UserReviews userId={userId} limit={5} showViewAll={true} />
+          <UserReviewPanel userId={userId} limit={3} showViewAll={true} />
         </div>
-      </div>
+      </StyledUserProfileContainer>
     </StyledDashboard>
   );
 }

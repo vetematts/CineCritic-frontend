@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
-import UserReviews from '../components/UserReviews';
+import UserReviewPanel from '../components/UserReviewPanel';
 
 const StyledContainer = styled.section`
   width: 100%;
@@ -35,7 +35,7 @@ export default function UserReviewsPage() {
   return (
     <StyledContainer>
       <StyledPageTitle>Reviews</StyledPageTitle>
-      <UserReviews userId={userId} />
+      <UserReviewPanel userId={userId} />
     </StyledContainer>
   );
 }

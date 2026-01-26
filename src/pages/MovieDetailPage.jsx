@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { get, post, put, del } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
-import getPosterUrl from '../utilities/image-pathing';
+import getPosterUrl from '../utils/image-pathing';
 import StarRating from '../components/StarRating';
+import MovieReviewPanel from '../components/MovieReviewPanel';
 import CalendarIcon from '../assets/CalendarIcon';
 import ClockIcon from '../assets/ClockIcon';
 import BackArrowIcon from '../assets/BackArrowIcon';
@@ -100,51 +101,6 @@ const StyledHeading = styled.h3`
 
 const StyledParagraph = styled.p`
   color: rgba(255, 255, 255, 0.87);
-`;
-
-const StyledList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-`;
-
-const StyledListItem = styled.li`
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 1.25rem;
-  color: rgba(255, 255, 255, 0.87);
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-  }
-`;
-
-const StyledReviewAuthor = styled.p`
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0;
-`;
-
-const StyledReviewAuthorLine = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 0.5rem 0 0.25rem 0;
-`;
-
-const StyledReviewDate = styled.p`
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 0.85rem;
-  margin: 0.25rem 0 0.5rem 0;
 `;
 
 const StyledMeta = styled.p`
@@ -495,60 +451,6 @@ const StyledActionButtons = styled.div`
   gap: 1rem;
   margin-top: 1.5rem;
   width: 100%;
-`;
-
-const StyledReviewActions = styled.div`
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
-`;
-
-const StyledEditButton = styled.button`
-  padding: 0.4rem 0.8rem;
-  background-color: transparent;
-  color: rgba(255, 255, 255, 0.87);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 400;
-  cursor: pointer;
-  white-space: nowrap;
-  height: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.25);
-  }
-`;
-
-const StyledDeleteButton = styled.button`
-  padding: 0.4rem 0.8rem;
-  background-color: transparent;
-  color: rgba(255, 255, 255, 0.87);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 400;
-  cursor: pointer;
-  white-space: nowrap;
-  height: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.25);
-  }
 `;
 
 function MovieDetailPage() {
@@ -977,92 +879,27 @@ function MovieDetailPage() {
             {reviews.length > 0 && (
               <>
                 <StyledHeading>Reviews</StyledHeading>
-                <StyledList>
-                  {reviews.map((review) => (
-                    <StyledListItem key={review.id || review._id}>
-                      <StyledReviewAuthorLine>
-                        <StyledReviewAuthor>
-                          {review.user?.username ||
-                            review.username ||
-                            review.user?.name ||
-                            review.user_name ||
-                            review.user?.email?.split('@')[0] ||
-                            'Anonymous'}
-                        </StyledReviewAuthor>
-                        {review.rating && (
-                          <StarRating value={String(review.rating)} disabled={true} />
-                        )}
-                      </StyledReviewAuthorLine>
-                      {(review.published_at || review.created_at) && (
-                        <StyledReviewDate>
-                          {(() => {
-                            // Format date to "Watched on 14 Jan 2026" format
-                            const dateStr = review.published_at || review.created_at;
-                            const date = new Date(dateStr);
-                            if (!isNaN(date.getTime())) {
-                              const day = date.getDate();
-                              const monthNames = [
-                                'Jan',
-                                'Feb',
-                                'Mar',
-                                'Apr',
-                                'May',
-                                'Jun',
-                                'Jul',
-                                'Aug',
-                                'Sep',
-                                'Oct',
-                                'Nov',
-                                'Dec',
-                              ];
-                              const month = monthNames[date.getMonth()];
-                              const year = date.getFullYear();
-                              return `Watched on ${day} ${month} ${year}`;
-                            }
-                            return dateStr;
-                          })()}
-                        </StyledReviewDate>
-                      )}
-                      <StyledParagraph>
-                        {review.body || review.content || review.text}
-                      </StyledParagraph>
-                      {user?.id &&
-                        (review.user_id === user.id ||
-                          review.userId === user.id ||
-                          review.user?.id === user.id) && (
-                          <StyledReviewActions>
-                            <StyledEditButton
-                              type="button"
-                              onClick={() => {
-                                const reviewId = review.id || review._id;
-                                setEditingReviewId(reviewId);
-                                setEditingBody(review.body || review.content || review.text || '');
-                                setEditingRating(String(review.rating || '5'));
-                                setIsReviewModalOpen(true);
-                              }}
-                            >
-                              Edit
-                            </StyledEditButton>
-                            <StyledDeleteButton
-                              type="button"
-                              onClick={async () => {
-                                setReviewError(null);
-                                try {
-                                  await del(`/api/reviews/${review.id || review._id}`);
-                                  const updated = await get(`/api/reviews/${id}`);
-                                  setReviews(updated || []);
-                                } catch (err) {
-                                  setReviewError(err?.message || 'Unable to delete review.');
-                                }
-                              }}
-                            >
-                              Delete
-                            </StyledDeleteButton>
-                          </StyledReviewActions>
-                        )}
-                    </StyledListItem>
-                  ))}
-                </StyledList>
+                <MovieReviewPanel
+                  reviewsArray={reviews}
+                  currentUserId={user?.id}
+                  onEdit={(review) => {
+                    const reviewId = review.id || review._id;
+                    setEditingReviewId(reviewId);
+                    setEditingBody(review.body || review.content || review.text || '');
+                    setEditingRating(String(review.rating || '5'));
+                    setIsReviewModalOpen(true);
+                  }}
+                  onDelete={async (review) => {
+                    setReviewError(null);
+                    try {
+                      await del(`/api/reviews/${review.id || review._id}`);
+                      const updated = await get(`/api/reviews/${id}`);
+                      setReviews(updated || []);
+                    } catch (err) {
+                      setReviewError(err?.message || 'Unable to delete review.');
+                    }
+                  }}
+                />
               </>
             )}
           </StyledTextColumn>

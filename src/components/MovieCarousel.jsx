@@ -1,5 +1,5 @@
 // Utilities                                            // -----DESCRPTION-----//
-import getPosterUrl from '../utilities/image-pathing'; // Creates URL to grab movie poster link
+import getPosterUrl from '../utils/image-pathing'; // Creates URL to grab movie poster link
 import styled from 'styled-components';
 
 // Child Component                      // -----DESCRPTION-----//
@@ -17,6 +17,10 @@ const StyledCarouselList = styled.ul`
   overflow-y: hidden; // Prevent vertical scrollbar while allowing horizontal scroll
   scrollbar-width: thin;
   scrollbar-color: #5a5b5f #242424;
+  width: 100%;
+  min-width: 0; // Critical: allows flex children to shrink and enable scrolling
+  -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+  scroll-behavior: smooth;
 
   // Hide scrollbar for webkit browsers but keep functionality
   &::-webkit-scrollbar {
@@ -42,6 +46,11 @@ const StyledCarouselList = styled.ul`
     flex-shrink: 0;
     padding: 16px 0; // Vertical padding only for glow, no horizontal padding
     margin: 0; // No negative margin needed
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 8px;
+    gap: 0.5rem;
   }
 `;
 

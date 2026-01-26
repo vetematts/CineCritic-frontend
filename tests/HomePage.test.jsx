@@ -6,10 +6,22 @@ import { MemoryRouter } from 'react-router-dom';
 const mockNavigate = vi.fn();
 vi.mock('react-router', () => ({
   useNavigate: () => mockNavigate,
+  NavLink: ({ to, children, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
 }));
 
 vi.mock('../src/api/api', () => ({
   get: vi.fn(),
+}));
+
+vi.mock('../src/contexts/AuthContext', () => ({
+  useAuth: () => ({
+    isAuthenticated: false,
+    logout: vi.fn(),
+  }),
 }));
 
 import HomePage from '../src/pages/HomePage';

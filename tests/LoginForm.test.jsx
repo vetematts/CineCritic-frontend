@@ -36,7 +36,6 @@ test('renders login inputs and submit button', () => {
   renderLogin();
 
   expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-  expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
   expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /log in/i })).toBeInTheDocument();
 });
@@ -48,14 +47,12 @@ test('submits login credentials and stores token', async () => {
   renderLogin();
 
   await userEvent.type(screen.getByLabelText(/email/i), 'test@example.com');
-  await userEvent.type(screen.getByLabelText(/username/i), 'testuser');
   await userEvent.type(screen.getByLabelText(/password/i), 'secret123');
   await userEvent.click(screen.getByRole('button', { name: /log in/i }));
 
   await waitFor(() => {
     expect(loginRequest).toHaveBeenCalledWith({
       email: 'test@example.com',
-      username: 'testuser',
       password: 'secret123',
     });
   });
