@@ -138,7 +138,6 @@ function ReviewCard({
   if (!review) return null;
 
   // Extract data from review object (handle different API response formats)
-  const reviewId = review.id || review._id;
   const reviewContent = review.body || review.content || review.text || '';
   const reviewRating = review.rating ? String(review.rating) : null;
   const reviewDate = review.published_at || review.created_at || review.date;
