@@ -3,7 +3,7 @@ import { Navigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
 import { get } from '../api/api';
-import getPosterUrl from '../utilities/image-pathing';
+import getPosterUrl from '../utils/image-pathing';
 
 // Container for watchlist content
 const StyledWatchlistContainer = styled.div`

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { get, put, del } from '../api/api';
-import getPosterUrl from '../utilities/image-pathing';
+import getPosterUrl from '../utils/image-pathing';
 import ReviewCard from './ReviewCard';
 import StarRating from './StarRating';
 

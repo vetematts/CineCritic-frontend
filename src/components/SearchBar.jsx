@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 
 // Utility - formats URL after submitting search query
-import getSearchURL from '../utilities/query-endpoints';
+import getSearchURL from '../utils/query-endpoints';
 
 // Styled components
 const StyledForm = styled.form`

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router';
 import styled from 'styled-components';
 
 // Import poster URL utility for TMDB images
-import getPosterUrl from '../utilities/image-pathing';
+import getPosterUrl from '../utils/image-pathing';
 
 // Styled NavLink to remove default link styling and ensure proper layout
 const StyledNavLink = styled(NavLink)`

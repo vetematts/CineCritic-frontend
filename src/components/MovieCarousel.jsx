@@ -1,5 +1,5 @@
 // Utilities                                            // -----DESCRPTION-----//
-import getPosterUrl from '../utilities/image-pathing'; // Creates URL to grab movie poster link
+import getPosterUrl from '../utils/image-pathing'; // Creates URL to grab movie poster link
 import styled from 'styled-components';
 
 // Child Component                      // -----DESCRPTION-----//

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { get, post, put, del } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
-import getPosterUrl from '../utilities/image-pathing';
+import getPosterUrl from '../utils/image-pathing';
 import StarRating from '../components/StarRating';
 import MovieReviewPanel from '../components/MovieReviewPanel';
 import CalendarIcon from '../assets/CalendarIcon';
