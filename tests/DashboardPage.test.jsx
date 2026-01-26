@@ -1,20 +1,32 @@
-vi.mock('react-router-dom', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    NavLink: ({ to, children, ...props }) => (
-      <a href={to} {...props}>
-        {children}
-      </a>
-    ),
-  };
-});
-
 import { expect, test, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import UserProfilePage from '../src/pages/UserProfilePage';
 import { get } from '../src/api/api';
+
+vi.mock('react-router-dom', () => ({
+  MemoryRouter: ({ children }) => <div>{children}</div>,
+  NavLink: ({ to, children, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
+  Link: ({ to, children, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
+  Navigate: ({ to }) => <div data-navigate-to={to} />,
+}));
+
+vi.mock('react-router', () => ({
+  NavLink: ({ to, children, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
+  useNavigate: () => vi.fn(),
+}));
 
 vi.mock('../src/contexts/AuthContext', () => ({
   useAuth: () => ({
