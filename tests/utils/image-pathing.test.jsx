@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import getPosterUrl from '../../src/utilities/image-pathing';
+import getPosterUrl from '../../src/utils/image-pathing';
 
 test('builds TMDB poster URL from poster_path', () => {
   const result = getPosterUrl('/test-poster.jpg', 'w500');
