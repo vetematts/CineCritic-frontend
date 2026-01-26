@@ -347,9 +347,13 @@ function UserProfilePage() {
         </StyledUserInformation>
         <div id="favourites">
           <StyledSubheadingLink to="/favourites">Favourites</StyledSubheadingLink>
-          {favouritesError && <StyledText style={{ color: '#ffb4a2' }}>{favouritesError}</StyledText>}
+          {favouritesError && (
+            <StyledText style={{ color: '#ffb4a2' }}>{favouritesError}</StyledText>
+          )}
           {!favouritesError && favourites.length === 0 && (
-            <StyledText>No favourites yet. Add movies to your favourites to see them here.</StyledText>
+            <StyledText>
+              No favourites yet. Add movies to your favourites to see them here.
+            </StyledText>
           )}
           {favourites.length > 0 && (
             <>
@@ -366,7 +370,9 @@ function UserProfilePage() {
           <StyledSubheadingLink to="/watchlist">Watchlist</StyledSubheadingLink>
           {watchlistError && <StyledText style={{ color: '#ffb4a2' }}>{watchlistError}</StyledText>}
           {!watchlistError && watchlist.length === 0 && (
-            <StyledText>No items in your watchlist yet. Add movies to your watchlist to see them here.</StyledText>
+            <StyledText>
+              No items in your watchlist yet. Add movies to your watchlist to see them here.
+            </StyledText>
           )}
           {watchlist.length > 0 && (
             <>

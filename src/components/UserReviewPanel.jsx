@@ -21,8 +21,8 @@ const StyledReviewRow = styled.div`
   display: grid;
   grid-template-columns: 110px minmax(0, 1fr);
   grid-template-areas:
-    "title title"
-    "poster card";
+    'title title'
+    'poster card';
   column-gap: 1.5rem;
   row-gap: 0.75rem;
   width: 100%;
@@ -483,8 +483,7 @@ function UserReviewPanel({ userId, limit = null, showViewAll = false }) {
   };
 
   // Calculate visible reviews
-  const visibleReviews =
-    limit && typeof limit === 'number' ? reviews.slice(0, limit) : reviews;
+  const visibleReviews = limit && typeof limit === 'number' ? reviews.slice(0, limit) : reviews;
 
   if (loading) {
     return <StyledLoadingText>Loading reviews...</StyledLoadingText>;

@@ -98,8 +98,18 @@ const formatDate = (dateString, prefix = '') => {
 
   const day = date.getDate();
   const monthNames = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
   const month = monthNames[date.getMonth()];
   const year = date.getFullYear();
@@ -160,9 +170,7 @@ function ReviewCard({
       )}
 
       {/* Review date */}
-      {reviewDate && (
-        <StyledDate>{formatDate(reviewDate, datePrefix)}</StyledDate>
-      )}
+      {reviewDate && <StyledDate>{formatDate(reviewDate, datePrefix)}</StyledDate>}
 
       {/* Review text */}
       {reviewContent && <StyledReviewText>{reviewContent}</StyledReviewText>}
