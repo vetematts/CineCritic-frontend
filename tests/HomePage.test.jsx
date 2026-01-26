@@ -6,6 +6,11 @@ import { MemoryRouter } from 'react-router-dom';
 const mockNavigate = vi.fn();
 vi.mock('react-router', () => ({
   useNavigate: () => mockNavigate,
+  NavLink: ({ to, children, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
 }));
 
 vi.mock('../src/api/api', () => ({
