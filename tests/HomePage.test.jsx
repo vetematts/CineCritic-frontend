@@ -17,6 +17,13 @@ vi.mock('../src/api/api', () => ({
   get: vi.fn(),
 }));
 
+vi.mock('../src/contexts/AuthContext', () => ({
+  useAuth: () => ({
+    isAuthenticated: false,
+    logout: vi.fn(),
+  }),
+}));
+
 import HomePage from '../src/pages/HomePage';
 import { get } from '../src/api/api';
 

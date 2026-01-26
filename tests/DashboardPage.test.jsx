@@ -4,6 +4,18 @@ import { MemoryRouter } from 'react-router-dom';
 import UserProfilePage from '../src/pages/UserProfilePage';
 import { get } from '../src/api/api';
 
+vi.mock('react-router-dom', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    NavLink: ({ to, children, ...props }) => (
+      <a href={to} {...props}>
+        {children}
+      </a>
+    ),
+  };
+});
+
 vi.mock('../src/contexts/AuthContext', () => ({
   useAuth: () => ({
     user: { id: 1 },
