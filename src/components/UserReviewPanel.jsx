@@ -21,7 +21,6 @@ const StyledReviewRow = styled.div`
   display: grid;
   grid-template-columns: 110px minmax(0, 1fr);
   grid-template-areas:
-    'title title'
     'poster card';
   column-gap: 1.5rem;
   row-gap: 0.75rem;
@@ -111,39 +110,11 @@ const StyledPosterPlaceholder = styled.div`
   letter-spacing: 0.08em;
 `;
 
-// Review content column (wraps ReviewCard + movie title)
+// Review content column
 const StyledReviewColumn = styled.div`
   grid-area: card;
   flex: 1;
   min-width: 0;
-`;
-
-const StyledTitleRow = styled.div`
-  grid-area: title;
-`;
-
-const StyledMovieLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  margin-bottom: 0.75rem;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const StyledMovieTitle = styled.h3`
-  margin: 0 0 0.25rem 0;
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 1.25rem;
-  font-weight: 600;
-`;
-
-const StyledMovieYear = styled.span`
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1rem;
-  font-weight: 400;
 `;
 
 const StyledEmptyMessage = styled.p`
@@ -564,27 +535,13 @@ function UserReviewPanel({
                 )}
               </StyledPosterColumn>
 
-              {/* Movie Title */}
-              <StyledTitleRow>
-                {tmdbId ? (
-                  <StyledMovieLink to={`/movies/${tmdbId}`}>
-                    <StyledMovieTitle>
-                      {movieTitle}
-                      {releaseYear && <StyledMovieYear> ({releaseYear})</StyledMovieYear>}
-                    </StyledMovieTitle>
-                  </StyledMovieLink>
-                ) : (
-                  <StyledMovieTitle>
-                    {movieTitle}
-                    {releaseYear && <StyledMovieYear> ({releaseYear})</StyledMovieYear>}
-                  </StyledMovieTitle>
-                )}
-              </StyledTitleRow>
-
               {/* Review Card */}
               <StyledReviewColumn>
                 <ReviewCard
                   review={review}
+                  title={movieTitle}
+                  year={releaseYear}
+                  titleLink={tmdbId ? `/movies/${tmdbId}` : null}
                   showAuthor={false}
                   isOwner={isOwner}
                   onEdit={handleEdit}
