@@ -346,7 +346,7 @@ const StyledEditingMovieTitle = styled.p`
  * - limit: Optional limit on number of reviews to show
  * - showViewAll: Whether to show "View all reviews" link
  */
-function UserReviewPanel({ userId, limit = null, showViewAll = false }) {
+function UserReviewPanel({ userId, limit = null, showViewAll = false, isOwner = true }) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -571,7 +571,7 @@ function UserReviewPanel({ userId, limit = null, showViewAll = false }) {
                 <ReviewCard
                   review={review}
                   showAuthor={false}
-                  isOwner={true}
+                  isOwner={isOwner}
                   onEdit={handleEdit}
                   onDelete={handleDelete}
                   datePrefix="Reviewed on "
