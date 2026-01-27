@@ -118,7 +118,7 @@ function Footer() {
               <StyledFooterLinks to="/signup">Register</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
-              <StyledFooterLinks>Terms of Service</StyledFooterLinks>
+              <StyledFooterLinks to="/tos">Terms of Service</StyledFooterLinks>
             </StyledFooterLinkList>
           </StyledList>
         </StyledFooterColumns>
