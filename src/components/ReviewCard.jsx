@@ -1,6 +1,7 @@
 // This is the card with a user's review on it
 // Shown in the Movies Page (via MovieReviewPanel) and the User's Profile (via UserReviewPanel)
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import StarRating from './StarRating';
 
 // Individual review card container
@@ -17,6 +18,30 @@ const StyledReviewCard = styled.div`
     background-color: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.15);
   }
+`;
+
+const StyledTitleLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  margin-bottom: 0.25rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const StyledTitle = styled.h3`
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.25rem;
+  font-weight: 600;
+`;
+
+const StyledYear = styled.span`
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  font-weight: 400;
 `;
 
 // Author name display
@@ -129,6 +154,9 @@ const formatDate = (dateString, prefix = '') => {
  */
 function ReviewCard({
   review,
+  title = null,
+  year = null,
+  titleLink = null,
   showAuthor = false,
   isOwner = false,
   onEdit,
@@ -153,6 +181,24 @@ function ReviewCard({
 
   return (
     <StyledReviewCard>
+      {title && (
+        <>
+          {titleLink ? (
+            <StyledTitleLink to={titleLink}>
+              <StyledTitle>
+                {title}
+                {year && <StyledYear> ({year})</StyledYear>}
+              </StyledTitle>
+            </StyledTitleLink>
+          ) : (
+            <StyledTitle>
+              {title}
+              {year && <StyledYear> ({year})</StyledYear>}
+            </StyledTitle>
+          )}
+        </>
+      )}
+
       {/* Author line with rating (for movie reviews) */}
       {showAuthor && (
         <StyledAuthorLine>
