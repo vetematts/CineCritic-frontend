@@ -36,6 +36,10 @@ function TermsOfServicePage() {
             <p>We may update these Terms from time to time. Continued use of the Service after changes are posted constitutes acceptance of the updated Terms.</p>
             <h3>Contact Us</h3>
             <p>If you have any questions about these Terms, please contact us at:</p>
+            <ul>
+                <li>vetematts @ Github</li>
+                <li>macfluffy @ Github</li>
+            </ul>
         </section>
     );
 }
