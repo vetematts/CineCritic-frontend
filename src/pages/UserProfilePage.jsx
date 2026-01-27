@@ -427,7 +427,11 @@ function UserProfilePage() {
                 <MovieCarousel moviesArray={favourites.slice(0, 10)} />
               </StyledCarouselContainer>
               <StyledSeeMoreRow>
-                <StyledSeeMoreLink to="/favourites">See more...</StyledSeeMoreLink>
+                <StyledSeeMoreLink
+                  to={isOwner ? '/favourites' : `/user/${targetUserId}/favourites`}
+                >
+                  See more...
+                </StyledSeeMoreLink>
               </StyledSeeMoreRow>
             </>
           )}
