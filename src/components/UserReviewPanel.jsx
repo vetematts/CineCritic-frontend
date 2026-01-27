@@ -346,7 +346,13 @@ const StyledEditingMovieTitle = styled.p`
  * - limit: Optional limit on number of reviews to show
  * - showViewAll: Whether to show "View all reviews" link
  */
-function UserReviewPanel({ userId, limit = null, showViewAll = false, isOwner = true }) {
+function UserReviewPanel({
+  userId,
+  limit = null,
+  showViewAll = false,
+  isOwner = true,
+  usePublicEndpoints = false,
+}) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -375,7 +381,10 @@ function UserReviewPanel({ userId, limit = null, showViewAll = false, isOwner = 
       try {
         let reviewsData;
         try {
-          reviewsData = await get(`/api/reviews/user/${userId}`);
+          const endpoint = usePublicEndpoints
+            ? `/api/public/users/${userId}/reviews`
+            : `/api/reviews/user/${userId}`;
+          reviewsData = await get(endpoint);
         } catch {
           console.warn('User reviews endpoint not found, using empty array');
           reviewsData = [];
@@ -446,7 +455,10 @@ function UserReviewPanel({ userId, limit = null, showViewAll = false, isOwner = 
       });
 
       // Reload reviews
-      const updatedReviews = await get(`/api/reviews/user/${userId}`);
+      const updatedEndpoint = usePublicEndpoints
+        ? `/api/public/users/${userId}/reviews`
+        : `/api/reviews/user/${userId}`;
+      const updatedReviews = await get(updatedEndpoint);
       setReviews(updatedReviews || []);
 
       // Close modal
@@ -475,7 +487,10 @@ function UserReviewPanel({ userId, limit = null, showViewAll = false, isOwner = 
       await del(`/api/reviews/${reviewId}`);
 
       // Reload reviews
-      const updatedReviews = await get(`/api/reviews/user/${userId}`);
+      const updatedEndpoint = usePublicEndpoints
+        ? `/api/public/users/${userId}/reviews`
+        : `/api/reviews/user/${userId}`;
+      const updatedReviews = await get(updatedEndpoint);
       setReviews(updatedReviews || []);
     } catch (err) {
       alert(err?.message || 'Unable to delete review.');
