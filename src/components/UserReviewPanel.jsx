@@ -409,7 +409,7 @@ function UserReviewPanel({
     return () => {
       isMounted = false;
     };
-  }, [userId]);
+  }, [userId, usePublicEndpoints]);
 
   // Handle ESC key to close modal
   useEffect(() => {

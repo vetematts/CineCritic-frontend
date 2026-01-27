@@ -249,7 +249,7 @@ function UserProfilePage() {
     return () => {
       isMounted = false;
     };
-  }, [targetUserId]);
+  }, [targetUserId, isOwner]);
 
   // Load watchlist
   useEffect(() => {
@@ -290,7 +290,7 @@ function UserProfilePage() {
     return () => {
       isMounted = false;
     };
-  }, [targetUserId]);
+  }, [targetUserId, isOwner]);
 
   // Load account creation date
   useEffect(() => {
