@@ -410,9 +410,7 @@ function UserProfilePage() {
           </StyledText>
         </StyledUserInformation>
         <div id="favourites">
-          <StyledSubheadingLink
-            to={isOwner ? '/favourites' : `/user/${targetUserId}/favourites`}
-          >
+          <StyledSubheadingLink to={isOwner ? '/favourites' : `/user/${targetUserId}/favourites`}>
             Favourites
           </StyledSubheadingLink>
           {favouritesError && (
@@ -435,9 +433,7 @@ function UserProfilePage() {
           )}
         </div>
         <div id="watchlist">
-          <StyledSubheadingLink
-            to={isOwner ? '/watchlist' : `/user/${targetUserId}/watchlist`}
-          >
+          <StyledSubheadingLink to={isOwner ? '/watchlist' : `/user/${targetUserId}/watchlist`}>
             Watchlist
           </StyledSubheadingLink>
           {watchlistError && <StyledText style={{ color: '#ffb4a2' }}>{watchlistError}</StyledText>}
