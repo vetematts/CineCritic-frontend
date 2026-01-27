@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
 import { get } from '../api/api';
@@ -134,12 +134,15 @@ const StyledMovieTitle = styled.div`
 
 export default function FavouritesPage() {
   const { user, isAuthenticated } = useAuth();
+  const { id: routeUserId } = useParams();
   const userId = user?.id ?? user?.sub ?? null;
+  const targetUserId = routeUserId ? Number(routeUserId) : userId;
+  const isOwner = !routeUserId || Number(routeUserId) === userId;
   const [favourites, setFavourites] = useState([]);
   const [favouritesError, setFavouritesError] = useState(null);
 
   useEffect(() => {
-    if (!userId) {
+    if (!targetUserId) {
       return;
     }
 
@@ -149,7 +152,11 @@ export default function FavouritesPage() {
     const loadFavourites = async () => {
       setFavouritesError(null);
       try {
-        const data = await get(`/api/favourites/${userId}`);
+        const data = await get(
+          isOwner
+            ? `/api/favourites/${targetUserId}`
+            : `/api/public/users/${targetUserId}/favourites`
+        );
         if (isMounted) {
           setFavourites(data || []);
         }
@@ -165,10 +172,10 @@ export default function FavouritesPage() {
     return () => {
       isMounted = false;
     };
-  }, [userId]);
+  }, [targetUserId, isOwner]);
 
   // Return user to login page if they're not authenticated.
-  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (!routeUserId && !isAuthenticated) return <Navigate to="/login" />;
 
   return (
     <StyledFavouritesContainer>
