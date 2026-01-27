@@ -153,9 +153,7 @@ export default function WatchlistPage() {
       setWatchlistError(null);
       try {
         const data = await get(
-          isOwner
-            ? `/api/watchlist/${targetUserId}`
-            : `/api/public/users/${targetUserId}/watchlist`
+          isOwner ? `/api/watchlist/${targetUserId}` : `/api/public/users/${targetUserId}/watchlist`
         );
         if (isMounted) {
           setWatchlist(data || []);
