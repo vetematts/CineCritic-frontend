@@ -36,6 +36,7 @@ function AppRoutes() {
         <Route path="/watchlist" element={<WatchlistPage />} />
         <Route path="/favourites" element={<FavouritesPage />} />
         <Route path="/user" element={<UserProfilePage />} />
+        <Route path="/user/:id" element={<UserProfilePage />} />
         <Route path="/reviews" element={<UserReviewsPage />} />
       </Route>
     </Routes>
