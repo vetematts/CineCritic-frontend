@@ -36,6 +36,7 @@ function AppRoutes() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/watchlist" element={<WatchlistPage />} />
         <Route path="/favourites" element={<FavouritesPage />} />
+        <Route path="/user" element={<UserProfilePage />} />
         <Route path="/user/:id" element={<UserProfilePage />} />
         <Route path="/reviews" element={<UserReviewsPage />} />
         <Route path="/tos" element={<TermsOfServicePage />} />
