@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
 import UserReviewPanel from '../components/UserReviewPanel';
@@ -28,14 +28,22 @@ const StyledPageTitle = styled.h1`
 
 export default function UserReviewsPage() {
   const { user, isAuthenticated } = useAuth();
+  const { id: routeUserId } = useParams();
   const userId = user?.id ?? user?.sub ?? null;
+  const targetUserId = routeUserId ? Number(routeUserId) : userId;
+  const isOwner = !routeUserId || Number(routeUserId) === userId;
 
-  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (!routeUserId && !isAuthenticated) return <Navigate to="/login" />;
 
   return (
     <StyledContainer>
       <StyledPageTitle>Reviews</StyledPageTitle>
-      <UserReviewPanel userId={userId} />
+      <UserReviewPanel
+        userId={targetUserId}
+        showViewAll={false}
+        isOwner={isOwner}
+        usePublicEndpoints={!isOwner}
+      />
     </StyledContainer>
   );
 }

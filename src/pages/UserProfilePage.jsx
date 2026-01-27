@@ -454,11 +454,11 @@ function UserProfilePage() {
           )}
         </div>
         <div id="reviews">
-          {isOwner ? (
-            <StyledSubheadingLink to="/reviews">Reviews</StyledSubheadingLink>
-          ) : (
-            <StyledSubheading>Reviews</StyledSubheading>
-          )}
+          <StyledSubheadingLink
+            to={isOwner ? '/reviews' : `/user/${targetUserId}/reviews`}
+          >
+            Reviews
+          </StyledSubheadingLink>
           <UserReviewPanel
             userId={targetUserId}
             limit={3}

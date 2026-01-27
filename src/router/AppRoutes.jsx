@@ -38,6 +38,7 @@ function AppRoutes() {
         <Route path="/user" element={<UserProfilePage />} />
         <Route path="/user/:id" element={<UserProfilePage />} />
         <Route path="/reviews" element={<UserReviewsPage />} />
+        <Route path="/user/:id/reviews" element={<UserReviewsPage />} />
         <Route path="/user/:id/favourites" element={<FavouritesPage />} />
         <Route path="/user/:id/watchlist" element={<WatchlistPage />} />
       </Route>
