@@ -17,6 +17,7 @@ vi.mock('react-router-dom', () => ({
     </a>
   ),
   Navigate: ({ to }) => <div data-navigate-to={to} />,
+  useParams: () => ({}),
 }));
 
 vi.mock('react-router', () => ({
