@@ -448,7 +448,11 @@ function UserProfilePage() {
                 <MovieCarousel moviesArray={watchlist.slice(0, 10)} />
               </StyledCarouselContainer>
               <StyledSeeMoreRow>
-                {isOwner && <StyledSeeMoreLink to="/watchlist">See more...</StyledSeeMoreLink>}
+                <StyledSeeMoreLink
+                  to={isOwner ? '/watchlist' : `/user/${targetUserId}/watchlist`}
+                >
+                  See more...
+                </StyledSeeMoreLink>
               </StyledSeeMoreRow>
             </>
           )}
