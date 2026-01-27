@@ -1,7 +1,7 @@
 // Import Packages
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { Navigate, NavLink } from 'react-router-dom';
+import { Navigate, NavLink, useParams } from 'react-router-dom';
 
 // Utilies
 import { useAuth } from '../contexts/AuthContext';
@@ -157,6 +157,7 @@ const StyledCarouselContainer = styled.div`
 
 function UserProfilePage() {
   const { user, isAuthenticated } = useAuth();
+  const { id: routeUserId } = useParams();
 
   // Hooks                                          // Description
   const [favourites, setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
@@ -167,8 +168,16 @@ function UserProfilePage() {
   const [accountCreatedLoading, setAccountCreatedLoading] = useState(true);
   const [accountCreatedError, setAccountCreatedError] = useState(null);
 
-  const username = user?.username || user?.name || user?.email?.split('@')[0] || 'User';
   const userId = user?.id ?? user?.sub ?? null;
+  const targetUserId = routeUserId ? Number(routeUserId) : userId;
+  const isOwner = !routeUserId || Number(routeUserId) === userId;
+  const [publicUser, setPublicUser] = useState(null);
+  const [publicUserError, setPublicUserError] = useState(null);
+  const [publicUserLoading, setPublicUserLoading] = useState(false);
+
+  const displayUser = isOwner ? user : publicUser;
+  const username =
+    displayUser?.username || displayUser?.name || displayUser?.email?.split('@')[0] || 'User';
 
   // Format date to match UI style (e.g., "15 Jan 2024")
   const formatDate = (dateString) => {
@@ -201,7 +210,7 @@ function UserProfilePage() {
 
   // Load favourites
   useEffect(() => {
-    if (!userId) {
+    if (!targetUserId) {
       return;
     }
 
@@ -210,7 +219,7 @@ function UserProfilePage() {
     const loadFavourites = async () => {
       setFavouritesError(null);
       try {
-        const data = await get(`/api/favourites/${userId}`);
+        const data = await get(`/api/favourites/${targetUserId}`);
         if (isMounted) {
           // Map backend data to MovieCarousel format
           const mappedFavourites = (data || []).map((entry) => ({
@@ -236,11 +245,11 @@ function UserProfilePage() {
     return () => {
       isMounted = false;
     };
-  }, [userId]);
+  }, [targetUserId]);
 
   // Load watchlist
   useEffect(() => {
-    if (!userId) {
+    if (!targetUserId) {
       return;
     }
 
@@ -249,7 +258,7 @@ function UserProfilePage() {
     const loadWatchlist = async () => {
       setWatchlistError(null);
       try {
-        const data = await get(`/api/watchlist/${userId}`);
+        const data = await get(`/api/watchlist/${targetUserId}`);
         if (isMounted) {
           // Map backend data to MovieCarousel format
           const mappedWatchlist = (data || []).map((entry) => ({
@@ -275,7 +284,7 @@ function UserProfilePage() {
     return () => {
       isMounted = false;
     };
-  }, [userId]);
+  }, [targetUserId]);
 
   // Load account creation date
   useEffect(() => {
@@ -285,22 +294,34 @@ function UserProfilePage() {
 
       try {
         // Check if user object already has created_at
-        if (user?.created_at || user?.createdAt || user?.created) {
-          const dateStr = user.created_at || user.createdAt || user.created;
+        if (displayUser?.created_at || displayUser?.createdAt || displayUser?.created) {
+          const dateStr =
+            displayUser.created_at || displayUser.createdAt || displayUser.created;
           const formatted = formatDate(dateStr);
           setAccountCreatedDate(formatted);
           setAccountCreatedLoading(false);
           return;
         }
 
-        // If not in user object, try fetching from /api/users/me
-        const userData = await get('/api/users/me');
-        const dateStr = userData?.created_at || userData?.createdAt || userData?.created;
-        if (dateStr) {
-          const formatted = formatDate(dateStr);
-          setAccountCreatedDate(formatted);
-        } else {
-          setAccountCreatedError('Date not available');
+        if (isOwner) {
+          // If not in user object, try fetching from /api/users/me
+          const userData = await get('/api/users/me');
+          const dateStr = userData?.created_at || userData?.createdAt || userData?.created;
+          if (dateStr) {
+            const formatted = formatDate(dateStr);
+            setAccountCreatedDate(formatted);
+          } else {
+            setAccountCreatedError('Date not available');
+          }
+        } else if (targetUserId) {
+          const userData = await get(`/api/users/${targetUserId}`);
+          const dateStr = userData?.created_at || userData?.createdAt || userData?.created;
+          if (dateStr) {
+            const formatted = formatDate(dateStr);
+            setAccountCreatedDate(formatted);
+          } else {
+            setAccountCreatedError('Date not available');
+          }
         }
       } catch (err) {
         setAccountCreatedError(err?.message || 'Unable to load account date');
@@ -309,13 +330,47 @@ function UserProfilePage() {
       }
     };
 
-    if (userId) {
+    if (targetUserId) {
       loadAccountCreatedDate();
     }
-  }, [user, userId]);
+  }, [displayUser, isOwner, targetUserId]);
+
+  // Load public user data when viewing another profile
+  useEffect(() => {
+    if (!routeUserId || isOwner) {
+      return;
+    }
+
+    let isMounted = true;
+    setPublicUserLoading(true);
+    setPublicUserError(null);
+
+    const loadPublicUser = async () => {
+      try {
+        const userData = await get(`/api/users/${routeUserId}`);
+        if (isMounted) {
+          setPublicUser(userData);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setPublicUserError(err?.message || 'Unable to load user profile.');
+        }
+      } finally {
+        if (isMounted) {
+          setPublicUserLoading(false);
+        }
+      }
+    };
+
+    loadPublicUser();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [routeUserId, isOwner]);
 
   // Return user to login page if they're not authenticated.
-  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (!routeUserId && !isAuthenticated) return <Navigate to="/login" />;
 
   return (
     <StyledDashboard id="dashboard">
@@ -336,6 +391,8 @@ function UserProfilePage() {
       <StyledUserProfileContainer id="user-profile-container">
         <StyledUserInformation id="user-information">
           <StyledUsersName>{username}</StyledUsersName>
+          {publicUserError && <StyledText style={{ color: '#ffb4a2' }}>{publicUserError}</StyledText>}
+          {publicUserLoading && <StyledText>Loading profile...</StyledText>}
           <StyledText>
             Account Created:{' '}
             {accountCreatedLoading
@@ -346,7 +403,11 @@ function UserProfilePage() {
           </StyledText>
         </StyledUserInformation>
         <div id="favourites">
-          <StyledSubheadingLink to="/favourites">Favourites</StyledSubheadingLink>
+          {isOwner ? (
+            <StyledSubheadingLink to="/favourites">Favourites</StyledSubheadingLink>
+          ) : (
+            <StyledSubheading>Favourites</StyledSubheading>
+          )}
           {favouritesError && (
             <StyledText style={{ color: '#ffb4a2' }}>{favouritesError}</StyledText>
           )}
@@ -367,7 +428,11 @@ function UserProfilePage() {
           )}
         </div>
         <div id="watchlist">
-          <StyledSubheadingLink to="/watchlist">Watchlist</StyledSubheadingLink>
+          {isOwner ? (
+            <StyledSubheadingLink to="/watchlist">Watchlist</StyledSubheadingLink>
+          ) : (
+            <StyledSubheading>Watchlist</StyledSubheading>
+          )}
           {watchlistError && <StyledText style={{ color: '#ffb4a2' }}>{watchlistError}</StyledText>}
           {!watchlistError && watchlist.length === 0 && (
             <StyledText>
@@ -380,14 +445,23 @@ function UserProfilePage() {
                 <MovieCarousel moviesArray={watchlist.slice(0, 10)} />
               </StyledCarouselContainer>
               <StyledSeeMoreRow>
-                <StyledSeeMoreLink to="/watchlist">See more...</StyledSeeMoreLink>
+              {isOwner && <StyledSeeMoreLink to="/watchlist">See more...</StyledSeeMoreLink>}
               </StyledSeeMoreRow>
             </>
           )}
         </div>
         <div id="reviews">
-          <StyledSubheadingLink to="/reviews">Reviews</StyledSubheadingLink>
-          <UserReviewPanel userId={userId} limit={3} showViewAll={true} />
+          {isOwner ? (
+            <StyledSubheadingLink to="/reviews">Reviews</StyledSubheadingLink>
+          ) : (
+            <StyledSubheading>Reviews</StyledSubheading>
+          )}
+          <UserReviewPanel
+            userId={targetUserId}
+            limit={3}
+            showViewAll={isOwner}
+            isOwner={isOwner}
+          />
         </div>
       </StyledUserProfileContainer>
     </StyledDashboard>
