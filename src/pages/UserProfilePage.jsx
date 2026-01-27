@@ -219,7 +219,11 @@ function UserProfilePage() {
     const loadFavourites = async () => {
       setFavouritesError(null);
       try {
-        const data = await get(`/api/favourites/${targetUserId}`);
+        const data = await get(
+          isOwner
+            ? `/api/favourites/${targetUserId}`
+            : `/api/public/users/${targetUserId}/favourites`
+        );
         if (isMounted) {
           // Map backend data to MovieCarousel format
           const mappedFavourites = (data || []).map((entry) => ({
@@ -258,7 +262,9 @@ function UserProfilePage() {
     const loadWatchlist = async () => {
       setWatchlistError(null);
       try {
-        const data = await get(`/api/watchlist/${targetUserId}`);
+        const data = await get(
+          isOwner ? `/api/watchlist/${targetUserId}` : `/api/public/users/${targetUserId}/watchlist`
+        );
         if (isMounted) {
           // Map backend data to MovieCarousel format
           const mappedWatchlist = (data || []).map((entry) => ({
@@ -295,8 +301,7 @@ function UserProfilePage() {
       try {
         // Check if user object already has created_at
         if (displayUser?.created_at || displayUser?.createdAt || displayUser?.created) {
-          const dateStr =
-            displayUser.created_at || displayUser.createdAt || displayUser.created;
+          const dateStr = displayUser.created_at || displayUser.createdAt || displayUser.created;
           const formatted = formatDate(dateStr);
           setAccountCreatedDate(formatted);
           setAccountCreatedLoading(false);
@@ -391,7 +396,9 @@ function UserProfilePage() {
       <StyledUserProfileContainer id="user-profile-container">
         <StyledUserInformation id="user-information">
           <StyledUsersName>{username}</StyledUsersName>
-          {publicUserError && <StyledText style={{ color: '#ffb4a2' }}>{publicUserError}</StyledText>}
+          {publicUserError && (
+            <StyledText style={{ color: '#ffb4a2' }}>{publicUserError}</StyledText>
+          )}
           {publicUserLoading && <StyledText>Loading profile...</StyledText>}
           <StyledText>
             Account Created:{' '}
@@ -445,7 +452,7 @@ function UserProfilePage() {
                 <MovieCarousel moviesArray={watchlist.slice(0, 10)} />
               </StyledCarouselContainer>
               <StyledSeeMoreRow>
-              {isOwner && <StyledSeeMoreLink to="/watchlist">See more...</StyledSeeMoreLink>}
+                {isOwner && <StyledSeeMoreLink to="/watchlist">See more...</StyledSeeMoreLink>}
               </StyledSeeMoreRow>
             </>
           )}
@@ -461,6 +468,7 @@ function UserProfilePage() {
             limit={3}
             showViewAll={isOwner}
             isOwner={isOwner}
+            usePublicEndpoints={!isOwner}
           />
         </div>
       </StyledUserProfileContainer>
