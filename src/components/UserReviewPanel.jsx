@@ -20,8 +20,7 @@ const StyledReviewsContainer = styled.div`
 const StyledReviewRow = styled.div`
   display: grid;
   grid-template-columns: 110px minmax(0, 1fr);
-  grid-template-areas:
-    'poster card';
+  grid-template-areas: 'poster card';
   column-gap: 1.5rem;
   row-gap: 0.75rem;
   width: 100%;
