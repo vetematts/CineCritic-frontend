@@ -14,6 +14,7 @@ import WatchlistPage from '../pages/WatchlistPage';
 import FavouritesPage from '../pages/FavouritesPage';
 import UserProfilePage from '../pages/UserProfilePage';
 import UserReviewsPage from '../pages/UserReviewsPage';
+import TermsOfServicePage from '../pages/TermsOfServicePage';
 
 // This component handles all the routing to the different pages
 function AppRoutes() {
@@ -37,6 +38,7 @@ function AppRoutes() {
         <Route path="/favourites" element={<FavouritesPage />} />
         <Route path="/user" element={<UserProfilePage />} />
         <Route path="/reviews" element={<UserReviewsPage />} />
+        <Route path="/tos" element={<TermsOfServicePage />} />
       </Route>
     </Routes>
   );
