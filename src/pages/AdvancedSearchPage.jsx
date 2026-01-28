@@ -215,6 +215,10 @@ const StyledStarsRow = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding-left: 8%;
+
+  @media (max-width: 768px) {
+    padding-left: 0;
+  }
 `;
 
 // Comparator dropdown styling
