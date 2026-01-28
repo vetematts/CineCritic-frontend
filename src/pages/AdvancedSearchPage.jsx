@@ -18,22 +18,30 @@ const StyledForm = styled.form`
   width: 100%;
 `;
 
-const StyledSearchRows = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  /* Allow the columns to shrink and grow depending on the screen size */
-  flex: 1;
-
-  /* Space the columns so they are now 1 column per row in mobile resolution */
+const StyledFieldsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 2rem;
   width: 80%;
-  margin: 1rem;
+  margin: 1rem 0 0;
 
   @media (max-width: 768px) {
+    grid-template-columns: 1fr;
     width: 100%;
-    margin: 0.5rem 0;
+    gap: 1rem;
   }
+`;
+
+const StyledSearchRows = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+
+  ${(props) =>
+    props.$fullWidth &&
+    `
+    grid-column: 1 / -1;
+  `}
 `;
 
 // Give all the labels uniform color
@@ -140,13 +148,7 @@ const StyledRatingInput = styled.div`
   gap: 0.75rem;
   flex: 1;
   flex-basis: 100%;
-
-  /* This container is 80% of the main's width */
-  width: 80%;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+  width: 100%;
 `;
 
 // Comparator dropdown styling
@@ -169,7 +171,7 @@ const StyledSubmitButton = styled.button`
   align-self: flex-start;
 
   /* Roughly 50px distance between this and the Genres input field */
-  margin: 4rem 0 0 0;
+  margin: 1.5rem 0 0 0;
 
   /* Give the button a bit more meat */
   height: 30px;
@@ -345,80 +347,82 @@ function AdvancedSearchPage() {
 
   return (
     <StyledForm onSubmit={handleSubmitSearch}>
-      <StyledSearchRows>
-        <StyledLabels>Movie Title</StyledLabels>
-        <StyledInputs
-          value={title}
-          onChange={handleTitle}
-          placeholder="Any word in the name of the movie"
-        />
-      </StyledSearchRows>
-      <StyledSearchRows>
-        <StyledLabels>Release Year</StyledLabels>
-        <StyledInputs
-          value={releaseYear}
-          onChange={handleReleaseYear}
-          placeholder="Any number when the movie was released"
-        />
-      </StyledSearchRows>
-      <StyledSearchRows>
-        <StyledLabels>Film Crew</StyledLabels>
-        <StyledInputs
-          value={crew}
-          onChange={handleFilmCrew}
-          placeholder="Any word in the name of any film crew members"
-        />
-      </StyledSearchRows>
-      <StyledSearchRows>
-        <StyledLabels>Rating</StyledLabels>
-        <StyledRatingInput>
-          <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
-            <option value="LESS_THAN">Less than</option>
-            <option value="LESS_OR_EQUAL">Less or equal to</option>
-            <option value="EQUAL_TO">Equal to</option>
-            <option value="GREATER_THAN">Greater than</option>
-            <option value="GREATER_OR_EQUAL">Greater or equal to</option>
-          </StyledComparatorSelect>
-          <div style={{ marginTop: '0.5rem' }}>
-            <StarRating value={rating || '0'} onChange={handleRating} />
-          </div>
-        </StyledRatingInput>
-      </StyledSearchRows>
-      <StyledSearchRows>
-        <StyledLabels>Genres</StyledLabels>
-        {genresError ? (
-          <p style={{ color: '#ffb4a2' }}>{genresError}</p>
-        ) : availableGenres.length > 0 ? (
-          <>
-            <StyledGenreContainer>
-              {availableGenres.map((genre) => {
-                const isSelected = selectedGenreIds.includes(genre.id);
-                return (
-                  <StyledGenreButton
-                    key={genre.id}
-                    type="button"
-                    $isSelected={isSelected}
-                    onClick={() => handleGenreToggle(genre.id)}
-                    aria-pressed={isSelected}
-                  >
-                    {genre.name}
-                  </StyledGenreButton>
-                );
-              })}
-            </StyledGenreContainer>
-            {selectedGenreIds.length > 0 && (
-              <p style={{ fontSize: '0.9em', color: '#bdbdbd', marginTop: '-10px' }}>
-                {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''} selected
-              </p>
-            )}
-          </>
-        ) : (
-          <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>Loading genres...</p>
-        )}
-      </StyledSearchRows>
-      <StyledSearchRows>
-        <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
-      </StyledSearchRows>
+      <StyledFieldsGrid>
+        <StyledSearchRows>
+          <StyledLabels>Movie Title</StyledLabels>
+          <StyledInputs
+            value={title}
+            onChange={handleTitle}
+            placeholder="Any word in the name of the movie"
+          />
+        </StyledSearchRows>
+        <StyledSearchRows>
+          <StyledLabels>Release Year</StyledLabels>
+          <StyledInputs
+            value={releaseYear}
+            onChange={handleReleaseYear}
+            placeholder="Any number when the movie was released"
+          />
+        </StyledSearchRows>
+        <StyledSearchRows>
+          <StyledLabels>Film Crew</StyledLabels>
+          <StyledInputs
+            value={crew}
+            onChange={handleFilmCrew}
+            placeholder="Any word in the name of any film crew members"
+          />
+        </StyledSearchRows>
+        <StyledSearchRows $fullWidth>
+          <StyledLabels>Rating</StyledLabels>
+          <StyledRatingInput>
+            <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
+              <option value="LESS_THAN">Less than</option>
+              <option value="LESS_OR_EQUAL">Less or equal to</option>
+              <option value="EQUAL_TO">Equal to</option>
+              <option value="GREATER_THAN">Greater than</option>
+              <option value="GREATER_OR_EQUAL">Greater or equal to</option>
+            </StyledComparatorSelect>
+            <div style={{ marginTop: '0.5rem' }}>
+              <StarRating value={rating || '0'} onChange={handleRating} />
+            </div>
+          </StyledRatingInput>
+        </StyledSearchRows>
+        <StyledSearchRows $fullWidth>
+          <StyledLabels>Genres</StyledLabels>
+          {genresError ? (
+            <p style={{ color: '#ffb4a2' }}>{genresError}</p>
+          ) : availableGenres.length > 0 ? (
+            <>
+              <StyledGenreContainer>
+                {availableGenres.map((genre) => {
+                  const isSelected = selectedGenreIds.includes(genre.id);
+                  return (
+                    <StyledGenreButton
+                      key={genre.id}
+                      type="button"
+                      $isSelected={isSelected}
+                      onClick={() => handleGenreToggle(genre.id)}
+                      aria-pressed={isSelected}
+                    >
+                      {genre.name}
+                    </StyledGenreButton>
+                  );
+                })}
+              </StyledGenreContainer>
+              {selectedGenreIds.length > 0 && (
+                <p style={{ fontSize: '0.9em', color: '#bdbdbd', marginTop: '-10px' }}>
+                  {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''} selected
+                </p>
+              )}
+            </>
+          ) : (
+            <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>Loading genres...</p>
+          )}
+        </StyledSearchRows>
+        <StyledSearchRows $fullWidth>
+          <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
+        </StyledSearchRows>
+      </StyledFieldsGrid>
 
       {/* Results Section */}
       {(loading || error || hasSearched) && (
