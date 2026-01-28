@@ -18,34 +18,62 @@ const StyledForm = styled.form`
   width: 100%;
 `;
 
-const StyledSearchRows = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  /* Allow the columns to shrink and grow depending on the screen size */
-  flex: 1;
-
-  /* Space the columns so they are now 1 column per row in mobile resolution */
+const StyledFormCard = styled.section`
   width: 80%;
-  margin: 1rem;
+  padding: 2rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(20, 24, 30, 0.9), rgba(12, 16, 22, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
   @media (max-width: 768px) {
     width: 100%;
-    margin: 0.5rem 0;
+    padding: 1.5rem;
+    border-radius: 12px;
   }
+`;
+
+const StyledFieldsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 2rem;
+  width: 100%;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 1rem;
+  }
+`;
+
+const StyledSearchRows = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+
+  ${(props) =>
+    props.$fullWidth &&
+    `
+    grid-column: 1 / -1;
+  `}
 `;
 
 // Give all the labels uniform color
 const StyledLabels = styled.label`
-  color: #cec8c8ff;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 
   /* Response design */
   display: flex;
   align-items: flex-start;
 
   /* Spacing between itself and its input */
-  padding: 2px;
+  padding: 0;
 `;
 
 // White background input fields with slight rounded corners
@@ -59,8 +87,13 @@ const StyledInputs = styled.input`
   color: #242424;
 
   /* Round the corners */
-  border-radius: 10px; /* More pixel value for more roundness */
-  padding: 5px; /* Optional: Add padding so text doesn't touch the edges */
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 
   /* Set responsive design */
   display: flex;
@@ -68,7 +101,17 @@ const StyledInputs = styled.input`
   flex-basis: 100%; /* Input will take up an entire row */
 
   /* Space away from other items */
-  margin: 5px 0 20px 0;
+  margin: 0;
+
+  &::placeholder {
+    color: rgba(36, 36, 36, 0.6);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+  }
 `;
 
 // Flexible drop down that fits in next to its input field
@@ -82,19 +125,31 @@ const StyledDropDown = styled.select`
   /* Dark text color for visibility */
   color: #242424;
   background-color: #ffffffff;
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   /* Space away from other items */
-  margin: 5px 5px 20px 0;
+  margin: 0;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+  }
 `;
 
 // Container for genre buttons/pills
 const StyledGenreContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.4rem;
   flex: 1;
   flex-basis: 100%;
-  margin: 5px 0 20px 0;
+  margin: 0;
 `;
 
 // Genre button/pill - clickable to toggle selection
@@ -102,10 +157,10 @@ const StyledGenreButton = styled.button`
   /* Unselected state */
   background-color: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 20px;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
 
@@ -137,15 +192,32 @@ const StyledRatingInput = styled.div`
   /* Set responsive design */
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.35rem;
   flex: 1;
   flex-basis: 100%;
+  width: 100%;
+`;
 
-  /* This container is 80% of the main's width */
-  width: 80%;
+const StyledRatingRow = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 150px) max-content;
+  gap: 0.75rem;
+  align-items: center;
 
   @media (max-width: 768px) {
-    width: 100%;
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+  }
+`;
+
+const StyledStarsRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 8%;
+
+  @media (max-width: 768px) {
+    padding-left: 0;
   }
 `;
 
@@ -156,11 +228,29 @@ const StyledComparatorSelect = styled.select`
   color: #242424;
   opacity: 0.9;
   border-radius: 10px;
-  padding: 5px;
+  padding: 0.75rem 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
   display: flex;
   flex: 1;
   flex-basis: 100%;
-  margin: 5px 0 20px 0;
+  margin: 0;
+  min-height: 42px;
+  width: 150px;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+  }
+`;
+
+const StyledHelperText = styled.p`
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
 `;
 
 // Space the submit button further away from the last query input
@@ -169,10 +259,31 @@ const StyledSubmitButton = styled.button`
   align-self: flex-start;
 
   /* Roughly 50px distance between this and the Genres input field */
-  margin: 4rem 0 0 0;
+  margin: 1rem 0 0 0;
 
   /* Give the button a bit more meat */
-  height: 30px;
+  height: 36px;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 `;
 
 // Container for search results - matches form width and styling
@@ -220,7 +331,7 @@ function AdvancedSearchPage() {
   const [title, setTitle] = useState('');
   const [releaseYear, setReleaseYear] = useState('');
   const [crew, setCrew] = useState('');
-  const [ratingComparator, setRatingComparator] = useState('EQUAL_TO');
+  const [ratingComparator, setRatingComparator] = useState('AVERAGE');
   const [rating, setRating] = useState('');
   const [selectedGenreIds, setSelectedGenreIds] = useState([]);
   const [results, setResults] = useState([]);
@@ -308,14 +419,17 @@ function AdvancedSearchPage() {
       const tmdbRating = (ratingNum * 2).toFixed(1); // Keep 1 decimal for half-stars
       const ratingValue = String(tmdbRating);
 
-      if (ratingComparator === 'LESS_THAN' || ratingComparator === 'LESS_OR_EQUAL') {
+      if (ratingComparator === 'AT_MOST') {
         ratingMax = ratingValue;
-      } else if (ratingComparator === 'GREATER_THAN' || ratingComparator === 'GREATER_OR_EQUAL') {
+      } else if (ratingComparator === 'AT_LEAST') {
         ratingMin = ratingValue;
       } else {
-        // EQUAL_TO - set both min and max to the same value
-        ratingMin = ratingValue;
-        ratingMax = ratingValue;
+        // AVERAGE - use +/- 0.5 stars (1.0 on TMDB's 10-point scale)
+        const aroundDelta = 1.0;
+        const minValue = Math.max(0, Number(tmdbRating) - aroundDelta).toFixed(1);
+        const maxValue = Math.min(10, Number(tmdbRating) + aroundDelta).toFixed(1);
+        ratingMin = String(minValue);
+        ratingMax = String(maxValue);
       }
     }
 
@@ -345,80 +459,85 @@ function AdvancedSearchPage() {
 
   return (
     <StyledForm onSubmit={handleSubmitSearch}>
-      <StyledSearchRows>
-        <StyledLabels>Movie Title</StyledLabels>
-        <StyledInputs
-          value={title}
-          onChange={handleTitle}
-          placeholder="Any word in the name of the movie"
-        />
-      </StyledSearchRows>
-      <StyledSearchRows>
-        <StyledLabels>Release Year</StyledLabels>
-        <StyledInputs
-          value={releaseYear}
-          onChange={handleReleaseYear}
-          placeholder="Any number when the movie was released"
-        />
-      </StyledSearchRows>
-      <StyledSearchRows>
-        <StyledLabels>Film Crew</StyledLabels>
-        <StyledInputs
-          value={crew}
-          onChange={handleFilmCrew}
-          placeholder="Any word in the name of any film crew members"
-        />
-      </StyledSearchRows>
-      <StyledSearchRows>
-        <StyledLabels>Rating</StyledLabels>
-        <StyledRatingInput>
-          <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
-            <option value="LESS_THAN">Less than</option>
-            <option value="LESS_OR_EQUAL">Less or equal to</option>
-            <option value="EQUAL_TO">Equal to</option>
-            <option value="GREATER_THAN">Greater than</option>
-            <option value="GREATER_OR_EQUAL">Greater or equal to</option>
-          </StyledComparatorSelect>
-          <div style={{ marginTop: '0.5rem' }}>
-            <StarRating value={rating || '0'} onChange={handleRating} />
-          </div>
-        </StyledRatingInput>
-      </StyledSearchRows>
-      <StyledSearchRows>
-        <StyledLabels>Genres</StyledLabels>
-        {genresError ? (
-          <p style={{ color: '#ffb4a2' }}>{genresError}</p>
-        ) : availableGenres.length > 0 ? (
-          <>
-            <StyledGenreContainer>
-              {availableGenres.map((genre) => {
-                const isSelected = selectedGenreIds.includes(genre.id);
-                return (
-                  <StyledGenreButton
-                    key={genre.id}
-                    type="button"
-                    $isSelected={isSelected}
-                    onClick={() => handleGenreToggle(genre.id)}
-                    aria-pressed={isSelected}
-                  >
-                    {genre.name}
-                  </StyledGenreButton>
-                );
-              })}
-            </StyledGenreContainer>
-            {selectedGenreIds.length > 0 && (
-              <p style={{ fontSize: '0.9em', color: '#bdbdbd', marginTop: '-10px' }}>
-                {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''} selected
-              </p>
+      <StyledFormCard>
+        <StyledFieldsGrid>
+          <StyledSearchRows>
+            <StyledLabels>Movie Title</StyledLabels>
+            <StyledInputs
+              value={title}
+              onChange={handleTitle}
+              placeholder="Any word in the name of the movie"
+            />
+          </StyledSearchRows>
+          <StyledSearchRows>
+            <StyledLabels>Release Year</StyledLabels>
+            <StyledInputs
+              value={releaseYear}
+              onChange={handleReleaseYear}
+              placeholder="Any number when the movie was released"
+            />
+          </StyledSearchRows>
+          <StyledSearchRows>
+            <StyledLabels>Film Crew</StyledLabels>
+            <StyledInputs
+              value={crew}
+              onChange={handleFilmCrew}
+              placeholder="Any word in the name of any film crew members"
+            />
+          </StyledSearchRows>
+          <StyledSearchRows>
+            <StyledLabels>Rating</StyledLabels>
+            <StyledRatingInput>
+              <StyledRatingRow>
+                <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
+                  <option value="AT_LEAST">At least</option>
+                  <option value="AT_MOST">At most</option>
+                  <option value="AVERAGE">Average</option>
+                </StyledComparatorSelect>
+                <StyledStarsRow>
+                  <StarRating value={rating || '0'} onChange={handleRating} />
+                </StyledStarsRow>
+              </StyledRatingRow>
+            </StyledRatingInput>
+          </StyledSearchRows>
+          <StyledSearchRows $fullWidth>
+            <StyledLabels>Genres</StyledLabels>
+            {genresError ? (
+              <StyledHelperText style={{ color: '#ffb4a2' }}>{genresError}</StyledHelperText>
+            ) : availableGenres.length > 0 ? (
+              <>
+                <StyledGenreContainer>
+                  {availableGenres.map((genre) => {
+                    const isSelected = selectedGenreIds.includes(genre.id);
+                    return (
+                      <StyledGenreButton
+                        key={genre.id}
+                        type="button"
+                        $isSelected={isSelected}
+                        onClick={() => handleGenreToggle(genre.id)}
+                        aria-pressed={isSelected}
+                      >
+                        {genre.name}
+                      </StyledGenreButton>
+                    );
+                  })}
+                </StyledGenreContainer>
+                {selectedGenreIds.length > 0 && (
+                  <StyledHelperText style={{ marginTop: '-6px' }}>
+                    {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''}{' '}
+                    selected
+                  </StyledHelperText>
+                )}
+              </>
+            ) : (
+              <StyledHelperText>Loading genres...</StyledHelperText>
             )}
-          </>
-        ) : (
-          <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>Loading genres...</p>
-        )}
-      </StyledSearchRows>
-      <StyledSearchRows>
-        <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
-      </StyledSearchRows>
+          </StyledSearchRows>
+          <StyledSearchRows $fullWidth>
+            <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
+          </StyledSearchRows>
+        </StyledFieldsGrid>
+      </StyledFormCard>
 
       {/* Results Section */}
       {(loading || error || hasSearched) && (
