@@ -46,6 +46,7 @@ function MovieReviewPanel({ reviewsArray, currentUserId, onEdit, onDelete }) {
           <StyledReviewItem key={review.id || review._id}>
             <ReviewCard
               review={review}
+              userId={reviewUserId}
               showAuthor={true}
               isOwner={isOwner}
               onEdit={onEdit}
