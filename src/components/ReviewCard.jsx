@@ -2,6 +2,7 @@
 // Shown in the Movies Page (via MovieReviewPanel) and the User's Profile (via UserReviewPanel)
 import styled from 'styled-components';
 import StarRating from './StarRating';
+import { NavLink } from 'react-router';
 
 // Individual review card container
 const StyledReviewCard = styled.div`
@@ -20,7 +21,7 @@ const StyledReviewCard = styled.div`
 `;
 
 // Author name display
-const StyledAuthor = styled.p`
+const StyledAuthor = styled(NavLink)`
   color: rgba(255, 255, 255, 0.95);
   font-size: 1rem;
   font-weight: 600;
@@ -121,6 +122,7 @@ const formatDate = (dateString, prefix = '') => {
  *
  * Props:
  * - review: The review object containing id, body/content/text, rating, dates, user info
+ * - userId: The reviewer's ID number that will be used to link to their profile page
  * - showAuthor: Whether to display the author name (default: false)
  * - isOwner: Whether the current user owns this review (shows edit/delete buttons)
  * - onEdit: Callback when Edit button is clicked, receives (review)
@@ -129,6 +131,7 @@ const formatDate = (dateString, prefix = '') => {
  */
 function ReviewCard({
   review,
+  userId,
   showAuthor = false,
   isOwner = false,
   onEdit,
@@ -143,6 +146,7 @@ function ReviewCard({
   const reviewDate = review.published_at || review.created_at || review.date;
 
   // Extract author info
+  const authorsProfilePage = `/user?${userId}`;
   const authorName =
     review.user?.username ||
     review.username ||
@@ -156,7 +160,7 @@ function ReviewCard({
       {/* Author line with rating (for movie reviews) */}
       {showAuthor && (
         <StyledAuthorLine>
-          <StyledAuthor>{authorName}</StyledAuthor>
+          <StyledAuthor to={authorsProfilePage}>{authorName}</StyledAuthor>
           {reviewRating && <StarRating value={reviewRating} disabled={true} />}
         </StyledAuthorLine>
       )}
