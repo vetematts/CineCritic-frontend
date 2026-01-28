@@ -46,11 +46,17 @@ const StyledYear = styled.span`
 `;
 
 // Author name display
-const StyledAuthor = styled(NavLink)`
+const StyledAuthorLink = styled(NavLink)`
   color: rgba(255, 255, 255, 0.95);
   font-size: 1rem;
   font-weight: 600;
   margin: 0;
+`;
+
+const StyledAuthorText = styled.span`
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  font-weight: 600;
 `;
 
 // Author line with rating
@@ -174,7 +180,8 @@ function ReviewCard({
   const reviewDate = review.published_at || review.created_at || review.date;
 
   // Extract author info
-  const authorsProfilePage = `/user/${userId}`;
+  const authorId = userId || review.user_id || review.userId || review.user?.id || null;
+  const authorsProfilePage = authorId ? (isOwner ? '/user' : `/user/${authorId}`) : null;
   const authorName =
     review.user?.username ||
     review.username ||
@@ -206,7 +213,11 @@ function ReviewCard({
       {/* Author line with rating (for movie reviews) */}
       {showAuthor && (
         <StyledAuthorLine>
-          <StyledAuthor to={authorsProfilePage}>{authorName}</StyledAuthor>
+          {authorsProfilePage ? (
+            <StyledAuthorLink to={authorsProfilePage}>{authorName}</StyledAuthorLink>
+          ) : (
+            <StyledAuthorText>{authorName}</StyledAuthorText>
+          )}
           {reviewRating && <StarRating value={reviewRating} disabled={true} />}
         </StyledAuthorLine>
       )}

@@ -1,4 +1,4 @@
-// Import the routing and current page tracking features 
+// Import the routing and current page tracking features
 // from the react-router library
 import { Route, Routes, useLocation } from 'react-router';
 
@@ -19,7 +19,7 @@ import WatchlistPage from '../pages/WatchlistPage';
 
 // This component handles all the routing to the different pages
 function AppRoutes() {
-  // Find out what page we're on so we can hide the header if on 
+  // Find out what page we're on so we can hide the header if on
   // the home page
   const location = useLocation();
 
