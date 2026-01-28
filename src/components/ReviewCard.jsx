@@ -180,7 +180,8 @@ function ReviewCard({
   const reviewDate = review.published_at || review.created_at || review.date;
 
   // Extract author info
-  const authorsProfilePage = userId ? (isOwner ? '/user' : `/user/${userId}`) : null;
+  const authorId = userId || review.user_id || review.userId || review.user?.id || null;
+  const authorsProfilePage = authorId ? (isOwner ? '/user' : `/user/${authorId}`) : null;
   const authorName =
     review.user?.username ||
     review.username ||
