@@ -419,18 +419,18 @@ function AdvancedSearchPage() {
       const tmdbRating = (ratingNum * 2).toFixed(1); // Keep 1 decimal for half-stars
       const ratingValue = String(tmdbRating);
 
-    if (ratingComparator === 'AT_MOST') {
-      ratingMax = ratingValue;
-    } else if (ratingComparator === 'AT_LEAST') {
-      ratingMin = ratingValue;
-    } else {
-      // AVERAGE - use +/- 0.5 stars (1.0 on TMDB's 10-point scale)
-      const aroundDelta = 1.0;
-      const minValue = Math.max(0, Number(tmdbRating) - aroundDelta).toFixed(1);
-      const maxValue = Math.min(10, Number(tmdbRating) + aroundDelta).toFixed(1);
-      ratingMin = String(minValue);
-      ratingMax = String(maxValue);
-    }
+      if (ratingComparator === 'AT_MOST') {
+        ratingMax = ratingValue;
+      } else if (ratingComparator === 'AT_LEAST') {
+        ratingMin = ratingValue;
+      } else {
+        // AVERAGE - use +/- 0.5 stars (1.0 on TMDB's 10-point scale)
+        const aroundDelta = 1.0;
+        const minValue = Math.max(0, Number(tmdbRating) - aroundDelta).toFixed(1);
+        const maxValue = Math.min(10, Number(tmdbRating) + aroundDelta).toFixed(1);
+        ratingMin = String(minValue);
+        ratingMax = String(maxValue);
+      }
     }
 
     // Convert selected genre IDs array to comma-separated string for API
@@ -489,11 +489,11 @@ function AdvancedSearchPage() {
             <StyledLabels>Rating</StyledLabels>
             <StyledRatingInput>
               <StyledRatingRow>
-              <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
-                <option value="AT_LEAST">At least</option>
-                <option value="AT_MOST">At most</option>
-                <option value="AVERAGE">Average</option>
-              </StyledComparatorSelect>
+                <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
+                  <option value="AT_LEAST">At least</option>
+                  <option value="AT_MOST">At most</option>
+                  <option value="AVERAGE">Average</option>
+                </StyledComparatorSelect>
                 <StyledStarsRow>
                   <StarRating value={rating || '0'} onChange={handleRating} />
                 </StyledStarsRow>
