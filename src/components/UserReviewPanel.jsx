@@ -19,18 +19,29 @@ const StyledReviewsContainer = styled.div`
 // Individual review row (poster + review card)
 const StyledReviewRow = styled.div`
   display: grid;
-  grid-template-columns: 110px minmax(0, 1fr);
+  grid-template-columns: 150px minmax(0, 1fr);
   grid-template-areas: 'poster card';
   column-gap: 1.5rem;
   row-gap: 0.75rem;
+  align-items: ${(props) => (props.$alignCenter ? 'center' : 'start')};
+  justify-items: start;
   width: 100%;
 
   @media (max-width: 768px) {
-    grid-template-columns: 110px minmax(0, 1fr);
+    grid-template-columns: 130px minmax(0, 1fr);
     column-gap: 1rem;
     row-gap: 0.6rem;
     max-width: 520px;
     margin: 0 auto;
+  }
+
+  @media (max-width: 520px) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'poster'
+      'card';
+    justify-items: center;
+    row-gap: 0.75rem;
   }
 `;
 
@@ -38,10 +49,15 @@ const StyledReviewRow = styled.div`
 const StyledPosterColumn = styled.div`
   grid-area: poster;
   flex-shrink: 0;
-  align-self: start;
+  align-self: ${(props) => (props.$alignCenter ? 'center' : 'start')};
+  justify-self: start;
 
   @media (max-width: 768px) {
     align-self: center;
+  }
+
+  @media (max-width: 520px) {
+    justify-self: center;
   }
 `;
 
@@ -114,6 +130,9 @@ const StyledReviewColumn = styled.div`
   grid-area: card;
   flex: 1;
   min-width: 0;
+  align-self: start;
+  justify-self: stretch;
+  width: 100%;
 `;
 
 const StyledEmptyMessage = styled.p`
@@ -506,9 +525,9 @@ function UserReviewPanel({
           const posterUrl = getPosterUrl(posterPath, 'w200');
 
           return (
-            <StyledReviewRow key={review.id || review._id}>
+            <StyledReviewRow key={review.id || review._id} $alignCenter={isOwner}>
               {/* Movie Poster */}
-              <StyledPosterColumn>
+              <StyledPosterColumn $alignCenter={isOwner}>
                 {tmdbId ? (
                   <StyledPosterLink to={`/movies/${tmdbId}`}>
                     <StyledPosterFrame>
