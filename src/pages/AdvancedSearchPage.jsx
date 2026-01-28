@@ -331,7 +331,7 @@ function AdvancedSearchPage() {
   const [title, setTitle] = useState('');
   const [releaseYear, setReleaseYear] = useState('');
   const [crew, setCrew] = useState('');
-  const [ratingComparator, setRatingComparator] = useState('EQUAL_TO');
+  const [ratingComparator, setRatingComparator] = useState('AVERAGE');
   const [rating, setRating] = useState('');
   const [selectedGenreIds, setSelectedGenreIds] = useState([]);
   const [results, setResults] = useState([]);
@@ -419,15 +419,18 @@ function AdvancedSearchPage() {
       const tmdbRating = (ratingNum * 2).toFixed(1); // Keep 1 decimal for half-stars
       const ratingValue = String(tmdbRating);
 
-      if (ratingComparator === 'LESS_THAN' || ratingComparator === 'LESS_OR_EQUAL') {
-        ratingMax = ratingValue;
-      } else if (ratingComparator === 'GREATER_THAN' || ratingComparator === 'GREATER_OR_EQUAL') {
-        ratingMin = ratingValue;
-      } else {
-        // EQUAL_TO - set both min and max to the same value
-        ratingMin = ratingValue;
-        ratingMax = ratingValue;
-      }
+    if (ratingComparator === 'AT_MOST') {
+      ratingMax = ratingValue;
+    } else if (ratingComparator === 'AT_LEAST') {
+      ratingMin = ratingValue;
+    } else {
+      // AVERAGE - use +/- 0.5 stars (1.0 on TMDB's 10-point scale)
+      const aroundDelta = 1.0;
+      const minValue = Math.max(0, Number(tmdbRating) - aroundDelta).toFixed(1);
+      const maxValue = Math.min(10, Number(tmdbRating) + aroundDelta).toFixed(1);
+      ratingMin = String(minValue);
+      ratingMax = String(maxValue);
+    }
     }
 
     // Convert selected genre IDs array to comma-separated string for API
@@ -486,13 +489,11 @@ function AdvancedSearchPage() {
             <StyledLabels>Rating</StyledLabels>
             <StyledRatingInput>
               <StyledRatingRow>
-                <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
-                  <option value="LESS_THAN">Less than</option>
-                  <option value="LESS_OR_EQUAL">Less or equal to</option>
-                  <option value="EQUAL_TO">Equal to</option>
-                  <option value="GREATER_THAN">Greater than</option>
-                  <option value="GREATER_OR_EQUAL">Greater or equal to</option>
-                </StyledComparatorSelect>
+              <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
+                <option value="AT_LEAST">At least</option>
+                <option value="AT_MOST">At most</option>
+                <option value="AVERAGE">Average</option>
+              </StyledComparatorSelect>
                 <StyledStarsRow>
                   <StarRating value={rating || '0'} onChange={handleRating} />
                 </StyledStarsRow>
