@@ -146,7 +146,7 @@ function ReviewCard({
   const reviewDate = review.published_at || review.created_at || review.date;
 
   // Extract author info
-  const authorsProfilePage = `/user?${userId}`;
+  const authorsProfilePage = `/user/${userId}`;
   const authorName =
     review.user?.username ||
     review.username ||
