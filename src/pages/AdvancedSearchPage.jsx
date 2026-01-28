@@ -458,56 +458,56 @@ function AdvancedSearchPage() {
     <StyledForm onSubmit={handleSubmitSearch}>
       <StyledFormCard>
         <StyledFieldsGrid>
-        <StyledSearchRows>
-          <StyledLabels>Movie Title</StyledLabels>
-          <StyledInputs
-            value={title}
-            onChange={handleTitle}
-            placeholder="Any word in the name of the movie"
-          />
-        </StyledSearchRows>
-        <StyledSearchRows>
-          <StyledLabels>Release Year</StyledLabels>
-          <StyledInputs
-            value={releaseYear}
-            onChange={handleReleaseYear}
-            placeholder="Any number when the movie was released"
-          />
-        </StyledSearchRows>
-        <StyledSearchRows>
-          <StyledLabels>Film Crew</StyledLabels>
-          <StyledInputs
-            value={crew}
-            onChange={handleFilmCrew}
-            placeholder="Any word in the name of any film crew members"
-          />
-        </StyledSearchRows>
-        <StyledSearchRows>
-          <StyledLabels>Rating</StyledLabels>
-          <StyledRatingInput>
-            <StyledRatingRow>
-              <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
-                <option value="LESS_THAN">Less than</option>
-                <option value="LESS_OR_EQUAL">Less or equal to</option>
-                <option value="EQUAL_TO">Equal to</option>
-                <option value="GREATER_THAN">Greater than</option>
-                <option value="GREATER_OR_EQUAL">Greater or equal to</option>
-              </StyledComparatorSelect>
-              <StyledStarsRow>
-                <StarRating value={rating || '0'} onChange={handleRating} />
-              </StyledStarsRow>
-            </StyledRatingRow>
-          </StyledRatingInput>
-        </StyledSearchRows>
-        <StyledSearchRows $fullWidth>
-          <StyledLabels>Genres</StyledLabels>
-          {genresError ? (
-            <StyledHelperText style={{ color: '#ffb4a2' }}>{genresError}</StyledHelperText>
-          ) : availableGenres.length > 0 ? (
-            <>
-              <StyledGenreContainer>
-                {availableGenres.map((genre) => {
-                  const isSelected = selectedGenreIds.includes(genre.id);
+          <StyledSearchRows>
+            <StyledLabels>Movie Title</StyledLabels>
+            <StyledInputs
+              value={title}
+              onChange={handleTitle}
+              placeholder="Any word in the name of the movie"
+            />
+          </StyledSearchRows>
+          <StyledSearchRows>
+            <StyledLabels>Release Year</StyledLabels>
+            <StyledInputs
+              value={releaseYear}
+              onChange={handleReleaseYear}
+              placeholder="Any number when the movie was released"
+            />
+          </StyledSearchRows>
+          <StyledSearchRows>
+            <StyledLabels>Film Crew</StyledLabels>
+            <StyledInputs
+              value={crew}
+              onChange={handleFilmCrew}
+              placeholder="Any word in the name of any film crew members"
+            />
+          </StyledSearchRows>
+          <StyledSearchRows>
+            <StyledLabels>Rating</StyledLabels>
+            <StyledRatingInput>
+              <StyledRatingRow>
+                <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
+                  <option value="LESS_THAN">Less than</option>
+                  <option value="LESS_OR_EQUAL">Less or equal to</option>
+                  <option value="EQUAL_TO">Equal to</option>
+                  <option value="GREATER_THAN">Greater than</option>
+                  <option value="GREATER_OR_EQUAL">Greater or equal to</option>
+                </StyledComparatorSelect>
+                <StyledStarsRow>
+                  <StarRating value={rating || '0'} onChange={handleRating} />
+                </StyledStarsRow>
+              </StyledRatingRow>
+            </StyledRatingInput>
+          </StyledSearchRows>
+          <StyledSearchRows $fullWidth>
+            <StyledLabels>Genres</StyledLabels>
+            {genresError ? (
+              <StyledHelperText style={{ color: '#ffb4a2' }}>{genresError}</StyledHelperText>
+            ) : availableGenres.length > 0 ? (
+              <>
+                <StyledGenreContainer>
+                  {availableGenres.map((genre) => {
+                    const isSelected = selectedGenreIds.includes(genre.id);
                     return (
                       <StyledGenreButton
                         key={genre.id}
@@ -520,18 +520,18 @@ function AdvancedSearchPage() {
                       </StyledGenreButton>
                     );
                   })}
-              </StyledGenreContainer>
-              {selectedGenreIds.length > 0 && (
-                <StyledHelperText style={{ marginTop: '-6px' }}>
-                  {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''}{' '}
-                  selected
-                </StyledHelperText>
-              )}
-            </>
-          ) : (
-            <StyledHelperText>Loading genres...</StyledHelperText>
-          )}
-        </StyledSearchRows>
+                </StyledGenreContainer>
+                {selectedGenreIds.length > 0 && (
+                  <StyledHelperText style={{ marginTop: '-6px' }}>
+                    {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''}{' '}
+                    selected
+                  </StyledHelperText>
+                )}
+              </>
+            ) : (
+              <StyledHelperText>Loading genres...</StyledHelperText>
+            )}
+          </StyledSearchRows>
           <StyledSearchRows $fullWidth>
             <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
           </StyledSearchRows>
