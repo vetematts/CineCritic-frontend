@@ -18,12 +18,29 @@ const StyledForm = styled.form`
   width: 100%;
 `;
 
+const StyledFormCard = styled.section`
+  width: 80%;
+  padding: 2rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(20, 24, 30, 0.9), rgba(12, 16, 22, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+`;
+
 const StyledFieldsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem 2rem;
-  width: 80%;
-  margin: 1rem 0 0;
+  width: 100%;
+  margin: 0;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -46,7 +63,9 @@ const StyledSearchRows = styled.div`
 
 // Give all the labels uniform color
 const StyledLabels = styled.label`
-  color: #cec8c8ff;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.95rem;
+  font-weight: 500;
 
   /* Response design */
   display: flex;
@@ -69,6 +88,11 @@ const StyledInputs = styled.input`
   /* Round the corners */
   border-radius: 10px;
   padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 
   /* Set responsive design */
   display: flex;
@@ -77,6 +101,12 @@ const StyledInputs = styled.input`
 
   /* Space away from other items */
   margin: 0;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+  }
 `;
 
 // Flexible drop down that fits in next to its input field
@@ -90,9 +120,21 @@ const StyledDropDown = styled.select`
   /* Dark text color for visibility */
   color: #242424;
   background-color: #ffffffff;
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   /* Space away from other items */
   margin: 0;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+  }
 `;
 
 // Container for genre buttons/pills
@@ -159,10 +201,20 @@ const StyledComparatorSelect = styled.select`
   opacity: 0.9;
   border-radius: 10px;
   padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
   display: flex;
   flex: 1;
   flex-basis: 100%;
   margin: 0;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+  }
 `;
 
 // Space the submit button further away from the last query input
@@ -174,7 +226,28 @@ const StyledSubmitButton = styled.button`
   margin: 1rem 0 0 0;
 
   /* Give the button a bit more meat */
-  height: 30px;
+  height: 36px;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 `;
 
 // Container for search results - matches form width and styling
@@ -347,82 +420,85 @@ function AdvancedSearchPage() {
 
   return (
     <StyledForm onSubmit={handleSubmitSearch}>
-      <StyledFieldsGrid>
-        <StyledSearchRows>
-          <StyledLabels>Movie Title</StyledLabels>
-          <StyledInputs
-            value={title}
-            onChange={handleTitle}
-            placeholder="Any word in the name of the movie"
-          />
-        </StyledSearchRows>
-        <StyledSearchRows>
-          <StyledLabels>Release Year</StyledLabels>
-          <StyledInputs
-            value={releaseYear}
-            onChange={handleReleaseYear}
-            placeholder="Any number when the movie was released"
-          />
-        </StyledSearchRows>
-        <StyledSearchRows>
-          <StyledLabels>Film Crew</StyledLabels>
-          <StyledInputs
-            value={crew}
-            onChange={handleFilmCrew}
-            placeholder="Any word in the name of any film crew members"
-          />
-        </StyledSearchRows>
-        <StyledSearchRows $fullWidth>
-          <StyledLabels>Rating</StyledLabels>
-          <StyledRatingInput>
-            <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
-              <option value="LESS_THAN">Less than</option>
-              <option value="LESS_OR_EQUAL">Less or equal to</option>
-              <option value="EQUAL_TO">Equal to</option>
-              <option value="GREATER_THAN">Greater than</option>
-              <option value="GREATER_OR_EQUAL">Greater or equal to</option>
-            </StyledComparatorSelect>
-            <div style={{ marginTop: '0.5rem' }}>
-              <StarRating value={rating || '0'} onChange={handleRating} />
-            </div>
-          </StyledRatingInput>
-        </StyledSearchRows>
-        <StyledSearchRows $fullWidth>
-          <StyledLabels>Genres</StyledLabels>
-          {genresError ? (
-            <p style={{ color: '#ffb4a2' }}>{genresError}</p>
-          ) : availableGenres.length > 0 ? (
-            <>
-              <StyledGenreContainer>
-                {availableGenres.map((genre) => {
-                  const isSelected = selectedGenreIds.includes(genre.id);
-                  return (
-                    <StyledGenreButton
-                      key={genre.id}
-                      type="button"
-                      $isSelected={isSelected}
-                      onClick={() => handleGenreToggle(genre.id)}
-                      aria-pressed={isSelected}
-                    >
-                      {genre.name}
-                    </StyledGenreButton>
-                  );
-                })}
-              </StyledGenreContainer>
-              {selectedGenreIds.length > 0 && (
-                <p style={{ fontSize: '0.9em', color: '#bdbdbd', marginTop: '-10px' }}>
-                  {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''} selected
-                </p>
-              )}
-            </>
-          ) : (
-            <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>Loading genres...</p>
-          )}
-        </StyledSearchRows>
-        <StyledSearchRows $fullWidth>
-          <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
-        </StyledSearchRows>
-      </StyledFieldsGrid>
+      <StyledFormCard>
+        <StyledFieldsGrid>
+          <StyledSearchRows>
+            <StyledLabels>Movie Title</StyledLabels>
+            <StyledInputs
+              value={title}
+              onChange={handleTitle}
+              placeholder="Any word in the name of the movie"
+            />
+          </StyledSearchRows>
+          <StyledSearchRows>
+            <StyledLabels>Release Year</StyledLabels>
+            <StyledInputs
+              value={releaseYear}
+              onChange={handleReleaseYear}
+              placeholder="Any number when the movie was released"
+            />
+          </StyledSearchRows>
+          <StyledSearchRows>
+            <StyledLabels>Film Crew</StyledLabels>
+            <StyledInputs
+              value={crew}
+              onChange={handleFilmCrew}
+              placeholder="Any word in the name of any film crew members"
+            />
+          </StyledSearchRows>
+          <StyledSearchRows $fullWidth>
+            <StyledLabels>Rating</StyledLabels>
+            <StyledRatingInput>
+              <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
+                <option value="LESS_THAN">Less than</option>
+                <option value="LESS_OR_EQUAL">Less or equal to</option>
+                <option value="EQUAL_TO">Equal to</option>
+                <option value="GREATER_THAN">Greater than</option>
+                <option value="GREATER_OR_EQUAL">Greater or equal to</option>
+              </StyledComparatorSelect>
+              <div style={{ marginTop: '0.5rem' }}>
+                <StarRating value={rating || '0'} onChange={handleRating} />
+              </div>
+            </StyledRatingInput>
+          </StyledSearchRows>
+          <StyledSearchRows $fullWidth>
+            <StyledLabels>Genres</StyledLabels>
+            {genresError ? (
+              <p style={{ color: '#ffb4a2' }}>{genresError}</p>
+            ) : availableGenres.length > 0 ? (
+              <>
+                <StyledGenreContainer>
+                  {availableGenres.map((genre) => {
+                    const isSelected = selectedGenreIds.includes(genre.id);
+                    return (
+                      <StyledGenreButton
+                        key={genre.id}
+                        type="button"
+                        $isSelected={isSelected}
+                        onClick={() => handleGenreToggle(genre.id)}
+                        aria-pressed={isSelected}
+                      >
+                        {genre.name}
+                      </StyledGenreButton>
+                    );
+                  })}
+                </StyledGenreContainer>
+                {selectedGenreIds.length > 0 && (
+                  <p style={{ fontSize: '0.9em', color: '#bdbdbd', marginTop: '-10px' }}>
+                    {selectedGenreIds.length} genre{selectedGenreIds.length !== 1 ? 's' : ''}{' '}
+                    selected
+                  </p>
+                )}
+              </>
+            ) : (
+              <p style={{ fontSize: '0.9em', color: '#bdbdbd' }}>Loading genres...</p>
+            )}
+          </StyledSearchRows>
+          <StyledSearchRows $fullWidth>
+            <StyledSubmitButton type="submit">Search with these options</StyledSubmitButton>
+          </StyledSearchRows>
+        </StyledFieldsGrid>
+      </StyledFormCard>
 
       {/* Results Section */}
       {(loading || error || hasSearched) && (
