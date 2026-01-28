@@ -192,10 +192,27 @@ const StyledRatingInput = styled.div`
   /* Set responsive design */
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.35rem;
   flex: 1;
   flex-basis: 100%;
   width: 100%;
+`;
+
+const StyledRatingRow = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 180px) max-content;
+  gap: 0.75rem;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+  }
+`;
+
+const StyledStarsRow = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 // Comparator dropdown styling
@@ -457,19 +474,21 @@ function AdvancedSearchPage() {
             placeholder="Any word in the name of any film crew members"
           />
         </StyledSearchRows>
-        <StyledSearchRows $fullWidth>
+        <StyledSearchRows>
           <StyledLabels>Rating</StyledLabels>
           <StyledRatingInput>
-            <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
-              <option value="LESS_THAN">Less than</option>
-              <option value="LESS_OR_EQUAL">Less or equal to</option>
-              <option value="EQUAL_TO">Equal to</option>
-              <option value="GREATER_THAN">Greater than</option>
-              <option value="GREATER_OR_EQUAL">Greater or equal to</option>
-            </StyledComparatorSelect>
-            <div style={{ marginTop: '0.5rem' }}>
-              <StarRating value={rating || '0'} onChange={handleRating} />
-            </div>
+            <StyledRatingRow>
+              <StyledComparatorSelect value={ratingComparator} onChange={handleRatingDropDown}>
+                <option value="LESS_THAN">Less than</option>
+                <option value="LESS_OR_EQUAL">Less or equal to</option>
+                <option value="EQUAL_TO">Equal to</option>
+                <option value="GREATER_THAN">Greater than</option>
+                <option value="GREATER_OR_EQUAL">Greater or equal to</option>
+              </StyledComparatorSelect>
+              <StyledStarsRow>
+                <StarRating value={rating || '0'} onChange={handleRating} />
+              </StyledStarsRow>
+            </StyledRatingRow>
           </StyledRatingInput>
         </StyledSearchRows>
         <StyledSearchRows $fullWidth>
