@@ -213,6 +213,8 @@ const StyledRatingRow = styled.div`
 const StyledStarsRow = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  padding-left: 8%;
 `;
 
 // Comparator dropdown styling
