@@ -53,7 +53,7 @@ const StyledLabels = styled.label`
   align-items: flex-start;
 
   /* Spacing between itself and its input */
-  padding: 2px;
+  padding: 0;
 `;
 
 // White background input fields with slight rounded corners
@@ -67,8 +67,8 @@ const StyledInputs = styled.input`
   color: #242424;
 
   /* Round the corners */
-  border-radius: 10px; /* More pixel value for more roundness */
-  padding: 5px; /* Optional: Add padding so text doesn't touch the edges */
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
 
   /* Set responsive design */
   display: flex;
@@ -76,7 +76,7 @@ const StyledInputs = styled.input`
   flex-basis: 100%; /* Input will take up an entire row */
 
   /* Space away from other items */
-  margin: 5px 0 20px 0;
+  margin: 0;
 `;
 
 // Flexible drop down that fits in next to its input field
@@ -92,17 +92,17 @@ const StyledDropDown = styled.select`
   background-color: #ffffffff;
 
   /* Space away from other items */
-  margin: 5px 5px 20px 0;
+  margin: 0;
 `;
 
 // Container for genre buttons/pills
 const StyledGenreContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.5rem;
   flex: 1;
   flex-basis: 100%;
-  margin: 5px 0 20px 0;
+  margin: 0;
 `;
 
 // Genre button/pill - clickable to toggle selection
@@ -158,11 +158,11 @@ const StyledComparatorSelect = styled.select`
   color: #242424;
   opacity: 0.9;
   border-radius: 10px;
-  padding: 5px;
+  padding: 0.55rem 0.75rem;
   display: flex;
   flex: 1;
   flex-basis: 100%;
-  margin: 5px 0 20px 0;
+  margin: 0;
 `;
 
 // Space the submit button further away from the last query input
@@ -171,7 +171,7 @@ const StyledSubmitButton = styled.button`
   align-self: flex-start;
 
   /* Roughly 50px distance between this and the Genres input field */
-  margin: 1.5rem 0 0 0;
+  margin: 1rem 0 0 0;
 
   /* Give the button a bit more meat */
   height: 30px;
