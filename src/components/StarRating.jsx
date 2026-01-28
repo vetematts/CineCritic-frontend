@@ -10,8 +10,8 @@ const StyledStarContainer = styled.div`
 
 const StyledStarWrapper = styled.div`
   position: relative;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2rem;
+  height: 2rem;
   cursor: pointer;
 `;
 

@@ -200,7 +200,7 @@ const StyledRatingInput = styled.div`
 
 const StyledRatingRow = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 180px) max-content;
+  grid-template-columns: minmax(0, 150px) max-content;
   gap: 0.75rem;
   align-items: center;
 
@@ -222,7 +222,7 @@ const StyledComparatorSelect = styled.select`
   color: #242424;
   opacity: 0.9;
   border-radius: 10px;
-  padding: 0.55rem 0.75rem;
+  padding: 0.75rem 0.8rem;
   border: 1px solid rgba(0, 0, 0, 0.15);
   transition:
     border-color 0.2s ease,
@@ -231,6 +231,8 @@ const StyledComparatorSelect = styled.select`
   flex: 1;
   flex-basis: 100%;
   margin: 0;
+  min-height: 42px;
+  width: 150px;
 
   &:focus {
     outline: none;
