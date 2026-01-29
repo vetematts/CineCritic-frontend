@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { get, put, del } from '../api/api';
 import getPosterUrl from '../utils/image-pathing';
-import ReviewCard from './ReviewCard';
+import { ReviewCard } from './reviewCard';
 import StarRating from './StarRating';
 
 // Container for all reviews

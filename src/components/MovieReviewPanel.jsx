@@ -1,7 +1,7 @@
 // This is all the reviews for this movie, shown on the movie's page
 // Similar pattern to MovieCarousel - receives array, maps to ReviewCard
 import styled from 'styled-components';
-import ReviewCard from './ReviewCard';
+import { ReviewCard } from './reviewCard';
 
 // Container for all reviews
 const StyledReviewList = styled.ul`
