@@ -1,5 +1,5 @@
 // Import search bar child component
-import SearchBar from '../SearchBar';
+import { SearchBar } from '../searchbar';
 
 // Import authorization functions and states
 import { useAuth } from '../../contexts/AuthContext';
