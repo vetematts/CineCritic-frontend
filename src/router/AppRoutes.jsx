@@ -7,7 +7,7 @@ import { AdvancedSearchPage } from '../pages/advancedSearchPage';
 import DiscoverPage from '../pages/DiscoverPage';
 import FavouritesPage from '../pages/FavouritesPage';
 import { HomePage } from '../pages/homePage';
-import LoginPage from '../pages/LoginPage';
+import { LoginPage } from '../pages/loginPage';
 import MovieDetailPage from '../pages/MovieDetailPage';
 import { PageLayout } from '../pages/pageLayout';
 import SearchResultsPage from '../pages/SearchResultsPage';
