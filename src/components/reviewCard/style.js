@@ -44,11 +44,17 @@ export const StyledYear = styled.span`
 `;
 
 // Author name display
-export const StyledAuthor = styled(NavLink)`
+export const StyledAuthorLink = styled(NavLink)`
   color: rgba(255, 255, 255, 0.95);
   font-size: 1rem;
   font-weight: 600;
   margin: 0;
+`;
+
+export const StyledAuthorText = styled.span`
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  font-weight: 600;
 `;
 
 // Author line with rating

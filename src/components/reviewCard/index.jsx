@@ -6,8 +6,9 @@ import { StarRating } from '../starRating';
 import { 
   StyledActionButton, 
   StyledActions, 
-  StyledAuthor, 
   StyledAuthorLine, 
+  StyledAuthorLink, 
+  StyledAuthorText, 
   StyledDate, 
   StyledRatingContainer, 
   StyledReviewCard, 
