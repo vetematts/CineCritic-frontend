@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { get } from '../api/api';
 import SearchResultCard from '../components/SearchResultCard';
-import StarRating from '../components/StarRating';
+import { StarRating } from '../components/starRating';
 
 // Styled components
 // This is the flex container for all the inputs

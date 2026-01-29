@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { get, put, del } from '../api/api';
 import getPosterUrl from '../utils/image-pathing';
 import { ReviewCard } from './reviewCard';
-import StarRating from './StarRating';
+import { StarRating } from './starRating';
 
 // Container for all reviews
 const StyledReviewsContainer = styled.div`

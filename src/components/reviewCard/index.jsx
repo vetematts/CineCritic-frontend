@@ -1,6 +1,6 @@
 // Import the star rating child component so users can 
 // give their rating out of 5 stars
-import StarRating from '../StarRating';
+import { StarRating } from '../starRating';
 
 // Import the review card component element styling
 import { 
