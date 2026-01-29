@@ -11,7 +11,7 @@ import { LoginPage } from '../pages/loginPage';
 import MovieDetailPage from '../pages/MovieDetailPage';
 import { PageLayout } from '../pages/pageLayout';
 import SearchResultsPage from '../pages/SearchResultsPage';
-import SignupPage from '../pages/SignupPage';
+import { SignupPage } from '../pages/signupPage';
 import TermsOfServicePage from '../pages/TermsOfServicePage';
 import UserProfilePage from '../pages/UserProfilePage';
 import UserReviewsPage from '../pages/UserReviewsPage';
