@@ -27,8 +27,9 @@ export function Header() {
   const handleLogout = async () => {
     try {
       await logoutRequest();
-    } catch {
+    } catch (error) {
       // Ignore network failures; local logout still proceeds.
+      console.log(error);
     }
     logout();
   };
