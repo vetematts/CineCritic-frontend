@@ -2,10 +2,13 @@ import { beforeEach, expect, test, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import LoginForm from '../src/components/LoginForm';
+
 import { AuthProvider } from '../src/contexts/AuthContext';
 import { loginRequest } from '../src/api/auth';
 import { get } from '../src/api/api';
+
+// Import the Login Form component for tests
+import { LoginForm } from '../src/components/loginForm';
 
 vi.mock('../src/api/auth', () => ({
   loginRequest: vi.fn(),
