@@ -13,7 +13,7 @@ import {
 } from './style';
 
 // Import image assets
-import banner from '../assets/cine_critic_logo.png';
+import banner from '../../assets/cine_critic_logo.png';
 
 export function LoginPage() {
   return (
