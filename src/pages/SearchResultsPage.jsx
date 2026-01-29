@@ -4,7 +4,7 @@ import { get } from '../api/api';
 import { useSearchParams } from 'react-router';
 import styled from 'styled-components';
 
-import SearchResultCard from '../components/SearchResultCard';
+import { SearchResultCard } from '../components/searchResultCard';
 
 // Container for search results with proper constraints
 const StyledSearchResultsContainer = styled.div`
