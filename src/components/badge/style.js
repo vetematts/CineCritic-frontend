@@ -10,11 +10,3 @@ export const StyledBadge = styled.img`
   border: 2px solid rgba(255, 255, 255, 0.2);
   background-color: rgba(255, 255, 255, 0.05);
 `;
-
-// Badge container for displaying multiple badges
-export const StyledBadgeContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1rem;
-`;
