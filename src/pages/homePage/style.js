@@ -1,21 +1,8 @@
-// Import Packages
+// Import packages that allow for CSS styling to be applied to React elements
 import { NavLink } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-// Import the Search Bar component
-import { SearchBar } from '../components/searchBar';
-import { MovieSection } from '../components/movieSection';
-import { get } from '../api/api';
-import { useAuth } from '../contexts/AuthContext';
-import { logoutRequest } from '../api/auth';
-
-// Import image assets
-import banner from '../assets/cine_critic_logo.png';
-import ProfileIcon from '../assets/ProfileIcon';
-
-// Styled components
-const StyledHomeContainer = styled.div`
+export const StyledHomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 76%;
@@ -26,7 +13,7 @@ const StyledHomeContainer = styled.div`
   }
 `;
 
-const StyledHomeRow = styled.div`
+export const StyledHomeRow = styled.div`
   display: flex;
   flex: 1;
 
@@ -44,7 +31,7 @@ const StyledHomeRow = styled.div`
 `;
 
 // Align the home logo container to centre the image
-const StyledFigure = styled.figure`
+export const StyledFigure = styled.figure`
   // Figure is the flex container for the image
   display: flex;
   flex: 1;
@@ -53,7 +40,7 @@ const StyledFigure = styled.figure`
 `;
 
 // Re-size the logo to be roughly 1/3rd to 1/4th of the screen
-const StyledHomeLogo = styled.img`
+export const StyledHomeLogo = styled.img`
   // This takes shape according to the parent, the figure
   // container
   flex: 1;
@@ -66,7 +53,7 @@ const StyledHomeLogo = styled.img`
 `;
 
 // Style the advanced search button under the search bar
-const StyledAdvancedSearchButton = styled(NavLink)`
+export const StyledAdvancedSearchButton = styled(NavLink)`
   color: #cec8c8ff;
   text-decoration: none;
   padding: 0.4rem 0.8rem;
@@ -90,7 +77,7 @@ const StyledAdvancedSearchButton = styled(NavLink)`
   }
 `;
 
-const StyledDiscoverButton = styled(NavLink)`
+export const StyledDiscoverButton = styled(NavLink)`
   color: #cec8c8ff;
   text-decoration: none;
   padding: 0.4rem 0.8rem;
@@ -114,11 +101,11 @@ const StyledDiscoverButton = styled(NavLink)`
   }
 `;
 
-const StyledError = styled.p`
+export const StyledError = styled.p`
   color: #ffb4a2;
 `;
 
-const StyledHomeHeader = styled.div`
+export const StyledHomeHeader = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
@@ -133,7 +120,7 @@ const StyledHomeHeader = styled.div`
   }
 `;
 
-const StyledLoginLink = styled(NavLink)`
+export const StyledLoginLink = styled(NavLink)`
   padding: 0.4rem 0.8rem;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.87);
@@ -165,7 +152,7 @@ const StyledLoginLink = styled(NavLink)`
   }
 `;
 
-const StyledAuthButton = styled.button`
+export const StyledAuthButton = styled.button`
   padding: 0.4rem 0.8rem;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.87);
@@ -194,7 +181,7 @@ const StyledAuthButton = styled.button`
   }
 `;
 
-const StyledDashboardLink = styled(NavLink)`
+export const StyledDashboardLink = styled(NavLink)`
   padding: 0.4rem 0.8rem;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.87);
@@ -231,105 +218,3 @@ const StyledDashboardLink = styled(NavLink)`
     }
   }
 `;
-
-// The default page that is loaded
-function HomePage() {
-  const { isAuthenticated, logout } = useAuth();
-  const [trending, setTrending] = useState([]);
-  const [topRated, setTopRated] = useState([]);
-  const [randomRecs, setRandomRecs] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    // Load trending + top-rated movies from the backend on first render.
-    const loadTrending = async () => {
-      setError(null);
-
-      try {
-        const [trendingData, topRatedData] = await Promise.all([
-          get('/api/movies/trending'),
-          get('/api/movies/top-rated'),
-        ]);
-        if (isMounted) {
-          const trendingList = trendingData || [];
-          const topRatedList = topRatedData || [];
-          setTrending(trendingList);
-          setTopRated(topRatedList);
-
-          // Pick a random selection from the combined lists for recommendations.
-          // Use 8-10 movies for a good single-row display
-          const combined = [...trendingList, ...topRatedList];
-          const shuffled = combined.sort(() => Math.random() - 0.5);
-          setRandomRecs(shuffled.slice(0, 10));
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError(err?.error || 'Unable to load trending movies.');
-        }
-      }
-    };
-
-    loadTrending();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  return (
-    <>
-      <StyledHomeContainer className="flex-container">
-        <StyledHomeHeader>
-          {isAuthenticated ? (
-            <>
-              <StyledDashboardLink to="/user">
-                <ProfileIcon />
-                Profile
-              </StyledDashboardLink>
-              <StyledAuthButton
-                type="button"
-                onClick={async () => {
-                  try {
-                    await logoutRequest();
-                    logout();
-                  } catch (error) {
-                    console.error('Logout error:', error);
-                    logout(); // Still log out locally even if API call fails
-                  }
-                }}
-              >
-                Log out
-              </StyledAuthButton>
-            </>
-          ) : (
-            <StyledLoginLink to="/login">
-              <ProfileIcon />
-              Login / Signup
-            </StyledLoginLink>
-          )}
-        </StyledHomeHeader>
-        <StyledFigure id="banner-container">
-          <StyledHomeLogo src={banner} className="home_logo" alt="CineCritic Banner" />
-        </StyledFigure>
-        <StyledHomeRow id="home-search-bar">
-          <SearchBar />
-          <StyledAdvancedSearchButton to="/advancedSearch">
-            Advanced Search
-          </StyledAdvancedSearchButton>
-          <StyledDiscoverButton to="/discover">Discover</StyledDiscoverButton>
-        </StyledHomeRow>
-        {error && <StyledError>{error}</StyledError>}
-
-        {/* Movie Sections */}
-        <MovieSection title="Random Recommendations" movies={randomRecs} />
-        <MovieSection title="Trending" movies={trending} />
-        <MovieSection title="Top Rated" movies={topRated} />
-        {/* Insert Recommendations Carousel */}
-      </StyledHomeContainer>
-    </>
-  );
-}
-
-export default HomePage;
