@@ -1,20 +1,10 @@
-// Import packages
-
-// Import other components
-import SearchBar from './SearchBar';
-import { useAuth } from '../contexts/AuthContext';
-import { logoutRequest } from '../api/auth';
-
-// Import image assets
-import logo from '../assets/cine_critic_logo.png';
-import ProfileIcon from '../assets/ProfileIcon';
+// Import packages that allow for CSS styling to be applied to React elements
 import styled from 'styled-components';
 import { NavLink } from 'react-router';
 
-// Styled parts
 // Create a responsive header that doesn't wrap and maintains its shape
 // This is the flex container parent
-const StyledHeader = styled.header`
+export const StyledHeader = styled.header`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -49,7 +39,7 @@ const StyledHeader = styled.header`
 `;
 
 // These are the flex items within the flex container "Header"
-const StyledHeaderColumns = styled.div`
+export const StyledHeaderColumns = styled.div`
   flex: 0 1 auto;
   min-width: 0;
 
@@ -108,7 +98,7 @@ const StyledHeaderColumns = styled.div`
 `;
 
 // Small icon that will grow and shrink with the rest of the header
-const StyledLogo = styled.img`
+export const StyledLogo = styled.img`
   height: 48px;
   width: auto;
   transition:
@@ -120,7 +110,7 @@ const StyledLogo = styled.img`
   }
 `;
 
-const StyledLogoLink = styled(NavLink)`
+export const StyledLogoLink = styled(NavLink)`
   display: inline-flex;
   align-items: center;
 
@@ -130,7 +120,7 @@ const StyledLogoLink = styled(NavLink)`
   }
 `;
 
-const StyledAuthButton = styled.button`
+export const StyledAuthButton = styled.button`
   padding: 0.4rem 0.8rem;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.87);
@@ -159,7 +149,7 @@ const StyledAuthButton = styled.button`
   }
 `;
 
-const StyledAuthLink = styled(NavLink)`
+export const StyledAuthLink = styled(NavLink)`
   padding: 0.4rem 0.8rem;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.87);
@@ -189,7 +179,7 @@ const StyledAuthLink = styled(NavLink)`
   }
 `;
 
-const StyledProfileLink = styled(NavLink)`
+export const StyledProfileLink = styled(NavLink)`
   padding: 0.4rem 0.8rem;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.87);
@@ -227,7 +217,7 @@ const StyledProfileLink = styled(NavLink)`
   }
 `;
 
-const StyledUserMenuContainer = styled.div`
+export const StyledUserMenuContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -243,46 +233,3 @@ const StyledUserMenuContainer = styled.div`
     flex-wrap: wrap;
   }
 `;
-
-function Header() {
-  const { isAuthenticated, logout } = useAuth();
-
-  const handleLogout = async () => {
-    try {
-      await logoutRequest();
-    } catch {
-      // Ignore network failures; local logout still proceeds.
-    }
-    logout();
-  };
-
-  return (
-    <StyledHeader>
-      <StyledHeaderColumns id="site-logo">
-        <StyledLogoLink to="/">
-          <StyledLogo src={logo} alt="CineCritic Logo" />
-        </StyledLogoLink>
-      </StyledHeaderColumns>
-      <StyledHeaderColumns id="header-search-bar">
-        <SearchBar />
-      </StyledHeaderColumns>
-      <StyledHeaderColumns id="user-menu">
-        {isAuthenticated ? (
-          <StyledUserMenuContainer>
-            <StyledProfileLink to="/user">
-              <ProfileIcon />
-              <span>Profile</span>
-            </StyledProfileLink>
-            <StyledAuthButton type="button" onClick={handleLogout}>
-              Log out
-            </StyledAuthButton>
-          </StyledUserMenuContainer>
-        ) : (
-          <StyledAuthLink to="/login">Log in</StyledAuthLink>
-        )}
-      </StyledHeaderColumns>
-    </StyledHeader>
-  );
-}
-
-export default Header;
