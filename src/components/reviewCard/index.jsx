@@ -1,126 +1,21 @@
-// This is the card with a user's review on it
-// Shown in the Movies Page (via MovieReviewPanel) and the User's Profile (via UserReviewPanel)
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import StarRating from './StarRating';
-import { NavLink } from 'react-router';
+// Import the star rating child component so users can 
+// give their rating out of 5 stars
+import StarRating from '../StarRating';
 
-// Individual review card container
-const StyledReviewCard = styled.div`
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 1.25rem;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-  }
-`;
-
-const StyledTitleLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
-  margin-bottom: 0.25rem;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const StyledTitle = styled.h3`
-  margin: 0;
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 1.25rem;
-  font-weight: 600;
-`;
-
-const StyledYear = styled.span`
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1rem;
-  font-weight: 400;
-`;
-
-// Author name display
-const StyledAuthorLink = styled(NavLink)`
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0;
-`;
-
-const StyledAuthorText = styled.span`
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 1rem;
-  font-weight: 600;
-`;
-
-// Author line with rating
-const StyledAuthorLine = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 0.5rem 0 0.25rem 0;
-`;
-
-// Rating container (when no author shown)
-const StyledRatingContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-`;
-
-// Review date
-const StyledDate = styled.p`
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 0.85rem;
-  margin: 0.25rem 0 0.5rem 0;
-`;
-
-// Review text content
-const StyledReviewText = styled.p`
-  margin: 0;
-  color: rgba(255, 255, 255, 0.87);
-  line-height: 1.6;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-`;
-
-// Action buttons container
-const StyledActions = styled.div`
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
-`;
-
-const StyledActionButton = styled.button`
-  padding: 0.4rem 0.8rem;
-  background-color: transparent;
-  color: rgba(255, 255, 255, 0.87);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 400;
-  cursor: pointer;
-  white-space: nowrap;
-  height: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.25);
-  }
-`;
+// Import the review card component element styling
+import { 
+  StyledActionButton, 
+  StyledActions, 
+  StyledAuthor, 
+  StyledAuthorLine, 
+  StyledDate, 
+  StyledRatingContainer, 
+  StyledReviewCard, 
+  StyledReviewText, 
+  StyledTitle, 
+  StyledTitleLink, 
+  StyledYear
+} from './style';
 
 // Format date to "15 Jan 2024" format
 const formatDate = (dateString, prefix = '') => {
@@ -149,8 +44,8 @@ const formatDate = (dateString, prefix = '') => {
 };
 
 /**
- * ReviewCard - Displays a single review
- *
+ * ReviewCard - This is the card with a user's review on it. Displays a single review
+ *              Shown in the Movies Page (via MovieReviewPanel) and the User's Profile (via UserReviewPanel)
  * Props:
  * - review: The review object containing id, body/content/text, rating, dates, user info
  * - userId: The reviewer's ID number that will be used to link to their profile page
@@ -160,7 +55,7 @@ const formatDate = (dateString, prefix = '') => {
  * - onDelete: Callback when Delete button is clicked, receives (review)
  * - datePrefix: Text to show before the date (e.g., "Reviewed on " or "Watched on ")
  */
-function ReviewCard({
+export function ReviewCard({
   review,
   userId,
   title = null,
@@ -253,5 +148,3 @@ function ReviewCard({
     </StyledReviewCard>
   );
 }
-
-export default ReviewCard;
