@@ -1,7 +1,9 @@
 import { expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import SearchResultCard from '../src/components/SearchResultCard';
+
+// Import the Search Result Card component for testing
+import { SearchResultCard } from '../src/components/searchResultCard';
 
 test('renders movie card with poster image when poster_path is provided', () => {
   render(
