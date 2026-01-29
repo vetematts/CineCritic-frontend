@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import SignupForm from '../components/SignupForm';
+import { SignupForm } from '../components/signupForm';
 
 // Import image assets
 import banner from '../assets/cine_critic_logo.png';

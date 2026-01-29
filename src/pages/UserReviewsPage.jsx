@@ -1,7 +1,7 @@
 import { Navigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
-import UserReviewPanel from '../components/UserReviewPanel';
+import { UserReviewPanel } from '../components/userReviewPanel';
 
 const StyledContainer = styled.section`
   width: 100%;

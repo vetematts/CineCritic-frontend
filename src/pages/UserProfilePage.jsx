@@ -8,8 +8,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { get } from '../api/api';
 
 // Components
-import MovieCarousel from '../components/MovieCarousel'; // Favourite movies carousel
-import UserReviewPanel from '../components/UserReviewPanel'; // User reviews panel
+import { MovieCarousel } from '../components/movieCarousel'; // Favourite movies carousel
+import { UserReviewPanel } from '../components/userReviewPanel'; // User reviews panel
 // import { BadgeList } from '../components/Badge'; // Badge component - commented out for future implementation
 
 // Stack the user's portait to the left of their details

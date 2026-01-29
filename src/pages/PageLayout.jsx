@@ -2,8 +2,8 @@
 import { Outlet } from 'react-router-dom';
 
 // Plugin the top level components that will exist on all the pages
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { Header } from '../components/header';
+import { Footer } from '../components/footer';
 import styled from 'styled-components';
 
 // Set the width of the main to match the root div container.
