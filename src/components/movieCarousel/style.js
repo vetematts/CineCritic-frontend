@@ -1,12 +1,8 @@
-// Utilities                                            // -----DESCRPTION-----//
-import getPosterUrl from '../utils/image-pathing'; // Creates URL to grab movie poster link
+// Import packages that allow for CSS styling to be applied to React elements
 import styled from 'styled-components';
 
-// Child Component                      // -----DESCRPTION-----//
-import { MovieCard } from './movieCard'; // Create the clickable movie card posters
-
 // Horizontal scrolling container for movie cards
-const StyledCarouselList = styled.ul`
+export const StyledCarouselList = styled.ul`
   list-style: none;
   padding: 0 16px; // Left/right padding to allow first/last card glows to extend
   margin: 0;
@@ -53,33 +49,3 @@ const StyledCarouselList = styled.ul`
     gap: 0.5rem;
   }
 `;
-
-// Movie carousel will be sent an array of movies
-function MovieCarousel({ moviesArray }) {
-  if (!moviesArray || moviesArray.length === 0) {
-    return null;
-  }
-
-  return (
-    <StyledCarouselList>
-      {moviesArray.map((movie) => {
-        const posterURL = getPosterUrl(movie.poster_path || movie.posterUrl, 'w200');
-        const movieId = movie.id || movie.tmdbId;
-        const movieTitle = movie.title || movie.name;
-        const releaseDate = movie.release_date || movie.releaseDate || movie.first_air_date || '';
-
-        return (
-          <MovieCard
-            key={movieId}
-            posterURL={posterURL}
-            id={movieId}
-            title={movieTitle}
-            release_date={releaseDate}
-          />
-        );
-      })}
-    </StyledCarouselList>
-  );
-}
-
-export default MovieCarousel;
