@@ -8,7 +8,7 @@ export const StyledStarContainer = styled.div`
   user-select: none;
 `;
 
-const StyledStarWrapper = styled.div`
+export const StyledStarWrapper = styled.div`
   position: relative;
   width: 2rem;
   height: 2rem;
