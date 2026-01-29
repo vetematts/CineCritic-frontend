@@ -405,6 +405,35 @@ function AdvancedSearchPage() {
     setError(null);
     setHasSearched(true);
 
+    const filterResults = (items, filters) => {
+      const { genreIds, year, minRating, maxRating } = filters;
+      return (items || []).filter((movie) => {
+        const movieGenres = movie.genre_ids || movie.genres || [];
+        const movieYear = movie.release_date?.slice(0, 4) || movie.releaseYear || movie.release_year;
+        const movieRating =
+          movie.vote_average ?? movie.rating ?? movie.average_rating ?? movie.avg_rating;
+
+        if (genreIds.length > 0) {
+          const hasAnyGenre = genreIds.some((id) => movieGenres.includes(id));
+          if (!hasAnyGenre) return false;
+        }
+
+        if (year && String(movieYear) !== String(year)) {
+          return false;
+        }
+
+        if (minRating !== undefined && movieRating !== undefined) {
+          if (Number(movieRating) < Number(minRating)) return false;
+        }
+
+        if (maxRating !== undefined && movieRating !== undefined) {
+          if (Number(movieRating) > Number(maxRating)) return false;
+        }
+
+        return true;
+      });
+    };
+
     // Map the rating comparator to ratingMin/ratingMax query params.
     // Rating comes from StarRating as a string like "2.5" or "0" when not set
     // Convert from our 5-star scale (0-5) to TMDB's 10-point scale (0-10)
@@ -449,7 +478,14 @@ function AdvancedSearchPage() {
         },
       });
 
-      setResults(data || []);
+      const filtered = filterResults(data, {
+        genreIds: selectedGenreIds,
+        year: releaseYear,
+        minRating: ratingMin,
+        maxRating: ratingMax,
+      });
+
+      setResults(filtered);
     } catch (err) {
       setError(err?.error || 'Unable to load results.');
     } finally {
