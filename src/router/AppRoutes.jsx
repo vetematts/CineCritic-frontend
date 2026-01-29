@@ -9,7 +9,7 @@ import FavouritesPage from '../pages/FavouritesPage';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import MovieDetailPage from '../pages/MovieDetailPage';
-import PageLayout from '../pages/PageLayout';
+import { PageLayout } from '../pages/pageLayout';
 import SearchResultsPage from '../pages/SearchResultsPage';
 import SignupPage from '../pages/SignupPage';
 import TermsOfServicePage from '../pages/TermsOfServicePage';
