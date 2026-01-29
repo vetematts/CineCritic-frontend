@@ -1,11 +1,8 @@
-// Import Packages                          // -----DESCRPTION-----//
-import { useRef, useState } from 'react'; // Holds state variables
+// Import packages that allow for CSS styling to be applied to React elements
 import { NavLink } from 'react-router'; // Handles the redirection to other pages
 import styled from 'styled-components'; // Handles the CSS styling to React elements
-import CalendarIcon from '../assets/CalendarIcon';
 
-// Styled Components
-const StyledTrendingItem = styled.li`
+export const StyledTrendingItem = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +20,7 @@ const StyledTrendingItem = styled.li`
 // Container that clips the glow to rounded corners
 // Extends 16px beyond card on all sides, matches reference implementation
 // z-index: -1 ensures it's behind all cards to prevent overlap
-const StyledGlowClipContainer = styled.div`
+export const StyledGlowClipContainer = styled.div`
   position: absolute;
   top: -16px;
   right: -16px;
@@ -39,7 +36,7 @@ const StyledGlowClipContainer = styled.div`
 
 // Blurred background glow effect (inspired by movie-ui-browser)
 // Image fills container completely with strong blur for border effect
-const StyledGlowBackground = styled.img`
+export const StyledGlowBackground = styled.img`
   position: absolute;
   top: 0;
   right: 0;
@@ -53,7 +50,7 @@ const StyledGlowBackground = styled.img`
 
 // Container for 3D tilt effect (Apple TV style)
 // Width increased to 150px to show 6 cards instead of 6-7
-const StyledCardContainer = styled.div`
+export const StyledCardContainer = styled.div`
   position: relative;
   width: 150px; // Increased from 120px to show 6 cards instead of 6-7
   perspective: 1000px; // Enable 3D transforms
@@ -70,7 +67,7 @@ const StyledCardContainer = styled.div`
 
 // Wrapper for entire card (poster + black bar) with 3D tilt effect
 // Moves as one piece, matching movie-ui-browser structure
-const StyledCardWrapper = styled.div.attrs((props) => ({
+export const StyledCardWrapper = styled.div.attrs((props) => ({
   style: {
     transform: props.$transform || 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)',
     transformStyle: 'preserve-3d',
@@ -99,7 +96,7 @@ const StyledCardWrapper = styled.div.attrs((props) => ({
 
 // Poster image inside the card wrapper
 // Maintains 2:3 aspect ratio like movie-ui-browser
-const StyledPosterWrapper = styled.div`
+export const StyledPosterWrapper = styled.div`
   width: 100%;
   height: 225px; // 150px * 1.5 = 225px (2:3 aspect ratio)
   overflow: hidden; // Keep rounded borders intact
@@ -108,7 +105,7 @@ const StyledPosterWrapper = styled.div`
 `;
 
 // Styled poster image for movie lists - card style matching wireframe
-const StyledPoster = styled.img`
+export const StyledPoster = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -116,7 +113,7 @@ const StyledPoster = styled.img`
 `;
 
 // Placeholder for missing posters - wrapped to maintain rounded borders
-const StyledPosterPlaceholder = styled.div`
+export const StyledPosterPlaceholder = styled.div`
   width: 150px;
   height: 225px;
   background-color: #5a5b5f;
@@ -140,7 +137,7 @@ const StyledPosterPlaceholder = styled.div`
 
 // Black rounded bar extending from poster (matches movie-ui-browser CardContent)
 // Same width as poster, seamlessly connected
-const StyledCardContent = styled.div`
+export const StyledCardContent = styled.div`
   background-color: #000000;
   padding: 12px;
   width: 100%;
@@ -150,7 +147,7 @@ const StyledCardContent = styled.div`
 `;
 
 // Movie title inside the black bar with ellipsis truncation
-const StyledMovieTitle = styled.h3`
+export const StyledMovieTitle = styled.h3`
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.2;
@@ -163,7 +160,7 @@ const StyledMovieTitle = styled.h3`
 `;
 
 // Release date inside the black bar
-const StyledReleaseDate = styled.p`
+export const StyledReleaseDate = styled.p`
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.6);
   margin: 0;
@@ -173,7 +170,7 @@ const StyledReleaseDate = styled.p`
 `;
 
 // Styled NavLink for movie cards - make entire card clickable
-const StyledMovieCardLink = styled(NavLink)`
+export const StyledMovieCardLink = styled(NavLink)`
   text-decoration: none;
   color: inherit;
   display: flex;
@@ -188,86 +185,3 @@ const StyledMovieCardLink = styled(NavLink)`
       0 0 12px rgba(206, 200, 200, 0.3);
   }
 `;
-
-// Component for movie card with 3D tilt effect
-function MovieCardWithTilt({ posterUrl, children }) {
-  const cardRef = useRef(null);
-  const [transform, setTransform] = useState('');
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-
-    const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-
-    // Calculate mouse position relative to card centre
-    const xValue = e.clientX - rect.left - width / 2;
-    const yValue = e.clientY - rect.top - height / 2;
-
-    // Calculate rotation values (max 15 degrees)
-    const rotateX = (-yValue / height) * 15;
-    const rotateY = (xValue / width) * 15;
-
-    // Apply scale and rotation
-    setTransform(
-      `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`
-    );
-  };
-
-  const handleMouseLeave = () => {
-    // Smoothly return to centre
-    setTransform('perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)');
-  };
-
-  return (
-    <StyledCardContainer
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      {posterUrl && (
-        <StyledGlowClipContainer>
-          <StyledGlowBackground src={posterUrl} alt="" />
-        </StyledGlowClipContainer>
-      )}
-      <StyledCardWrapper $transform={transform}>{children}</StyledCardWrapper>
-    </StyledCardContainer>
-  );
-}
-
-function MovieCard(prop) {
-  // Properties of the Movie Card Object      // -----DESCRIPTION-----//
-  const posterUrl = prop.posterURL || prop.posterUrl; // URL to the movie poster (fixed typo)
-  const movieId = prop.id || prop.movieId || prop.tmdbId; // ID number of the movie
-  const movieTitle = prop.title || prop.movieTitle || prop.name; // Name of the movie
-  const releaseDate = prop.release_date || prop.releaseDate || prop.first_air_date || ''; // Release date of the movie
-  const formattedDate = releaseDate ? new Date(releaseDate).getFullYear().toString() : ''; // Format the release date to something legible
-
-  return (
-    <StyledTrendingItem key={movieId}>
-      <StyledMovieCardLink to={`/movies/${movieId}`}>
-        {posterUrl ? (
-          <MovieCardWithTilt posterUrl={posterUrl}>
-            <StyledPosterWrapper>
-              <StyledPoster src={posterUrl} alt={`${movieTitle} poster`} />
-            </StyledPosterWrapper>
-            <StyledCardContent>
-              <StyledMovieTitle>{movieTitle}</StyledMovieTitle>
-              {formattedDate && (
-                <StyledReleaseDate>
-                  <CalendarIcon />
-                  {formattedDate}
-                </StyledReleaseDate>
-              )}
-            </StyledCardContent>
-          </MovieCardWithTilt>
-        ) : (
-          <StyledPosterPlaceholder>No poster</StyledPosterPlaceholder>
-        )}
-      </StyledMovieCardLink>
-    </StyledTrendingItem>
-  );
-}
-
-export default MovieCard;
