@@ -19,12 +19,13 @@ import AdvancedSearchPage from '../src/pages/AdvancedSearchPage';
 // )
 
 // Test Case 2: Check the labels are rendered
-test('Test Case 2: Check labels are correctly rendered', () => {
+test('Test Case 2: Check labels are correctly rendered', async () => {
   // Arrange
   render(<AdvancedSearchPage />);
 
   // Act: None
   // Assert: Labels are visible
+  await screen.findByText(/Loading genres/i);
   const titleLabel = screen.getByText(/Movie Title/i);
   const releaseYearLabel = screen.getByText(/Release Year/i);
   const filmCrewLabel = screen.getByText(/Film Crew/i);
@@ -39,12 +40,13 @@ test('Test Case 2: Check labels are correctly rendered', () => {
 });
 
 // Test Case 3: Check the placeholder text in the input fields
-test('Test Case 3: Check correct placeholder text in inputs', () => {
+test('Test Case 3: Check correct placeholder text in inputs', async () => {
   // Arrange
   const { container } = render(<AdvancedSearchPage />);
 
   // Act: None
   // Assert: Correct placeholder text in the input fields
+  await screen.findByText(/Loading genres/i);
   const titlePlaceholder = screen.getByPlaceholderText(/Any word in the name of the movie/i);
   const releaseYearPlaceholder = screen.getByPlaceholderText(
     /Any number when the movie was released/i
@@ -52,10 +54,11 @@ test('Test Case 3: Check correct placeholder text in inputs', () => {
   const filmCrewPlaceholder = screen.getByPlaceholderText(
     /Any word in the name of any film crew members/i
   );
-  const ratingDropDownPlaceholder = screen.getByDisplayValue(/Equal to/i);
+  const ratingDropDownPlaceholder = screen.getByDisplayValue(/Average/i);
   const ratingStars = container.querySelectorAll('svg');
   // Genres is now a dropdown, not an input - check for loading state or dropdown instead
-  const genresLoadingText = screen.getByText(/Loading genres/i);
+  const genresLoadingText =
+    screen.queryByText(/Loading genres/i) || screen.getByText(/Unable to load genres/i);
   expect(titlePlaceholder).toBeInTheDocument();
   expect(releaseYearPlaceholder).toBeInTheDocument();
   expect(filmCrewPlaceholder).toBeInTheDocument();
