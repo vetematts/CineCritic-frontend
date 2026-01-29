@@ -6,7 +6,7 @@ import { get, post, put, del } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
 import getPosterUrl from '../utils/image-pathing';
 import { StarRating } from '../components/starRating';
-import MovieReviewPanel from '../components/MovieReviewPanel';
+import { MovieReviewPanel } from '../components/movieReviewPanel';
 import CalendarIcon from '../assets/CalendarIcon';
 import ClockIcon from '../assets/ClockIcon';
 import BackArrowIcon from '../assets/BackArrowIcon';
