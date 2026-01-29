@@ -6,7 +6,7 @@ import { Route, Routes, useLocation } from 'react-router';
 import AdvancedSearchPage from '../pages/AdvancedSearchPage';
 import DiscoverPage from '../pages/DiscoverPage';
 import FavouritesPage from '../pages/FavouritesPage';
-import HomePage from '../pages/HomePage';
+import { HomePage } from '../pages/homePage';
 import LoginPage from '../pages/LoginPage';
 import MovieDetailPage from '../pages/MovieDetailPage';
 import { PageLayout } from '../pages/pageLayout';
