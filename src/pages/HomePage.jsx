@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 // Import the Search Bar component
-import { SearchBar } from '../components/searchbar';
+import { SearchBar } from '../components/searchBar';
 import MovieSection from '../components/MovieSection';
 import { get } from '../api/api';
 import { useAuth } from '../contexts/AuthContext';
