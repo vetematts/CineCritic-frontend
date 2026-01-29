@@ -1,6 +1,6 @@
 // Utilities
 import styled from 'styled-components';
-import MovieCarousel from './MovieCarousel';
+import { MovieCarousel } from './movieCarousel';
 
 // Styled heading for movie sections
 const StyledSectionHeading = styled.h3`
