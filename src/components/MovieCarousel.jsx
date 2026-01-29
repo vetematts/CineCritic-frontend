@@ -3,7 +3,7 @@ import getPosterUrl from '../utils/image-pathing'; // Creates URL to grab movie 
 import styled from 'styled-components';
 
 // Child Component                      // -----DESCRPTION-----//
-import MovieCard from './MovieCard'; // Create the clickable movie card posters
+import { MovieCard } from './movieCard'; // Create the clickable movie card posters
 
 // Horizontal scrolling container for movie cards
 const StyledCarouselList = styled.ul`
