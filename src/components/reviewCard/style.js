@@ -1,7 +1,7 @@
 // Import packages that allow for CSS styling to be applied to React elements
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';    // Handles the redirection to other pages
-import { NavLink } from 'react-router';     // Handles the redirection to other pages
+import { Link } from 'react-router-dom'; // Handles the redirection to other pages
+import { NavLink } from 'react-router'; // Handles the redirection to other pages
 
 // Individual review card container
 export const StyledReviewCard = styled.div`

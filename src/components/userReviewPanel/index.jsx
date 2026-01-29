@@ -7,40 +7,40 @@ import { ReviewCard } from '../reviewCard'; // Shows all the user's reviews
 import { StarRating } from '../starRating'; // Shows the rating the user gave
 
 // Import utilities
-import { get, put, del } from '../../api/api';        // Communicates with the back-end server
+import { get, put, del } from '../../api/api'; // Communicates with the back-end server
 import getPosterUrl from '../../utils/image-pathing'; // Grabs the URL path to the poster
 
 // Import the user review panel css styling
-import { 
-  StyledCancelButton, 
-  StyledCloseButton, 
-  StyledEditingMovieInfo, 
-  StyledEditingMovieTitle, 
-  StyledEmptyMessage, 
-  StyledError, 
-  StyledLoadingText, 
-  StyledModal, 
-  StyledModalButton, 
-  StyledModalButtons, 
-  StyledModalContent, 
-  StyledModalForm, 
-  StyledModalHeader, 
-  StyledModalLabel, 
-  StyledModalOverlay, 
-  StyledModalTextarea, 
-  StyledModalTitle, 
-  StyledPoster, 
-  StyledPosterColumn, 
-  StyledPosterFrame, 
-  StyledPosterLink, 
-  StyledPosterPlaceholder, 
-  StyledPosterWrapper, 
-  StyledReviewColumn, 
-  StyledReviewRow, 
-  StyledReviewsContainer, 
-  StyledSubmitButton, 
-  StyledViewAllLink, 
-  StyledViewAllRow
+import {
+  StyledCancelButton,
+  StyledCloseButton,
+  StyledEditingMovieInfo,
+  StyledEditingMovieTitle,
+  StyledEmptyMessage,
+  StyledError,
+  StyledLoadingText,
+  StyledModal,
+  StyledModalButton,
+  StyledModalButtons,
+  StyledModalContent,
+  StyledModalForm,
+  StyledModalHeader,
+  StyledModalLabel,
+  StyledModalOverlay,
+  StyledModalTextarea,
+  StyledModalTitle,
+  StyledPoster,
+  StyledPosterColumn,
+  StyledPosterFrame,
+  StyledPosterLink,
+  StyledPosterPlaceholder,
+  StyledPosterWrapper,
+  StyledReviewColumn,
+  StyledReviewRow,
+  StyledReviewsContainer,
+  StyledSubmitButton,
+  StyledViewAllLink,
+  StyledViewAllRow,
 } from './style';
 
 /**

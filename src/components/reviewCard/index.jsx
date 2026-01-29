@@ -1,21 +1,21 @@
-// Import the star rating child component so users can 
+// Import the star rating child component so users can
 // give their rating out of 5 stars
 import { StarRating } from '../starRating';
 
 // Import the review card component element styling
-import { 
-  StyledActionButton, 
-  StyledActions, 
-  StyledAuthorLine, 
-  StyledAuthorLink, 
-  StyledAuthorText, 
-  StyledDate, 
-  StyledRatingContainer, 
-  StyledReviewCard, 
-  StyledReviewText, 
-  StyledTitle, 
-  StyledTitleLink, 
-  StyledYear
+import {
+  StyledActionButton,
+  StyledActions,
+  StyledAuthorLine,
+  StyledAuthorLink,
+  StyledAuthorText,
+  StyledDate,
+  StyledRatingContainer,
+  StyledReviewCard,
+  StyledReviewText,
+  StyledTitle,
+  StyledTitleLink,
+  StyledYear,
 } from './style';
 
 // Format date to "15 Jan 2024" format

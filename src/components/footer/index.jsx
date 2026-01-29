@@ -1,5 +1,5 @@
 // Import the styling for each of the footer components
-import { 
+import {
   StyledFooter,
   StyledFooterContainer,
   StyledFooterColumns,
@@ -8,7 +8,7 @@ import {
   StyledFooterText,
   StyledFooterLinks,
   StyledList,
-  StyledFooterLinkList
+  StyledFooterLinkList,
 } from './style';
 
 // Three div containers to flex as columns that contain different links

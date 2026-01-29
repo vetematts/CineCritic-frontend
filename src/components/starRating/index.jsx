@@ -2,12 +2,12 @@
 import { useState } from 'react';
 
 // Import the star rating component element styling
-import { 
-  ClickableArea, 
-  GoldStarSvg, 
-  StarSvg, 
-  StyledStarContainer, 
-  StyledStarWrapper 
+import {
+  ClickableArea,
+  GoldStarSvg,
+  StarSvg,
+  StyledStarContainer,
+  StyledStarWrapper,
 } from './style';
 
 // Star rating component

@@ -6,11 +6,7 @@ import { useNavigate } from 'react-router';
 import getSearchURL from '../../utils/query-endpoints';
 
 // Import the styling
-import { 
-  StyledForm, 
-  StyledSearchBar, 
-  StyledSearchButton 
-} from './style';
+import { StyledForm, StyledSearchBar, StyledSearchButton } from './style';
 
 // Search bar handles the processing of any queries submitted anywhere the component exists
 export function SearchBar() {

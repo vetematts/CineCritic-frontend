@@ -2,11 +2,7 @@
 import { MovieCarousel } from '../movieCarousel';
 
 // Import the movie section component element styling
-import { 
-  StyledSectionHeading, 
-  StyledSectionRow, 
-  StyledSectionWrapper 
-} from './style';
+import { StyledSectionHeading, StyledSectionRow, StyledSectionWrapper } from './style';
 
 // Reusable movie section component with heading and carousel
 export function MovieSection({ title, movies }) {

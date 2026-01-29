@@ -2,18 +2,13 @@
 import { ReviewCard } from '../reviewCard';
 
 // Import the movie review panel css styling
-import { 
-  StyledEmptyMessage, 
-  StyledReviewItem, 
-  StyledReviewList 
-} from './style';
-
+import { StyledEmptyMessage, StyledReviewItem, StyledReviewList } from './style';
 
 /**
  * MovieReviewPanel - Displays all reviews for a movie
- *                    This is all the reviews for this movie, 
+ *                    This is all the reviews for this movie,
  *                    shown on the movie's page
- *                    Similar pattern to MovieCarousel 
+ *                    Similar pattern to MovieCarousel
  *                    receives array, maps to ReviewCard
  * Props:
  * - reviewsArray: Array of review objects

@@ -5,19 +5,19 @@ import { useRef, useState } from 'react'; // Holds state variables
 import CalendarIcon from '../../assets/CalendarIcon';
 
 // Import the movie card component element styling
-import { 
-  StyledCardContainer, 
-  StyledCardContent, 
-  StyledCardWrapper, 
-  StyledGlowBackground, 
-  StyledGlowClipContainer, 
-  StyledMovieCardLink, 
-  StyledMovieTitle, 
-  StyledPoster, 
-  StyledPosterPlaceholder, 
-  StyledPosterWrapper, 
-  StyledReleaseDate, 
-  StyledTrendingItem
+import {
+  StyledCardContainer,
+  StyledCardContent,
+  StyledCardWrapper,
+  StyledGlowBackground,
+  StyledGlowClipContainer,
+  StyledMovieCardLink,
+  StyledMovieTitle,
+  StyledPoster,
+  StyledPosterPlaceholder,
+  StyledPosterWrapper,
+  StyledReleaseDate,
+  StyledTrendingItem,
 } from './style';
 
 // Component for movie card with 3D tilt effect

@@ -1,6 +1,4 @@
 {
   "ignoreCommand": "[[ \"$VERCEL_ENV\" != \"production\" ]]",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }

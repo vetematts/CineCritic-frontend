@@ -10,15 +10,15 @@ import logo from '../../assets/cine_critic_logo.png';
 import ProfileIcon from '../../assets/ProfileIcon';
 
 // Import the styling for the Header component elements
-import { 
-  StyledAuthButton, 
+import {
+  StyledAuthButton,
   StyledAuthLink,
-  StyledHeader, 
-  StyledHeaderColumns, 
-  StyledLogo, 
-  StyledLogoLink, 
-  StyledProfileLink, 
-  StyledUserMenuContainer
+  StyledHeader,
+  StyledHeaderColumns,
+  StyledLogo,
+  StyledLogoLink,
+  StyledProfileLink,
+  StyledUserMenuContainer,
 } from './style';
 
 export function Header() {

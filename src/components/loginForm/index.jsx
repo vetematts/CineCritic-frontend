@@ -1,4 +1,4 @@
-// Import packages that enable state tracking and 
+// Import packages that enable state tracking and
 // redirecting users to pages
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -8,12 +8,12 @@ import { loginRequest } from '../../api/auth';
 import { useAuth } from '../../contexts/AuthContext';
 
 // Import the login form css styling
-import { 
-  StyledError, 
-  StyledForm, 
-  StyledInput, 
-  StyledLoginButton, 
-  StyledLoginLabels 
+import {
+  StyledError,
+  StyledForm,
+  StyledInput,
+  StyledLoginButton,
+  StyledLoginLabels,
 } from './style';
 
 // The login input and submit button component
