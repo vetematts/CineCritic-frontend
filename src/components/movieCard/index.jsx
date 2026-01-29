@@ -2,7 +2,7 @@
 import { useRef, useState } from 'react'; // Holds state variables
 
 // Import the calendar icon to display on the movie cards
-import CalendarIcon from '../assets/CalendarIcon';
+import CalendarIcon from '../../assets/CalendarIcon';
 
 // Import the movie card component element styling
 import { 
