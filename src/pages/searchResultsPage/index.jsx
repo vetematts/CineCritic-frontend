@@ -1,47 +1,23 @@
 // Import packages
 import { useEffect, useState } from 'react';
-import { get } from '../api/api';
 import { useSearchParams } from 'react-router';
-import styled from 'styled-components';
 
-import { SearchResultCard } from '../components/searchResultCard';
+// Import the utilities
+import { get } from '../../api/api';
 
-// Container for search results with proper constraints
-const StyledSearchResultsContainer = styled.div`
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+// Import the result card child components to fill up the search results
+import { SearchResultCard } from '../../components/searchResultCard';
 
-  @media (max-width: 768px) {
-    padding: 0.75rem;
-    gap: 1rem;
-  }
-`;
-
-const StyledLoading = styled.p`
-  text-align: center;
-  color: rgba(255, 255, 255, 0.87);
-  padding: 2rem;
-`;
-
-const StyledError = styled.p`
-  color: #ffb4a2;
-  text-align: center;
-  padding: 2rem;
-`;
-
-const StyledNoResults = styled.p`
-  text-align: center;
-  color: rgba(255, 255, 255, 0.6);
-  padding: 2rem;
-`;
+// Import the CSS styling for the search results page elements
+import { 
+  StyledError, 
+  StyledLoading, 
+  StyledNoResults, 
+  StyledSearchResultsContainer 
+} from './style';
 
 // Takes results as a prop and renders the results
-function SearchResults() {
+export function SearchResultsPage() {
   // Check the URL for the query
   const [searchParams] = useSearchParams();
   const searchTerm = searchParams.get('q'); // Checks after "search?q="
@@ -110,5 +86,3 @@ function SearchResults() {
     </StyledSearchResultsContainer>
   );
 }
-
-export default SearchResults;
