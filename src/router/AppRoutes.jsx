@@ -3,19 +3,19 @@
 import { Route, Routes, useLocation } from 'react-router';
 
 // Import all the pages for AppRoutes to redirect users to
-import AdvancedSearchPage from '../pages/AdvancedSearchPage';
-import DiscoverPage from '../pages/DiscoverPage';
-import FavouritesPage from '../pages/FavouritesPage';
-import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/LoginPage';
-import MovieDetailPage from '../pages/MovieDetailPage';
-import PageLayout from '../pages/PageLayout';
-import SearchResultsPage from '../pages/SearchResultsPage';
-import SignupPage from '../pages/SignupPage';
-import TermsOfServicePage from '../pages/TermsOfServicePage';
-import UserProfilePage from '../pages/UserProfilePage';
-import UserReviewsPage from '../pages/UserReviewsPage';
-import WatchlistPage from '../pages/WatchlistPage';
+import { AdvancedSearchPage } from '../pages/advancedSearchPage';
+import { DiscoverPage } from '../pages/discoverPage';
+import { FavouritesPage } from '../pages/favouritesPage';
+import { HomePage } from '../pages/homePage';
+import { LoginPage } from '../pages/loginPage';
+import { MovieDetailPage } from '../pages/movieDetailPage';
+import { PageLayout } from '../pages/pageLayout';
+import { SearchResultsPage } from '../pages/searchResultsPage';
+import { SignupPage } from '../pages/signupPage';
+import { TermsOfServicePage } from '../pages/termsOfServicePage';
+import { UserProfilePage } from '../pages/userProfilePage';
+import { UserReviewsPage } from '../pages/userReviewsPage';
+import { WatchlistPage } from '../pages/watchlistPage';
 
 // This component handles all the routing to the different pages
 function AppRoutes() {

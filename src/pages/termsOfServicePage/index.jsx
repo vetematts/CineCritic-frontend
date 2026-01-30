@@ -1,8 +1,8 @@
 // Terms and Conditions to using our website. Any legal statements to let users know we don't own any of this
 // and should not rely on our information to be accurate.
-function TermsOfServicePage() {
+export function TermsOfServicePage() {
   return (
-    <section idName="terms-of-service-text">
+    <section idname="terms-of-service-text">
       <h2>Terms of Service</h2>
       <p>
         These are the terms of service to accessing and using our website and services. You must
@@ -82,5 +82,3 @@ function TermsOfServicePage() {
     </section>
   );
 }
-
-export default TermsOfServicePage;
