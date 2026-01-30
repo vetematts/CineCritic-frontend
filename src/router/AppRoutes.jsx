@@ -12,7 +12,7 @@ import { MovieDetailPage } from '../pages/movieDetailPage';
 import { PageLayout } from '../pages/pageLayout';
 import { SearchResultsPage } from '../pages/searchResultsPage';
 import { SignupPage } from '../pages/signupPage';
-import TermsOfServicePage from '../pages/TermsOfServicePage';
+import { TermsOfServicePage } from '../pages/termsOfServicePage';
 import { UserProfilePage } from '../pages/userProfilePage';
 import { UserReviewsPage } from '../pages/userReviewsPage';
 import { WatchlistPage } from '../pages/watchlistPage';
