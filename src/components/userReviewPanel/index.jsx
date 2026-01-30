@@ -35,6 +35,7 @@ import {
   StyledPosterLink,
   StyledPosterPlaceholder,
   StyledPosterWrapper,
+  StyledReviewCardWrapper,
   StyledReviewColumn,
   StyledReviewRow,
   StyledReviewsContainer,
@@ -241,7 +242,11 @@ export function UserReviewPanel({
           const posterUrl = getPosterUrl(posterPath, 'w200');
 
           return (
-            <StyledReviewRow key={review.id || review._id} $alignCenter={isOwner}>
+            <StyledReviewRow
+              key={review.id || review._id}
+              $alignCenter={isOwner}
+              $matchPoster={!isOwner}
+            >
               {/* Movie Poster */}
               <StyledPosterColumn $alignCenter={isOwner}>
                 {tmdbId ? (
@@ -270,18 +275,20 @@ export function UserReviewPanel({
               </StyledPosterColumn>
 
               {/* Review Card */}
-              <StyledReviewColumn>
-                <ReviewCard
-                  review={review}
-                  title={movieTitle}
-                  year={releaseYear}
-                  titleLink={tmdbId ? `/movies/${tmdbId}` : null}
-                  showAuthor={false}
-                  isOwner={isOwner}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                  datePrefix="Reviewed on "
-                />
+              <StyledReviewColumn $matchPoster={!isOwner}>
+                <StyledReviewCardWrapper $matchPoster={!isOwner}>
+                  <ReviewCard
+                    review={review}
+                    title={movieTitle}
+                    year={releaseYear}
+                    titleLink={tmdbId ? `/movies/${tmdbId}` : null}
+                    showAuthor={false}
+                    isOwner={isOwner}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                    datePrefix="Reviewed on "
+                  />
+                </StyledReviewCardWrapper>
               </StyledReviewColumn>
             </StyledReviewRow>
           );
