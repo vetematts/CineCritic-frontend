@@ -14,7 +14,7 @@ import SearchResultsPage from '../pages/SearchResultsPage';
 import { SignupPage } from '../pages/signupPage';
 import TermsOfServicePage from '../pages/TermsOfServicePage';
 import UserProfilePage from '../pages/UserProfilePage';
-import UserReviewsPage from '../pages/UserReviewsPage';
+import { UserReviewsPage } from '../pages/userReviewsPage';
 import { WatchlistPage } from '../pages/watchlistPage';
 
 // This component handles all the routing to the different pages
