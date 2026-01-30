@@ -9,14 +9,11 @@ import { get } from '../../api/api';
 // Components
 import { MovieCarousel } from '../../components/movieCarousel'; // Favourite movies carousel
 import { UserReviewPanel } from '../../components/userReviewPanel'; // User reviews panel
-// import { BadgeList } from '../components/Badge'; // Badge component - commented out for future implementation
 
 // Import the CSS styling for the user's profile page
 import {
   StyledCarouselContainer,
   StyledDashboard,
-  StyledPortaitColumn,
-  StyledProfilePicture,
   StyledSeeMoreLink,
   StyledSeeMoreRow,
   StyledStrongText,
@@ -251,20 +248,6 @@ export function UserProfilePage() {
 
   return (
     <StyledDashboard id="dashboard">
-      {/* Profile Picture and Badges section - commented out for future implementation */}
-      {/* <StyledPortaitColumn id="user-portait-badge-container">
-        <div id="user-profile-portait">
-          <StyledProfilePicture
-            src="https://via.placeholder.com/160"
-            className="profile-picture"
-            alt="Profile Picture"
-          />
-          <div id="badges">
-            <StyledStrongText>Badges</StyledStrongText>
-            <BadgeList badges={[]} />
-          </div>
-        </div>
-      </StyledPortaitColumn> */}
       <StyledUserProfileContainer id="user-profile-container">
         <StyledUserInformation id="user-information">
           <StyledUsersName>{username}</StyledUsersName>

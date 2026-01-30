@@ -19,27 +19,6 @@ export const StyledDashboard = styled.div`
   }
 `;
 
-// Portait should take no more than 20% of the space
-export const StyledPortaitColumn = styled.div`
-  flex-basis: 20%;
-  min-width: 200px;
-
-  @media (max-width: 768px) {
-    flex-basis: 100%;
-    width: 100%;
-  }
-`;
-
-// Set a restriction to the maximum size limit on the profile picture
-// 160px x 160px
-export const StyledProfilePicture = styled.img`
-  flex: 1;
-  max-width: 10rem;
-  max-height: 10rem;
-  border: 1px;
-  border-radius: 10rem;
-`;
-
 // Give all the subheadings a similar grayish white as the
 // rest of the text but a bolder tone
 export const StyledSubheading = styled.h2`
