@@ -16,9 +16,14 @@ export const StyledTitleLink = styled(Link)`
   color: inherit;
   display: inline-block;
   margin-bottom: 0.25rem;
+  transition: color 0.2s ease, font-weight 0.2s ease;
 
   &:hover {
+    color: #ffffff;
+    font-weight: 600;
     text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
 `;
 
