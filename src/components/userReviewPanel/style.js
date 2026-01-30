@@ -17,7 +17,10 @@ export const StyledReviewRow = styled.div`
   grid-template-areas: 'poster card';
   column-gap: 1.5rem;
   row-gap: 0.75rem;
-  align-items: ${(props) => (props.$alignCenter ? 'center' : 'start')};
+  align-items: ${(props) => {
+    if (props.$matchPoster) return 'stretch';
+    return props.$alignCenter ? 'center' : 'start';
+  }};
   justify-items: start;
   width: 100%;
 
@@ -124,9 +127,17 @@ export const StyledReviewColumn = styled.div`
   grid-area: card;
   flex: 1;
   min-width: 0;
-  align-self: start;
+  align-self: ${(props) => (props.$matchPoster ? 'stretch' : 'start')};
   justify-self: stretch;
   width: 100%;
+`;
+
+export const StyledReviewCardWrapper = styled.div`
+  height: ${(props) => (props.$matchPoster ? '100%' : 'auto')};
+
+  & > div {
+    height: ${(props) => (props.$matchPoster ? '100%' : 'auto')};
+  }
 `;
 
 export const StyledEmptyMessage = styled.p`
