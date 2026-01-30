@@ -1,3 +1,4 @@
+// Import packages that allow for CSS styling to be applied to React elements
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
