@@ -10,7 +10,7 @@ import { HomePage } from '../pages/homePage';
 import { LoginPage } from '../pages/loginPage';
 import { MovieDetailPage } from '../pages/movieDetailPage';
 import { PageLayout } from '../pages/pageLayout';
-import SearchResultsPage from '../pages/SearchResultsPage';
+import { SearchResultsPage } from '../pages/searchResultsPage';
 import { SignupPage } from '../pages/signupPage';
 import TermsOfServicePage from '../pages/TermsOfServicePage';
 import { UserProfilePage } from '../pages/userProfilePage';
