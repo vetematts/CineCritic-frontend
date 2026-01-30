@@ -1,32 +1,19 @@
+// Import packages to navigate users to the correct review page
 import { Navigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { useAuth } from '../contexts/AuthContext';
-import { UserReviewPanel } from '../components/userReviewPanel';
 
-const StyledContainer = styled.section`
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-  color: rgba(255, 255, 255, 0.87);
+// Import authorisation / security methods
+import { useAuth } from '../../contexts/AuthContext';
 
-  @media (max-width: 768px) {
-    padding: 0.75rem;
-  }
-`;
+// Import the review panel to show all the users reviews
+import { UserReviewPanel } from '../../components/userReviewPanel';
 
-const StyledPageTitle = styled.h1`
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin: 0 0 1.5rem 0;
+// Import the CSS styling for the user reviews page elements
+import { 
+  StyledContainer, 
+  StyledPageTitle 
+} from './style';
 
-  @media (max-width: 768px) {
-    font-size: 1.75rem;
-  }
-`;
-
-export default function UserReviewsPage() {
+export function UserReviewsPage() {
   const { user, isAuthenticated } = useAuth();
   const { id: routeUserId } = useParams();
   const userId = user?.id ?? user?.sub ?? null;
