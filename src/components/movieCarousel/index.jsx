@@ -1,7 +1,7 @@
-// Import utility functions                           // -----DESCRPTION-----//
+// Import utility functions
 import getPosterUrl from '../../utils/image-pathing'; // Creates URL to grab movie poster link
 
-// Import child components                // -----DESCRPTION-----//
+// Import child components
 import { MovieCard } from '../movieCard'; // Create the clickable movie card posters
 
 // Import the movie carousel component element styling

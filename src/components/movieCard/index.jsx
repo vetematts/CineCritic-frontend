@@ -1,4 +1,4 @@
-// Import Packages                        // -----DESCRPTION-----//
+// Import Packages
 import { useRef, useState } from 'react'; // Holds state variables
 
 // Import the calendar icon to display on the movie cards
@@ -68,7 +68,7 @@ function MovieCardWithTilt({ posterUrl, children }) {
 }
 
 export function MovieCard(prop) {
-  // Properties of the Movie Card Object      // -----DESCRIPTION-----//
+  // Properties of the Movie Card Object
   const posterUrl = prop.posterURL || prop.posterUrl; // URL to the movie poster (fixed typo)
   const movieId = prop.id || prop.movieId || prop.tmdbId; // ID number of the movie
   const movieTitle = prop.title || prop.movieTitle || prop.name; // Name of the movie

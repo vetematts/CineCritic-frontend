@@ -3,6 +3,22 @@
 Frontend React application for the CineCritic movie review platform. This repo consumes the
 CineCritic backend API.
 
+## Contents
+
+- [Repositories](#-repositories)
+- [Deployed URLs](#-deployed-urls)
+- [Code Style Guide](#-code-style-guide)
+- [Dependencies](#-dependencies)
+- [Hardware Requirements](#-hardware-requirements)
+- [Technology Choices and Alternatives](#-technology-choices-and-alternatives)
+- [Licensing Notes](#-licensing-notes)
+- [Data Source Attribution](#-data-source-attribution)
+- [Commands](#-commands)
+- [Frontend Install Instructions](#-frontend-install-instructions)
+- [Environment Variables](#-environment-variables)
+- [Authentication](#-authentication)
+- [Key Endpoints Used](#-key-endpoints-used)
+
 ## 📂 Repositories
 
 - Backend: https://github.com/vetematts/CineCritic-backend.git
@@ -10,8 +26,8 @@ CineCritic backend API.
 
 ## 🚀 Deployed URLs
 
-- Backend API: (to be added)
-- Frontend App: (to be added)
+- Backend API: https://cinecritic.onrender.com
+- Frontend App: https://cinecritic.app
 
 ## 📏 Code Style Guide
 
@@ -51,6 +67,11 @@ ESLint is configured to defer formatting rules to Prettier to avoid conflicts.
 
 This project depends on open-source packages under permissive licenses (MIT/ISC/BSD-2/3).
 See each dependency's npm page for details.
+
+## 📌 Data Source Attribution
+
+This product uses the TMDB API but is not endorsed or certified by TMDB.
+See TMDB documentation: https://developer.themoviedb.org/docs
 
 ## 🧪 Commands
 
