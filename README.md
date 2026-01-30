@@ -117,10 +117,14 @@ Copy `.env.example` to `.env` and set your values:
 
 ## 🧩 Key Endpoints Used
 
-- Movies: `GET /api/movies/trending`, `GET /api/movies/top-rated`, `GET /api/movies/search?q=`,
-  `GET /api/movies/advanced?query=&year=&genres=&crew=&ratingMin=&ratingMax=`, `GET /api/movies/{id}`,
-  `GET /api/movies/genres` (returns list of available genres for advanced search)
-- Reviews: `GET /api/reviews/{tmdbId}`, `POST /api/reviews`, `PUT /api/reviews/{id}`,
-  `DELETE /api/reviews/{id}`
-- Watchlist: `GET /api/watchlist/{userId}`, `POST /api/watchlist`, `PUT /api/watchlist/{id}`,
-  `DELETE /api/watchlist/{id}`
+| Area        | Endpoints Used                                                                                                      |
+| ----------- | ------------------------------------------------------------------------------------------------------------------- |
+| Auth        | `POST /api/users/login`, `POST /api/users/signup`, `POST /api/users/logout`, `GET /api/users/me`                    |
+| Users       | `GET /api/users/{id}`                                                                                               |
+| Public User | `GET /api/public/users/{id}/favourites`, `GET /api/public/users/{id}/watchlist`, `GET /api/public/users/{id}/reviews` |
+| Movies      | `GET /api/movies/trending`, `GET /api/movies/top-rated`, `GET /api/movies/search?q=`,                               |
+|             | `GET /api/movies/advanced?query=&year=&genres=&crew=&ratingMin=&ratingMax=`, `GET /api/movies/{id}`,                |
+|             | `GET /api/movies/genres` (returns list of available genres for advanced search)                                    |
+| Reviews     | `GET /api/reviews/{tmdbId}`, `POST /api/reviews`, `PUT /api/reviews/{id}`, `DELETE /api/reviews/{id}`               |
+| Watchlist   | `GET /api/watchlist/{userId}`, `POST /api/watchlist`, `PUT /api/watchlist/{id}`, `DELETE /api/watchlist/{id}`       |
+| Favourites  | `GET /api/favourites/{userId}`, `POST /api/favourites`, `DELETE /api/favourites/{userId}/{tmdbId}`                  |
