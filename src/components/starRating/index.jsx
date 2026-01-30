@@ -11,7 +11,7 @@ import {
 } from './style';
 
 // Star rating component
-export function StarRating({ value = 0, onChange, disabled = false }) {
+export function StarRating({ value = 0, onChange, disabled = false, size = 2 }) {
   const [hoverValue, setHoverValue] = useState(null);
 
   // Round to nearest 0.5 increment
@@ -54,7 +54,7 @@ export function StarRating({ value = 0, onChange, disabled = false }) {
         const isHalfFilled = displayValue > starIndex && displayValue < starValue;
 
         return (
-          <StyledStarWrapper key={starIndex}>
+        <StyledStarWrapper key={starIndex} $size={size}>
             {/* Base gray star - always shown */}
             <StarSvg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
               {starPath}

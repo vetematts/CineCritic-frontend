@@ -43,7 +43,7 @@ export const StyledYear = styled.span`
 // Author name display
 export const StyledAuthorLink = styled(NavLink)`
   color: rgba(255, 255, 255, 0.95);
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 500;
   line-height: 1;
   text-decoration: none;
@@ -61,7 +61,7 @@ export const StyledAuthorLink = styled(NavLink)`
 
 export const StyledAuthorText = styled.span`
   color: rgba(255, 255, 255, 0.95);
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 500;
   line-height: 1;
 `;
