@@ -2,6 +2,9 @@
 // give their rating out of 5 stars
 import { StarRating } from '../starRating';
 
+// Import utilities
+import { formatDate } from '../../utils/date-formatting';
+
 // Import the review card component element styling
 import {
   StyledActionButton,
@@ -17,32 +20,6 @@ import {
   StyledTitleLink,
   StyledYear,
 } from './style';
-
-// Format date to "15 Jan 2024" format
-const formatDate = (dateString, prefix = '') => {
-  if (!dateString) return null;
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return dateString;
-
-  const day = date.getDate();
-  const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  const month = monthNames[date.getMonth()];
-  const year = date.getFullYear();
-  return `${prefix}${day} ${month} ${year}`;
-};
 
 /**
  * ReviewCard - This is the card with a user's review on it. Displays a single review
