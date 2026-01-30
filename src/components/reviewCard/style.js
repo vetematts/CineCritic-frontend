@@ -46,22 +46,31 @@ export const StyledYear = styled.span`
 // Author name display
 export const StyledAuthorLink = styled(NavLink)`
   color: rgba(255, 255, 255, 0.95);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
   margin: 0;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+
+  &:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+  }
 `;
 
 export const StyledAuthorText = styled.span`
   color: rgba(255, 255, 255, 0.95);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1;
 `;
 
 // Author line with rating
 export const StyledAuthorLine = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
   margin: 0.5rem 0 0.25rem 0;
 `;
 
