@@ -176,8 +176,7 @@ function UserProfilePage() {
   const [publicUserLoading, setPublicUserLoading] = useState(false);
 
   const displayUser = isOwner ? user : publicUser;
-  const username =
-    displayUser?.username || displayUser?.name || displayUser?.email?.split('@')[0] || 'User';
+  const username = displayUser?.username || displayUser?.name || 'User';
 
   // Format date to match UI style (e.g., "15 Jan 2024")
   const formatDate = (dateString) => {

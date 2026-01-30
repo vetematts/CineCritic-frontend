@@ -83,7 +83,6 @@ export function ReviewCard({
     review.username ||
     review.user?.name ||
     review.user_name ||
-    review.user?.email?.split('@')[0] ||
     'Anonymous';
 
   return (
