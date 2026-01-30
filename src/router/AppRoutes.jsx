@@ -4,7 +4,7 @@ import { Route, Routes, useLocation } from 'react-router';
 
 // Import all the pages for AppRoutes to redirect users to
 import { AdvancedSearchPage } from '../pages/advancedSearchPage';
-import DiscoverPage from '../pages/DiscoverPage';
+import { DiscoverPage } from '../pages/discoverPage';
 import FavouritesPage from '../pages/FavouritesPage';
 import { HomePage } from '../pages/homePage';
 import { LoginPage } from '../pages/loginPage';
