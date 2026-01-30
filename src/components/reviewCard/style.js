@@ -48,6 +48,9 @@ export const StyledAuthorLink = styled(NavLink)`
   &:hover {
     color: #ffffff;
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
 `;
 
