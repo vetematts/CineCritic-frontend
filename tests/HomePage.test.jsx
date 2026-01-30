@@ -24,7 +24,7 @@ vi.mock('../src/contexts/AuthContext', () => ({
   }),
 }));
 
-import HomePage from '../src/pages/HomePage';
+import { HomePage } from '../src/pages/homePage';
 import { get } from '../src/api/api';
 
 test('renders trending and top-rated lists', async () => {

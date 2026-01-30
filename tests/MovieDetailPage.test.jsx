@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import MovieDetailPage from '../src/pages/MovieDetailPage';
+import { MovieDetailPage } from '../src/pages/movieDetailPage';
 import { get } from '../src/api/api';
 
 vi.mock('../src/api/api', () => ({
