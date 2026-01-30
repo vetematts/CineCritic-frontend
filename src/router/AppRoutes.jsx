@@ -13,7 +13,7 @@ import { PageLayout } from '../pages/pageLayout';
 import SearchResultsPage from '../pages/SearchResultsPage';
 import { SignupPage } from '../pages/signupPage';
 import TermsOfServicePage from '../pages/TermsOfServicePage';
-import UserProfilePage from '../pages/UserProfilePage';
+import { UserProfilePage } from '../pages/userProfilePage';
 import { UserReviewsPage } from '../pages/userReviewsPage';
 import { WatchlistPage } from '../pages/watchlistPage';
 
