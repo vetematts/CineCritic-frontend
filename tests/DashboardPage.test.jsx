@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import UserProfilePage from '../src/pages/UserProfilePage';
+import { UserProfilePage } from '../src/pages/userProfilePage';
 import { get } from '../src/api/api';
 
 vi.mock('react-router-dom', () => ({

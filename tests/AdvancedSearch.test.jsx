@@ -3,7 +3,7 @@ import { expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 // Import the Advanced Search Page to test
-import AdvancedSearchPage from '../src/pages/AdvancedSearchPage';
+import { AdvancedSearchPage } from '../src/pages/advancedSearchPage';
 
 // // Test Case 1: Initialisation of the Advanced Search Page
 // test("Test Case 1: Initialisation of the Advanced Search Page | " +
