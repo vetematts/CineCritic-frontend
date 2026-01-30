@@ -9,27 +9,27 @@ import { StarRating } from '../../components/starRating';
 import { get } from '../../api/api';
 
 // Import the CSS Styling for the advanced search page elements
-import { 
-  StyledComparatorSelect, 
-  StyledDropDown, 
-  StyledError, 
-  StyledFieldsGrid, 
-  StyledForm, 
-  StyledFormCard, 
-  StyledGenreButton, 
-  StyledGenreContainer, 
-  StyledHelperText, 
-  StyledInputs, 
-  StyledLabels, 
-  StyledLoading, 
-  StyledNoResults, 
-  StyledRatingInput, 
-  StyledRatingRow, 
-  StyledResultsContainer, 
-  StyledResultsWrapper, 
-  StyledSearchRows, 
-  StyledStarsRow, 
-  StyledSubmitButton
+import {
+  StyledComparatorSelect,
+  StyledDropDown,
+  StyledError,
+  StyledFieldsGrid,
+  StyledForm,
+  StyledFormCard,
+  StyledGenreButton,
+  StyledGenreContainer,
+  StyledHelperText,
+  StyledInputs,
+  StyledLabels,
+  StyledLoading,
+  StyledNoResults,
+  StyledRatingInput,
+  StyledRatingRow,
+  StyledResultsContainer,
+  StyledResultsWrapper,
+  StyledSearchRows,
+  StyledStarsRow,
+  StyledSubmitButton,
 } from './style';
 
 // This is the search results list
@@ -115,7 +115,8 @@ export function AdvancedSearchPage() {
       const { genreIds, year, minRating, maxRating } = filters;
       return (items || []).filter((movie) => {
         const movieGenres = movie.genre_ids || movie.genres || [];
-        const movieYear = movie.release_date?.slice(0, 4) || movie.releaseYear || movie.release_year;
+        const movieYear =
+          movie.release_date?.slice(0, 4) || movie.releaseYear || movie.release_year;
         const movieRating =
           movie.vote_average ?? movie.rating ?? movie.average_rating ?? movie.avg_rating;
 

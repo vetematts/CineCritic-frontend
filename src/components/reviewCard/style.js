@@ -16,7 +16,9 @@ export const StyledTitleLink = styled(Link)`
   color: inherit;
   display: inline-block;
   margin-bottom: 0.25rem;
-  transition: color 0.2s ease, font-weight 0.2s ease;
+  transition:
+    color 0.2s ease,
+    font-weight 0.2s ease;
 
   &:hover {
     color: #ffffff;
@@ -48,7 +50,9 @@ export const StyledAuthorLink = styled(NavLink)`
   line-height: 1;
   text-decoration: none;
   margin: 0;
-  transition: color 0.2s ease, font-weight 0.2s ease;
+  transition:
+    color 0.2s ease,
+    font-weight 0.2s ease;
 
   &:hover {
     color: #ffffff;

@@ -5,22 +5,22 @@ import { Navigate, useParams } from 'react-router-dom';
 // Import authorisation / security methods
 import { useAuth } from '../../contexts/AuthContext';
 
-// Import utilities 
+// Import utilities
 import { get } from '../../api/api';
 import getPosterUrl from '../../utils/image-pathing';
 
 // Import the CSS styling of the favourites page elements
-import { 
-  StyledEmptyMessage, 
-  StyledError, 
-  StyledFavouritesContainer, 
-  StyledFavouritesItem, 
-  StyledFavouritesLink, 
-  StyledFavouritesList, 
-  StyledMovieTitle, 
-  StyledFavouritesPoster, 
-  StyledFavouritesPosterPlaceholder, 
-  StyledPageTitle
+import {
+  StyledEmptyMessage,
+  StyledError,
+  StyledFavouritesContainer,
+  StyledFavouritesItem,
+  StyledFavouritesLink,
+  StyledFavouritesList,
+  StyledMovieTitle,
+  StyledFavouritesPoster,
+  StyledFavouritesPosterPlaceholder,
+  StyledPageTitle,
 } from './style';
 
 export function FavouritesPage() {

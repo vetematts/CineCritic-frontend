@@ -9,12 +9,7 @@ import { get } from '../../api/api';
 import { SearchResultCard } from '../../components/searchResultCard';
 
 // Import the CSS styling for the search results page elements
-import { 
-  StyledError, 
-  StyledLoading, 
-  StyledNoResults, 
-  StyledSearchResultsContainer 
-} from './style';
+import { StyledError, StyledLoading, StyledNoResults, StyledSearchResultsContainer } from './style';
 
 // Takes results as a prop and renders the results
 export function SearchResultsPage() {

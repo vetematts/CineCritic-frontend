@@ -54,7 +54,7 @@ export function StarRating({ value = 0, onChange, disabled = false, size = 2 }) 
         const isHalfFilled = displayValue > starIndex && displayValue < starValue;
 
         return (
-        <StyledStarWrapper key={starIndex} $size={size}>
+          <StyledStarWrapper key={starIndex} $size={size}>
             {/* Base gray star - always shown */}
             <StarSvg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
               {starPath}

@@ -12,20 +12,20 @@ import { UserReviewPanel } from '../../components/userReviewPanel'; // User revi
 // import { BadgeList } from '../components/Badge'; // Badge component - commented out for future implementation
 
 // Import the CSS styling for the user's profile page
-import { 
-  StyledCarouselContainer, 
-  StyledDashboard, 
-  StyledPortaitColumn, 
-  StyledProfilePicture, 
-  StyledSeeMoreLink, 
-  StyledSeeMoreRow, 
-  StyledStrongText, 
-  StyledSubheading, 
-  StyledSubheadingLink, 
-  StyledText, 
-  StyledUserInformation, 
-  StyledUserProfileContainer, 
-  StyledUsersName
+import {
+  StyledCarouselContainer,
+  StyledDashboard,
+  StyledPortaitColumn,
+  StyledProfilePicture,
+  StyledSeeMoreLink,
+  StyledSeeMoreRow,
+  StyledStrongText,
+  StyledSubheading,
+  StyledSubheadingLink,
+  StyledText,
+  StyledUserInformation,
+  StyledUserProfileContainer,
+  StyledUsersName,
 } from './style';
 
 export function UserProfilePage() {

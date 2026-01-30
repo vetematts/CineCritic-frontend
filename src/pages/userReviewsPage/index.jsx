@@ -8,10 +8,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { UserReviewPanel } from '../../components/userReviewPanel';
 
 // Import the CSS styling for the user reviews page elements
-import { 
-  StyledContainer, 
-  StyledPageTitle 
-} from './style';
+import { StyledContainer, StyledPageTitle } from './style';
 
 export function UserReviewsPage() {
   const { user, isAuthenticated } = useAuth();

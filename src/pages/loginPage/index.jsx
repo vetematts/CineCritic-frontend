@@ -5,12 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { LoginForm } from '../../components/loginForm';
 
 // Import CSS Styling for the login page
-import { 
-  StyledFigure, 
-  StyledFlexContainer, 
-  StyledLoginLogo, 
-  StyledMessage
-} from './style';
+import { StyledFigure, StyledFlexContainer, StyledLoginLogo, StyledMessage } from './style';
 
 // Import image assets
 import banner from '../../assets/cine_critic_logo.png';

@@ -17,18 +17,18 @@ import banner from '../../assets/cine_critic_logo.png';
 import ProfileIcon from '../../assets/ProfileIcon';
 
 // Import the CSS styling for the home page
-import { 
-  StyledAdvancedSearchButton, 
-  StyledAuthButton, 
-  StyledDashboardLink, 
-  StyledDiscoverButton, 
-  StyledError, 
-  StyledFigure, 
-  StyledHomeContainer, 
-  StyledHomeHeader, 
-  StyledHomeLogo, 
-  StyledHomeRow, 
-  StyledLoginLink
+import {
+  StyledAdvancedSearchButton,
+  StyledAuthButton,
+  StyledDashboardLink,
+  StyledDiscoverButton,
+  StyledError,
+  StyledFigure,
+  StyledHomeContainer,
+  StyledHomeHeader,
+  StyledHomeLogo,
+  StyledHomeRow,
+  StyledLoginLink,
 } from './style';
 
 // The default page that is loaded

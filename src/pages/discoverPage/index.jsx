@@ -1,38 +1,38 @@
 // Import packages to handle different states
 import { useEffect, useMemo, useState } from 'react';
 
-// Import utilities - For handling API methods and 
+// Import utilities - For handling API methods and
 // finding the url path to poster images
 import { get } from '../../api/api';
 import getPosterUrl from '../../utils/image-pathing';
 
 // Import the CSS styling for the discover page elements
-import { 
-  StyledCard, 
-  StyledDiscoverContainer, 
-  StyledError, 
-  StyledGrid, 
-  StyledHeader, 
-  StyledLabel, 
-  StyledMovieTitle, 
-  StyledPageButton, 
-  StyledPageMeta, 
-  StyledPagination, 
-  StyledPoster, 
-  StyledPosterFallback, 
-  StyledPosterFrame, 
-  StyledPosterLink, 
-  StyledRatingRow, 
-  StyledRatingText, 
-  StyledSelect, 
-  StyledStarBase, 
-  StyledStarFill, 
-  StyledStarWrapper, 
-  StyledStatus, 
-  StyledSubtitle, 
-  StyledTitle, 
-  StyledTitleGroup, 
-  StyledToolbar
+import {
+  StyledCard,
+  StyledDiscoverContainer,
+  StyledError,
+  StyledGrid,
+  StyledHeader,
+  StyledLabel,
+  StyledMovieTitle,
+  StyledPageButton,
+  StyledPageMeta,
+  StyledPagination,
+  StyledPoster,
+  StyledPosterFallback,
+  StyledPosterFrame,
+  StyledPosterLink,
+  StyledRatingRow,
+  StyledRatingText,
+  StyledSelect,
+  StyledStarBase,
+  StyledStarFill,
+  StyledStarWrapper,
+  StyledStatus,
+  StyledSubtitle,
+  StyledTitle,
+  StyledTitleGroup,
+  StyledToolbar,
 } from './style';
 
 const starPath = (

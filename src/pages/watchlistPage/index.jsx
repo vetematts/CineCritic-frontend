@@ -5,22 +5,22 @@ import { Navigate, useParams } from 'react-router-dom';
 // Import authorisation / security methods
 import { useAuth } from '../../contexts/AuthContext';
 
-// Import utilities 
+// Import utilities
 import { get } from '../../api/api';
 import getPosterUrl from '../../utils/image-pathing';
 
 // Import the CSS Styling for the watchlist page elements
-import { 
-  StyledEmptyMessage, 
-  StyledError, 
-  StyledMovieTitle, 
-  StyledPageTitle, 
-  StyledWatchlistContainer, 
-  StyledWatchlistItem, 
-  StyledWatchlistLink, 
-  StyledWatchlistList, 
-  StyledWatchlistPoster, 
-  StyledWatchlistPosterPlaceholder
+import {
+  StyledEmptyMessage,
+  StyledError,
+  StyledMovieTitle,
+  StyledPageTitle,
+  StyledWatchlistContainer,
+  StyledWatchlistItem,
+  StyledWatchlistLink,
+  StyledWatchlistList,
+  StyledWatchlistPoster,
+  StyledWatchlistPosterPlaceholder,
 } from './style';
 
 export function WatchlistPage() {
