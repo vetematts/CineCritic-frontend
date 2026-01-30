@@ -8,7 +8,7 @@ import { DiscoverPage } from '../pages/discoverPage';
 import { FavouritesPage } from '../pages/favouritesPage';
 import { HomePage } from '../pages/homePage';
 import { LoginPage } from '../pages/loginPage';
-import MovieDetailPage from '../pages/MovieDetailPage';
+import { MovieDetailPage } from '../pages/movieDetailPage';
 import { PageLayout } from '../pages/pageLayout';
 import SearchResultsPage from '../pages/SearchResultsPage';
 import { SignupPage } from '../pages/signupPage';
