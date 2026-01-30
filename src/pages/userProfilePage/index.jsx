@@ -5,6 +5,7 @@ import { Navigate, useParams } from 'react-router-dom';
 // Utilies
 import { useAuth } from '../../contexts/AuthContext';
 import { get } from '../../api/api';
+import { formatDate } from '../../utils/date-formatting';
 
 // Components
 import { MovieCarousel } from '../../components/movieCarousel'; // Favourite movies carousel
@@ -47,35 +48,6 @@ export function UserProfilePage() {
 
   const displayUser = isOwner ? user : publicUser;
   const username = displayUser?.username || displayUser?.name || 'User';
-
-  // Format date to match UI style (e.g., "15 Jan 2024")
-  const formatDate = (dateString) => {
-    if (!dateString) return null;
-    try {
-      const date = new Date(dateString);
-      if (isNaN(date.getTime())) return null;
-      const day = date.getDate();
-      const monthNames = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ];
-      const month = monthNames[date.getMonth()];
-      const year = date.getFullYear();
-      return `${day} ${month} ${year}`;
-    } catch {
-      return null;
-    }
-  };
 
   // Load favourites
   useEffect(() => {
