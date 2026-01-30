@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 // Import the Search Bar component and the different Movie panels
-import { SearchBar } from '../../components/searchBar';
+import { SearchBar } from '../../components/searchbar';
 import { MovieSection } from '../../components/movieSection';
 
 // Import authorisation security methods
