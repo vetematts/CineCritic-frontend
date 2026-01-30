@@ -43,11 +43,11 @@ export const StyledAuthorLink = styled(NavLink)`
   line-height: 1;
   text-decoration: none;
   margin: 0;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color 0.2s ease, font-weight 0.2s ease;
 
   &:hover {
     color: #ffffff;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+    font-weight: 600;
   }
 `;
 
