@@ -113,7 +113,7 @@ export function ReviewCard({
           ) : (
             <StyledAuthorText>{authorName}</StyledAuthorText>
           )}
-          {reviewRating && <StarRating value={reviewRating} disabled={true} />}
+          {reviewRating && <StarRating value={reviewRating} disabled={true} size={1.6} />}
         </StyledAuthorLine>
       )}
 

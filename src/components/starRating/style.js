@@ -10,8 +10,8 @@ export const StyledStarContainer = styled.div`
 
 export const StyledStarWrapper = styled.div`
   position: relative;
-  width: 2rem;
-  height: 2rem;
+  width: ${({ $size = 2 }) => `${$size}rem`};
+  height: ${({ $size = 2 }) => `${$size}rem`};
   cursor: pointer;
 `;
 
