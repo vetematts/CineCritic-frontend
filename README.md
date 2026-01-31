@@ -27,6 +27,7 @@ CineCritic backend API.
 ## 🚀 Deployed URLs
 
 - Frontend App: https://cinecritic.app
+- Fallback (Vercel): https://cinecritic-fawn.vercel.app
 - Backend API: https://cinecritic.onrender.com
 
 ## 📏 Code Style Guide
