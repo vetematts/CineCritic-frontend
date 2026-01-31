@@ -53,6 +53,11 @@ import {
   StyledPoster,
   StyledPosterColumn,
   StyledPosterPlaceholder,
+  StyledSkeletonLine,
+  StyledSkeletonMetaRow,
+  StyledSkeletonPill,
+  StyledSkeletonPoster,
+  StyledSkeletonTitle,
   StyledSignInLink,
   StyledSignInPrompt,
   StyledSignInReviewButton,
@@ -241,7 +246,24 @@ export function MovieDetailPage() {
         <BackArrowIcon />
         Back to Home
       </StyledBackButton>
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <StyledMainContent>
+          <StyledPosterColumn>
+            <StyledSkeletonPoster />
+          </StyledPosterColumn>
+          <StyledTextColumn>
+            <StyledSkeletonTitle />
+            <StyledSkeletonMetaRow>
+              <StyledSkeletonLine $width="10rem" />
+              <StyledSkeletonLine $width="7rem" />
+            </StyledSkeletonMetaRow>
+            <StyledSkeletonPill />
+            <StyledSkeletonLine />
+            <StyledSkeletonLine $width="90%" />
+            <StyledSkeletonLine $width="75%" />
+          </StyledTextColumn>
+        </StyledMainContent>
+      )}
       {error && <StyledError>{error}</StyledError>}
       {!loading && movie && (
         <StyledMainContent>
