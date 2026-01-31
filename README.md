@@ -26,8 +26,8 @@ CineCritic backend API.
 
 ## 🚀 Deployed URLs
 
-- Backend API: https://cinecritic.onrender.com
 - Frontend App: https://cinecritic.app
+- Backend API: https://cinecritic.onrender.com
 
 ## 📏 Code Style Guide
 
