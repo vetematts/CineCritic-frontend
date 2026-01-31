@@ -128,7 +128,11 @@ export function HomePage() {
         {error && <StyledError>{error}</StyledError>}
 
         {/* Movie Sections */}
-        <MovieSection title="Random Recommendations" movies={randomRecs} loading={loadingSections} />
+        <MovieSection
+          title="Random Recommendations"
+          movies={randomRecs}
+          loading={loadingSections}
+        />
         <MovieSection title="Trending" movies={trending} loading={loadingSections} />
         <MovieSection title="Top Rated" movies={topRated} loading={loadingSections} />
         {/* Insert Recommendations Carousel */}
