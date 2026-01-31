@@ -1,7 +1,7 @@
 # 🎬 CineCritic Frontend
 
-Frontend React application for the CineCritic movie review platform. This repo consumes the
-CineCritic backend API.
+Movie review and discovery platform built with React, backed by our
+[CineCritic backend API](https://github.com/vetematts/CineCritic-backend.git).
 
 ## Contents
 
