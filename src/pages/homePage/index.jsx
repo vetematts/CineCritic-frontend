@@ -37,6 +37,7 @@ export function HomePage() {
   const [trending, setTrending] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [randomRecs, setRandomRecs] = useState([]);
+  const [loadingSections, setLoadingSections] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -45,6 +46,7 @@ export function HomePage() {
     // Load trending + top-rated movies from the backend on first render.
     const loadTrending = async () => {
       setError(null);
+      setLoadingSections(true);
 
       try {
         const [trendingData, topRatedData] = await Promise.all([
@@ -66,6 +68,10 @@ export function HomePage() {
       } catch (err) {
         if (isMounted) {
           setError(err?.error || 'Unable to load trending movies.');
+        }
+      } finally {
+        if (isMounted) {
+          setLoadingSections(false);
         }
       }
     };
@@ -122,9 +128,9 @@ export function HomePage() {
         {error && <StyledError>{error}</StyledError>}
 
         {/* Movie Sections */}
-        <MovieSection title="Random Recommendations" movies={randomRecs} />
-        <MovieSection title="Trending" movies={trending} />
-        <MovieSection title="Top Rated" movies={topRated} />
+        <MovieSection title="Random Recommendations" movies={randomRecs} loading={loadingSections} />
+        <MovieSection title="Trending" movies={trending} loading={loadingSections} />
+        <MovieSection title="Top Rated" movies={topRated} loading={loadingSections} />
         {/* Insert Recommendations Carousel */}
       </StyledHomeContainer>
     </>
