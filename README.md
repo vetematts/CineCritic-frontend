@@ -59,10 +59,33 @@ ESLint is configured to defer formatting rules to Prettier to avoid conflicts.
 
 ## 🧭 Technology Choices and Alternatives
 
-- React + React Router: component model and client-side routing; alternative: Next.js.
-- Vite: fast dev server and build pipeline; alternative: Webpack/CRA.
-- styled-components: scoped styling; alternative: CSS modules.
-- Vitest + Testing Library: lightweight testing; alternative: Jest.
+### Core Framework & Tooling
+
+**React + React Router**
+
+- **Purpose:** Build the UI and handle client-side navigation.
+- **Why Chosen:** Familiar ecosystem, strong community support, and a clean component model.
+- **Alternatives:** Next.js (SSR + routing), Vue (simpler template-driven approach).
+
+**Vite**
+
+- **Purpose:** Fast dev server and production build pipeline.
+- **Why Chosen:** Quick startup, fast HMR, and simple configuration.
+- **Alternatives:** Webpack, CRA.
+
+### Styling & Testing
+
+**styled-components**
+
+- **Purpose:** Component-scoped styling with reusable patterns.
+- **Why Chosen:** Keeps styles close to components and supports dynamic styling.
+- **Alternatives:** CSS Modules, Tailwind.
+
+**Vitest + Testing Library**
+
+- **Purpose:** Unit and interaction testing for React components.
+- **Why Chosen:** Lightweight, Vite-native, and user-focused testing approach.
+- **Alternatives:** Jest, Cypress (E2E).
 
 ## 📜 Licensing Notes
 
