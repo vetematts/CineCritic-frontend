@@ -1,6 +1,6 @@
 // Import packages that allow for CSS styling to be applied to React elements
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const StyledContainer = styled.section`
   width: 100%;
@@ -54,6 +54,60 @@ export const StyledPoster = styled.img`
   height: 450px;
   object-fit: cover;
   border-radius: 10px;
+`;
+
+const shimmer = keyframes`
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+`;
+
+export const StyledSkeletonBlock = styled.div`
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  background-size: 200% 100%;
+  animation: ${shimmer} 1.2s ease-in-out infinite;
+`;
+
+export const StyledSkeletonPoster = styled(StyledSkeletonBlock)`
+  width: 100%;
+  height: 450px;
+  border-radius: 10px;
+`;
+
+export const StyledSkeletonTitle = styled(StyledSkeletonBlock)`
+  height: 2.2rem;
+  width: 60%;
+  margin: 0 0 0.75rem 0;
+  border-radius: 8px;
+`;
+
+export const StyledSkeletonLine = styled(StyledSkeletonBlock)`
+  height: 0.9rem;
+  width: ${({ $width }) => $width || '100%'};
+  margin: 0.5rem 0;
+  border-radius: 6px;
+`;
+
+export const StyledSkeletonPill = styled(StyledSkeletonBlock)`
+  height: 2rem;
+  width: 10rem;
+  margin: 0.75rem 0;
+  border-radius: 999px;
+`;
+
+export const StyledSkeletonMetaRow = styled.div`
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0;
 `;
 
 // Placeholder for missing poster

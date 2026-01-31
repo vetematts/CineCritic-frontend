@@ -2,10 +2,22 @@
 import { MovieCarousel } from '../movieCarousel';
 
 // Import the movie section component element styling
+import { SkeletonCarousel } from '../skeletonCarousel';
 import { StyledSectionHeading, StyledSectionRow, StyledSectionWrapper } from './style';
 
 // Reusable movie section component with heading and carousel
-export function MovieSection({ title, movies }) {
+export function MovieSection({ title, movies, loading = false }) {
+  if (loading) {
+    return (
+      <StyledSectionWrapper>
+        <StyledSectionRow>
+          <StyledSectionHeading>{title}</StyledSectionHeading>
+        </StyledSectionRow>
+        <SkeletonCarousel />
+      </StyledSectionWrapper>
+    );
+  }
+
   if (!movies || movies.length === 0) {
     return null;
   }
