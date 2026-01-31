@@ -9,6 +9,7 @@ import { formatDate } from '../../utils/date-formatting';
 
 // Components
 import { MovieCarousel } from '../../components/movieCarousel'; // Favourite movies carousel
+import { SkeletonCarousel } from '../../components/skeletonCarousel';
 import { UserReviewPanel } from '../../components/userReviewPanel'; // User reviews panel
 
 // Import the CSS styling for the user's profile page
@@ -33,8 +34,10 @@ export function UserProfilePage() {
   // Hooks                                          // Description
   const [favourites, setFavourites] = useState([]); // Use this to load up this user's favourite movies and fetch the posters
   const [favouritesError, setFavouritesError] = useState(null);
+  const [favouritesLoading, setFavouritesLoading] = useState(false);
   const [watchlist, setWatchlist] = useState([]); // Use this to load up this user's watchlist movies and fetch the posters
   const [watchlistError, setWatchlistError] = useState(null);
+  const [watchlistLoading, setWatchlistLoading] = useState(false);
   const [accountCreatedDate, setAccountCreatedDate] = useState(null);
   const [accountCreatedLoading, setAccountCreatedLoading] = useState(true);
   const [accountCreatedError, setAccountCreatedError] = useState(null);
@@ -59,6 +62,7 @@ export function UserProfilePage() {
 
     const loadFavourites = async () => {
       setFavouritesError(null);
+      setFavouritesLoading(true);
       try {
         const data = await get(
           isOwner
@@ -82,6 +86,10 @@ export function UserProfilePage() {
         if (isMounted) {
           setFavouritesError(err?.message || 'Unable to load favourites.');
         }
+      } finally {
+        if (isMounted) {
+          setFavouritesLoading(false);
+        }
       }
     };
 
@@ -102,6 +110,7 @@ export function UserProfilePage() {
 
     const loadWatchlist = async () => {
       setWatchlistError(null);
+      setWatchlistLoading(true);
       try {
         const data = await get(
           isOwner ? `/api/watchlist/${targetUserId}` : `/api/public/users/${targetUserId}/watchlist`
@@ -122,6 +131,10 @@ export function UserProfilePage() {
       } catch (err) {
         if (isMounted) {
           setWatchlistError(err?.message || 'Unable to load watchlist.');
+        }
+      } finally {
+        if (isMounted) {
+          setWatchlistLoading(false);
         }
       }
     };
@@ -243,6 +256,11 @@ export function UserProfilePage() {
           {favouritesError && (
             <StyledText style={{ color: '#ffb4a2' }}>{favouritesError}</StyledText>
           )}
+          {favouritesLoading && !favouritesError && (
+            <StyledCarouselContainer>
+              <SkeletonCarousel />
+            </StyledCarouselContainer>
+          )}
           {!favouritesError && favourites.length === 0 && (
             <StyledText>
               No favourites yet. Add movies to your favourites to see them here.
@@ -268,6 +286,11 @@ export function UserProfilePage() {
             Watchlist
           </StyledSubheadingLink>
           {watchlistError && <StyledText style={{ color: '#ffb4a2' }}>{watchlistError}</StyledText>}
+          {watchlistLoading && !watchlistError && (
+            <StyledCarouselContainer>
+              <SkeletonCarousel />
+            </StyledCarouselContainer>
+          )}
           {!watchlistError && watchlist.length === 0 && (
             <StyledText>
               No items in your watchlist yet. Add movies to your watchlist to see them here.
