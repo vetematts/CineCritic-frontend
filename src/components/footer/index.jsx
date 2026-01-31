@@ -25,7 +25,7 @@ export function Footer() {
               <StyledFooterLinks to="/advancedSearch">Advanced Search</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
-              <StyledFooterLinks>All Films</StyledFooterLinks>
+              <StyledFooterLinks to="/discover">Discover Films</StyledFooterLinks>
             </StyledFooterLinkList>
           </StyledList>
         </StyledFooterColumns>
@@ -52,7 +52,7 @@ export function Footer() {
               </StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
-              <StyledFooterLinks to="https://x.com/vetematts">Contact Us</StyledFooterLinks>
+              <StyledFooterLinks to="https://github.com/vetematts">Contact Us</StyledFooterLinks>
             </StyledFooterLinkList>
             <StyledFooterLinkList>
               <StyledFooterLinks to="https://github.com/users/vetematts/projects/2">
