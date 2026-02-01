@@ -11,12 +11,12 @@ Movie review and discovery platform built with React, backed by our
 - [Hardware Requirements](#-hardware-requirements)
 - [Frontend Install Instructions](#-frontend-install-instructions)
 - [Environment Variables](#-environment-variables)
+- [Commands](#-commands)
 - [Code Style Guide](#-code-style-guide)
 - [Dependencies](#-dependencies)
 - [Technology Choices and Alternatives](#-technology-choices-and-alternatives)
 - [Licensing Notes](#-licensing-notes)
 - [Data Source Attribution](#-data-source-attribution)
-- [Commands](#-commands)
 - [Authentication](#-authentication)
 - [Key Endpoints Used](#-key-endpoints-used)
 
@@ -69,6 +69,16 @@ Movie review and discovery platform built with React, backed by our
 Copy `.env.example` to `.env` and set your values:
 
 - `VITE_API_BASE_URL` (required): backend API base URL
+
+## 🧪 Commands
+
+- `npm run dev` - start the dev server
+- `npm run build` - build production bundle
+- `npm run preview` - preview production build
+- `npm run lint` - check style + code issues
+- `npm run lint:fix` - auto-fix ESLint issues where possible
+- `npm run format` - format with Prettier
+- `npm run test` - run Vitest tests
 
 ## 📏 Code Style Guide
 
@@ -154,16 +164,6 @@ See each dependency's npm page for details.
 
 This product uses the TMDB API but is not endorsed or certified by TMDB.
 See TMDB documentation: https://developer.themoviedb.org/docs
-
-## 🧪 Commands
-
-- `npm run dev` - start the dev server
-- `npm run build` - build production bundle
-- `npm run preview` - preview production build
-- `npm run lint` - check style + code issues
-- `npm run lint:fix` - auto-fix ESLint issues where possible
-- `npm run format` - format with Prettier
-- `npm run test` - run Vitest tests
 
 ## 🔐 Authentication
 
