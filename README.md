@@ -14,6 +14,7 @@ Movie review and discovery platform built with React, backed by our
 - [Licensing Notes](#-licensing-notes)
 - [Data Source Attribution](#-data-source-attribution)
 - [Commands](#-commands)
+- [Prerequisites](#-prerequisites)
 - [Frontend Install Instructions](#-frontend-install-instructions)
 - [Environment Variables](#-environment-variables)
 - [Authentication](#-authentication)
@@ -53,9 +54,10 @@ ESLint is configured to defer formatting rules to Prettier to avoid conflicts.
 
 ## 💻 Hardware Requirements
 
-- CPU: modern dual-core (or better)
-- RAM: 4 GB minimum (8 GB recommended)
-- Disk: ~500 MB for node_modules
+- CPU: modern dual-core (or better) to run the dev server smoothly.
+- RAM: 4 GB minimum (8 GB recommended) for build + test tooling.
+- Disk: ~500 MB for `node_modules` + build output.
+- Network: stable internet required (TMDB + backend API calls).
 
 ## 🧭 Technology Choices and Alternatives
 
@@ -64,14 +66,26 @@ ESLint is configured to defer formatting rules to Prettier to avoid conflicts.
 **React + React Router**
 
 - **Purpose:** Build the UI and handle client-side navigation.
-- **Why Chosen:** Familiar ecosystem, strong community support, and a clean component model.
+- **Why Chosen:** Industry standard for SPAs; large ecosystem + strong community support.
+- **Industry Relevance:** React and React Router are widely used in production SPAs.
 - **Alternatives:** Next.js (SSR + routing), Vue (simpler template-driven approach).
+- **Licensing:** MIT (see npm pages).
 
 **Vite**
 
 - **Purpose:** Fast dev server and production build pipeline.
 - **Why Chosen:** Quick startup, fast HMR, and simple configuration.
+- **Industry Relevance:** Modern standard build tool for React apps.
 - **Alternatives:** Webpack, CRA.
+- **Licensing:** MIT.
+
+**Node.js + npm**
+
+- **Purpose:** Runtime + package manager for tooling and builds.
+- **Why Chosen:** Default ecosystem for modern JS tooling.
+- **Industry Relevance:** Standard across frontend build pipelines.
+- **Alternatives:** pnpm, yarn, bun.
+- **Licensing:** Node.js (MIT), npm (Artistic-2.0).
 
 ### Styling & Testing
 
@@ -79,13 +93,25 @@ ESLint is configured to defer formatting rules to Prettier to avoid conflicts.
 
 - **Purpose:** Component-scoped styling with reusable patterns.
 - **Why Chosen:** Keeps styles close to components and supports dynamic styling.
+- **Industry Relevance:** Common in React projects for CSS-in-JS.
 - **Alternatives:** CSS Modules, Tailwind.
+- **Licensing:** MIT.
 
 **Vitest + Testing Library**
 
 - **Purpose:** Unit and interaction testing for React components.
 - **Why Chosen:** Lightweight, Vite-native, and user-focused testing approach.
+- **Industry Relevance:** Typical combo for modern React testing.
 - **Alternatives:** Jest, Cypress (E2E).
+- **Licensing:** MIT.
+
+**ESLint + Prettier**
+
+- **Purpose:** Enforce code style and formatting consistency.
+- **Why Chosen:** Widely adopted tooling for JS projects.
+- **Industry Relevance:** Standard in most professional codebases.
+- **Alternatives:** Biome, StandardJS.
+- **Licensing:** MIT.
 
 ## 📜 Licensing Notes
 
@@ -106,6 +132,11 @@ See TMDB documentation: https://developer.themoviedb.org/docs
 - `npm run lint:fix` - auto-fix ESLint issues where possible
 - `npm run format` - format with Prettier
 - `npm run test` - run Vitest tests
+
+## ✅ Prerequisites
+
+- Node.js 18+ and npm
+- Git
 
 ## 🛠️ Frontend Install Instructions
 
