@@ -12,12 +12,12 @@ Movie review and discovery platform built with React, backed by our
 - [Frontend Install Instructions](#-frontend-install-instructions)
 - [Environment Variables](#-environment-variables)
 - [Commands](#-commands)
+- [Authentication](#-authentication)
 - [Code Style Guide](#-code-style-guide)
 - [Dependencies](#-dependencies)
 - [Technology Choices and Alternatives](#-technology-choices-and-alternatives)
 - [Licensing Notes](#-licensing-notes)
 - [Data Source Attribution](#-data-source-attribution)
-- [Authentication](#-authentication)
 - [Key Endpoints Used](#-key-endpoints-used)
 
 ## 📂 Repositories
@@ -79,6 +79,13 @@ Copy `.env.example` to `.env` and set your values:
 - `npm run lint:fix` - auto-fix ESLint issues where possible
 - `npm run format` - format with Prettier
 - `npm run test` - run Vitest tests
+
+## 🔐 Authentication
+
+- Login via `POST /api/users/login` to receive a JWT (`token`).
+- Store the token in `localStorage` and send it on protected routes as
+  `Authorization: Bearer <token>`.
+- Logout is stateless: `POST /api/users/logout` acknowledges the request; clients clear the token.
 
 ## 📏 Code Style Guide
 
@@ -164,13 +171,6 @@ See each dependency's npm page for details.
 
 This product uses the TMDB API but is not endorsed or certified by TMDB.
 See TMDB documentation: https://developer.themoviedb.org/docs
-
-## 🔐 Authentication
-
-- Login via `POST /api/users/login` to receive a JWT (`token`).
-- Store the token in `localStorage` and send it on protected routes as
-  `Authorization: Bearer <token>`.
-- Logout is stateless: `POST /api/users/logout` acknowledges the request; clients clear the token.
 
 ## 🧩 Key Endpoints Used
 
