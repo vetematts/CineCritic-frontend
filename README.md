@@ -8,11 +8,11 @@ Movie review and discovery platform built with React, backed by our
 - [Repositories](#-repositories)
 - [Deployed URLs](#-deployed-urls)
 - [Prerequisites](#-prerequisites)
+- [Hardware Requirements](#-hardware-requirements)
 - [Frontend Install Instructions](#-frontend-install-instructions)
 - [Environment Variables](#-environment-variables)
 - [Code Style Guide](#-code-style-guide)
 - [Dependencies](#-dependencies)
-- [Hardware Requirements](#-hardware-requirements)
 - [Technology Choices and Alternatives](#-technology-choices-and-alternatives)
 - [Licensing Notes](#-licensing-notes)
 - [Data Source Attribution](#-data-source-attribution)
@@ -35,6 +35,14 @@ Movie review and discovery platform built with React, backed by our
 
 - Node.js 18+ and npm
 - Git
+
+## 💻 Hardware Requirements
+
+- CPU: modern dual-core (or better) to run the dev server smoothly.
+- RAM: 4 GB minimum (8 GB recommended) for build + test tooling.
+- Disk: ~500 MB for `node_modules` + build output.
+- Network: stable internet required (TMDB + backend API calls).
+- OS: Windows 10+, macOS 12+, or a modern Linux distro.
 
 ## 🛠️ Frontend Install Instructions
 
@@ -82,14 +90,6 @@ ESLint is configured to defer formatting rules to Prettier to avoid conflicts.
 | [@testing-library/jest-dom](https://www.npmjs.com/package/@testing-library/jest-dom)               | DOM assertions            |
 | [@testing-library/user-event](https://www.npmjs.com/package/@testing-library/user-event)           | User interaction testing  |
 | [eslint](https://www.npmjs.com/package/eslint), [prettier](https://www.npmjs.com/package/prettier) | Linting and formatting    |
-
-## 💻 Hardware Requirements
-
-- CPU: modern dual-core (or better) to run the dev server smoothly.
-- RAM: 4 GB minimum (8 GB recommended) for build + test tooling.
-- Disk: ~500 MB for `node_modules` + build output.
-- Network: stable internet required (TMDB + backend API calls).
-- OS: Windows 10+, macOS 12+, or a modern Linux distro.
 
 ## 🧭 Technology Choices and Alternatives
 
