@@ -7,6 +7,9 @@ Movie review and discovery platform built with React, backed by our
 
 - [Repositories](#-repositories)
 - [Deployed URLs](#-deployed-urls)
+- [Prerequisites](#-prerequisites)
+- [Frontend Install Instructions](#-frontend-install-instructions)
+- [Environment Variables](#-environment-variables)
 - [Code Style Guide](#-code-style-guide)
 - [Dependencies](#-dependencies)
 - [Hardware Requirements](#-hardware-requirements)
@@ -14,9 +17,6 @@ Movie review and discovery platform built with React, backed by our
 - [Licensing Notes](#-licensing-notes)
 - [Data Source Attribution](#-data-source-attribution)
 - [Commands](#-commands)
-- [Prerequisites](#-prerequisites)
-- [Frontend Install Instructions](#-frontend-install-instructions)
-- [Environment Variables](#-environment-variables)
 - [Authentication](#-authentication)
 - [Key Endpoints Used](#-key-endpoints-used)
 
@@ -30,6 +30,37 @@ Movie review and discovery platform built with React, backed by our
 - Frontend App: https://cinecritic.app
 - Fallback (Vercel): https://cinecritic-fawn.vercel.app
 - Backend API: https://cinecritic.onrender.com
+
+## ✅ Prerequisites
+
+- Node.js 18+ and npm
+- Git
+
+## 🛠️ Frontend Install Instructions
+
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/vetematts/CineCritic-frontend.git
+   cd CineCritic-frontend
+   ```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+3. **Create `.env`**
+   ```sh
+   VITE_API_BASE_URL="http://localhost:4000"
+   ```
+4. **Start the app**
+   ```bash
+   npm run dev
+   ```
+
+## ⚙️ Environment Variables
+
+Copy `.env.example` to `.env` and set your values:
+
+- `VITE_API_BASE_URL` (required): backend API base URL
 
 ## 📏 Code Style Guide
 
@@ -58,6 +89,7 @@ ESLint is configured to defer formatting rules to Prettier to avoid conflicts.
 - RAM: 4 GB minimum (8 GB recommended) for build + test tooling.
 - Disk: ~500 MB for `node_modules` + build output.
 - Network: stable internet required (TMDB + backend API calls).
+- OS: Windows 10+, macOS 12+, or a modern Linux distro.
 
 ## 🧭 Technology Choices and Alternatives
 
@@ -132,36 +164,6 @@ See TMDB documentation: https://developer.themoviedb.org/docs
 - `npm run lint:fix` - auto-fix ESLint issues where possible
 - `npm run format` - format with Prettier
 - `npm run test` - run Vitest tests
-
-## ✅ Prerequisites
-
-- Node.js 18+ and npm
-- Git
-
-## 🛠️ Frontend Install Instructions
-
-1. **Clone the repo**
-   ```bash
-   git clone https://github.com/vetematts/CineCritic-frontend.git
-   ```
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-3. **Create `.env`**
-   ```sh
-   VITE_API_BASE_URL="http://localhost:4000"
-   ```
-4. **Start the app**
-   ```bash
-   npm run dev
-   ```
-
-## ⚙️ Environment Variables
-
-Copy `.env.example` to `.env` and set your values:
-
-- `VITE_API_BASE_URL` (required): backend API base URL
 
 ## 🔐 Authentication
 
