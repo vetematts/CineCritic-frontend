@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./src/assets/cine_critic_logo.png" alt="CineCritic Logo" width="444" />
+</p>
+
 # 🎬 CineCritic Frontend
 
 Movie review and discovery platform built with React, backed by our
